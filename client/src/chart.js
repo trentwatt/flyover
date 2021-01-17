@@ -5,6 +5,31 @@ const height = 200
 
 import { expandGraph } from './utilities'
 
+function getTriangle(d) {
+  const xCenter = d.x
+  const yCenter = d.y
+  const top = `${xCenter}, ${yCenter - 6}`
+  const bottomLeft = `${xCenter - 4}, ${yCenter + 4}`
+  const bottomRight = `${xCenter + 4}, ${yCenter + 4}`
+  return `${top} ${bottomLeft} ${bottomRight}`
+}
+
+function getRotationForDatum(d) {
+  if (!d.parentNode) return 0
+  const parentX = Number(d3.select(d.parentNode).attr('cx'))
+  const parentY = Number(d3.select(d.parentNode).attr('cy'))
+  const nodeX = Number(d.x)
+  const nodeY = Number(d.y)
+  const dx = nodeX - parentX
+  const dy = -(nodeY - parentY)
+  const counterClockwiseXAxis =
+    Math.atan(dy / dx) * (180 / Math.PI) + 180 * (dx < 0)
+  const clockwiseFromYAxis = 90 - counterClockwiseXAxis
+  const directionAdjustedAngle = clockwiseFromYAxis + 180 * (d.type === 'in')
+  console.log(directionAdjustedAngle)
+  return directionAdjustedAngle
+}
+
 const colorForDatum = d =>
   d && d.type == 'in' ? 'blue' : d && d.type == 'out' ? 'red' : 'black'
 
@@ -27,6 +52,7 @@ export async function createChart(originalPageranks) {
     .force('charge', d3.forceManyBody().strength(-50))
     .force('center', d3.forceCenter(0, 0).strength(0.5))
     .on('tick', ticked)
+
   //   .force('radial', d3.forceRadial())
   //   .force('collide', d3.forceCollide())
   //   .force('x', d3.forceX())
@@ -40,13 +66,36 @@ export async function createChart(originalPageranks) {
 
   let node = svg
     .append('g')
+    .attr('id', 'nodes')
     .attr('fill', '#fff')
     .attr('stroke', '#000')
-    .attr('stroke-width', 1.5)
-    .selectAll('circle')
+    .attr('font-family', 'Arial, Helvetica, sans-serif')
+    .attr('font-size', 4)
+    .attr('text-anchor', 'middle')
+    .selectAll('g')
 
   function ticked() {
-    node.attr('cx', d => d.x).attr('cy', d => d.y)
+    node
+      .selectAll('circle')
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y)
+
+    node
+      .selectAll('polygon')
+      .attr('points', d => getTriangle(d))
+      .attr(
+        'transform',
+        d => `translate(${getRotationForDatum(d)}), ${d.x}, ${d.y}`
+      )
+      .attr(
+        'transform',
+        d => `rotate(${getRotationForDatum(d)}, ${d.x}, ${d.y})`
+      )
+
+    node
+      .selectAll('text')
+      .attr('x', d => d.x)
+      .attr('y', d => d.y)
 
     link
       .attr('x1', d => d.source.x)
@@ -66,16 +115,36 @@ export async function createChart(originalPageranks) {
 
       node = node
         .data(nodes, d => d.id)
-        .join(enter => enter.append('circle').attr('r', 3.5))
+        .join(enter => {
+          // return enter.append('circle').attr('r', 3.5)
+          let g = enter.append('g')
+          let circle = g
+            .append('circle')
+            .attr('r', 3.5)
+            .attr('stroke-width', 0.5)
+          let triangle = g.append('polygon').attr('stroke-width', 1)
+
+          let text = g
+            .append('text')
+            .text(d => d && d.name && d.name.slice(0, -4))
+            .attr('stroke-width', 0.1)
+            .attr('fill', 'black')
+            .style('pointer-events', 'none')
+          // // console.log(circle)
+          // return circle
+          // enter.append('text').text(d => d && d.name)
+          return g
+        })
 
       node
+        .selectAll('polygon')
         .attr('fill', d => (d.children ? '#fff' : colorForDatum(d)))
         .attr('stroke', d => (d.children ? colorForDatum(d) : '#fff'))
-        .on('click', (_, d) => {
+        .on('click', (e, d) => {
           expandGraph(
             originalPageranks,
             { nodes, links },
-            d
+            { ...d, node: e.currentTarget }
           ).then(({ nodes, links }) => this.update({ nodes, links }))
         })
         .append('title')
