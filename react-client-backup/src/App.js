@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import Graph from './components/Graph'
+import Graph from './Graph'
 
 function App() {
   useEffect(() => {
