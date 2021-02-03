@@ -6,6 +6,12 @@ import React, {
   useState,
   // useMemo,
 } from 'react'
+import {
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+} from '@chakra-ui/react'
 import * as d3 from 'd3'
 import { ForceGraph2D } from 'react-force-graph'
 import { networkReducer, getExpansion } from './utilities'
@@ -21,6 +27,7 @@ const initialNetwork = {
 
 export default function Graph() {
   const graphRef = useRef()
+  const [sensitivity, setSensitivity] = useState(0.75)
   const [state, dispatch] = useReducer(networkReducer, initialNetwork)
   const { graphData, globalPageRanks } = state
   // const [highlightNodes, setHighlightNodes] = useState(new Set())
@@ -66,11 +73,11 @@ export default function Graph() {
       getExpansion(globalPageRanks, node.id).then(({ incoming, outgoing }) =>
         dispatch({
           type: 'NODE_EXPANSION',
-          payload: { incoming, outgoing, nodeToExpand: node },
+          payload: { incoming, outgoing, nodeToExpand: node, sensitivity },
         })
       )
     },
-    [globalPageRanks]
+    [globalPageRanks, sensitivity]
   )
 
   const handleNodeHover = useCallback(node => {
@@ -99,6 +106,10 @@ export default function Graph() {
   //   }
   //   updateHighlight()
   // }
+  const handleSensitivityUpdate = sensitivity => {
+    setSensitivity(sensitivity)
+    // dispatch({ type: 'SENSITIVITY_UPDATE', payload: 'INCOMMMING' })
+  }
   const paintNode = (node, ctx, globalScale) => {
     const label = node.name
     const fontSize =
@@ -120,12 +131,13 @@ export default function Graph() {
     ctx.fillText(label, node.x, node.y)
   }
   return globalPageRanks && graphData?.nodes?.length ? (
-    <div className="App" style={{ display: 'flex' }}>
-      <div style={{ width: '80vw' }}>
+    <div className="App" style={{ display: 'flex', flexDirection: 'column' }}>
+      <div style={{ height: '80vh' }}>
         {/* {React.memo( */}
         <ForceGraph2D
           ref={graphRef}
-          linkDirectionalParticles={3}
+          linkDirectionalParticles={l => (l.leaf ? 4 : 1)}
+          linkColor="black"
           graphData={graphData}
           onNodeClick={handleNodeClick}
           onNodeHover={handleNodeHover}
@@ -139,7 +151,23 @@ export default function Graph() {
         src={lastHoverNode ? `https://${lastHoverNode}.gov` : 'about:blank'}
         title="Preview"
         style={{ width: '20vw' }}
+        <
       /> */}
+      <div>
+        <Slider
+          aria-label="slider-ex-1"
+          min={0}
+          max={1}
+          step={0.025}
+          defaultValue={sensitivity}
+          onChangeEnd={handleSensitivityUpdate}
+        >
+          <SliderTrack>
+            <SliderFilledTrack />
+          </SliderTrack>
+          <SliderThumb />
+        </Slider>
+      </div>
     </div>
   ) : null
 }

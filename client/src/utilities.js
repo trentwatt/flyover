@@ -15,7 +15,9 @@ export function networkReducer(state, action) {
       incoming,
       outgoing,
       nodeToExpand, // , type: expandNodeType },
+      sensitivity,
     } = payload
+    console.log({ sensitivity })
     // const oldNodes = nodes.filter(n => n.id !== expandNodeId)
     // incoming and outgoing should come pre-sliced
     // fetching, getting and setting local storage should happen in event handler/ middleware
@@ -41,19 +43,29 @@ export function networkReducer(state, action) {
       source: id,
       target: nodeToExpand.id,
       leaf: true,
+      child: id,
     }))
     const newOutgoingLinks = newOutgoingNodes.map(({ id }) => ({
       source: nodeToExpand.id,
       target: id,
       leaf: true,
+      child: id,
     }))
     const newLinks = [...newIncomingLinks, ...newOutgoingLinks]
+    // const oldNodes = graphData.nodes.filter(n => n.id !== nodeToExpand.id)
     nodeToExpand.leaf = false
+    const existingNodes = graphData.nodes
+    const existingLinks = graphData.links
+    existingLinks.forEach(link => {
+      if (link.child === nodeToExpand.id) {
+        link.leaf = false
+      }
+    })
     return {
       ...state,
       graphData: {
         nodes: [
-          ...graphData.nodes,
+          ...existingNodes,
           // ...oldNodes,
           // {
           //   ...nodeToExpand, // type: expandNodeType,
@@ -61,7 +73,7 @@ export function networkReducer(state, action) {
           // },
           ...newNodes,
         ],
-        links: [...graphData.links, ...newLinks],
+        links: [...existingLinks, ...newLinks],
       },
     }
   }
