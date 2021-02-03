@@ -1,11 +1,99 @@
-import { v4 as uuid } from 'uuid'
-const verticesAtOnce = 2
+export function networkReducer(state, action) {
+  const { globalPageRanks, graphData } = state
+  const { type: actionType, payload } = action
+  if (actionType === 'SET_GLOBAL_PAGERANKS') {
+    return {
+      graphData,
+      globalPageRanks: payload,
+    }
+  } else if (action.type === 'NODE_EXPANSION') {
+    if (!globalPageRanks) return state
+    // there is still a potential problem here.
+    // they can "use up" vertcices by clicking before load.
+    // currently handling it in UI but should be handling in state logic
+    const {
+      incoming,
+      outgoing,
+      nodeToExpand, // , type: expandNodeType },
+    } = payload
+    // const oldNodes = nodes.filter(n => n.id !== expandNodeId)
+    // incoming and outgoing should come pre-sliced
+    // fetching, getting and setting local storage should happen in event handler/ middleware
+    const newIncomingNodes = incoming.map(n => ({
+      id: `IN: ${n} ${Math.floor(Math.random() * 100)}`,
+      name: n.split('.')[0],
+      type: 'in',
+      parent: nodeToExpand.id,
+      leaf: true,
+      // parentNode: expandNodeNode,
+    }))
 
-export async function expandGraph(
+    const newOutgoingNodes = outgoing.map(n => ({
+      id: `OUT: ${n} ${Math.floor(Math.random() * 100)}`,
+      name: n.split('.')[0],
+      type: 'out',
+      parent: nodeToExpand.id,
+      leaf: true,
+      // parentNode: expandNodeNode,
+    }))
+    const newNodes = [...newIncomingNodes, ...newOutgoingNodes]
+    const newIncomingLinks = newIncomingNodes.map(({ id }) => ({
+      source: id,
+      target: nodeToExpand.id,
+      leaf: true,
+    }))
+    const newOutgoingLinks = newOutgoingNodes.map(({ id }) => ({
+      source: nodeToExpand.id,
+      target: id,
+      leaf: true,
+    }))
+    const newLinks = [...newIncomingLinks, ...newOutgoingLinks]
+    nodeToExpand.leaf = false
+    return {
+      ...state,
+      graphData: {
+        nodes: [
+          ...graphData.nodes,
+          // ...oldNodes,
+          // {
+          //   ...nodeToExpand, // type: expandNodeType,
+          //   leaf: false,
+          // },
+          ...newNodes,
+        ],
+        links: [...graphData.links, ...newLinks],
+      },
+    }
+  }
+}
+
+export function getRelativePageRanks(
+  subgraphPageRanks,
   globalPageRanks,
-  { nodes, links },
-  { id: expandNodeId, type: expandNodeType, node: expandNodeNode }
+  sensitivity = 0.75
 ) {
+  if (!globalPageRanks) return
+  const normalize = ranks => {
+    return (
+      ranks &&
+      Object.entries(ranks)
+        .map(([vertex, score]) => ({
+          [vertex]: score / globalPageRanks[vertex] ** sensitivity,
+        }))
+        .sort((a, b) => {
+          return Object.values(b)[0] - Object.values(a)[0]
+        })
+        .slice(0, 10)
+        .reduce((a, b) => ({ ...a, ...b }))
+    )
+  }
+  const { node, incoming, outgoing } = subgraphPageRanks
+
+  return { node, incoming: normalize(incoming), outgoing: normalize(outgoing) }
+}
+
+const verticesAtOnce = 2
+export async function getExpansion(globalPageRanks, expandNodeId) {
   const expandNodeName = expandNodeId.split(' ')[1]
   const storedValue = JSON.parse(localStorage.getItem(expandNodeName))
   let incoming, outgoing, sliceIndex
@@ -21,32 +109,6 @@ export async function expandGraph(
       ))
     sliceIndex = 0
   }
-
-  if (sliceIndex > Math.max(incoming.length, outgoing.length)) {
-    return { nodes, links }
-  }
-
-  const oldNodes = nodes.filter(n => n.id !== expandNodeId)
-  const newIncoming = Object.keys(incoming)
-    .slice(sliceIndex, sliceIndex + verticesAtOnce)
-    .map(n => ({
-      id: `IN: ${n} ${uuid().slice(0, 2)}`,
-      name: n,
-      type: 'in',
-      parent: expandNodeId,
-      parentNode: expandNodeNode,
-    }))
-
-  const newOutgoing = Object.keys(outgoing)
-    .slice(sliceIndex, sliceIndex + verticesAtOnce)
-    .map(n => ({
-      id: `OUT: ${n} ${uuid().slice(0, 2)}`,
-      name: n,
-      type: 'out',
-      parent: expandNodeId,
-      parentNode: expandNodeNode,
-    }))
-
   localStorage.setItem(
     expandNodeName,
     JSON.stringify({
@@ -55,39 +117,19 @@ export async function expandGraph(
       sliceIndex: sliceIndex + verticesAtOnce,
     })
   )
-  const newNodes = [...newIncoming, ...newOutgoing]
-  const newLinks = newNodes.map(({ id }) => ({
-    source: expandNodeId,
-    target: id,
-  }))
-  return {
-    nodes: [...oldNodes, { id: expandNodeId, children: newNodes }, ...newNodes],
-    links: [...links, ...newLinks],
+
+  if (sliceIndex > Math.max(incoming.length, outgoing.length)) {
+    return { incoming: null, outgoing: null }
   }
-}
 
-export function getRelativePageRanks(
-  subgraphsPageRanks,
-  globalPageRank,
-  sensitivity = 0.75
-) {
-  if (!globalPageRank) return
-  const normalize = subgraphRanks =>
-    subgraphRanks &&
-    Object.entries(subgraphRanks)
-      .map(([vertex, score]) => ({
-        [vertex]: score / globalPageRank[vertex] ** sensitivity,
-      }))
-      .sort((a, b) => {
-        return Object.values(b)[0] - Object.values(a)[0]
-      })
-      .slice(0, 10)
-      .reduce((a, b) => ({ ...a, ...b }))
-  const { node, incoming, outgoing } = subgraphsPageRanks
-  return { node, incoming: normalize(incoming), outgoing: normalize(outgoing) }
-}
+  const newIncoming = Object.keys(incoming).slice(
+    sliceIndex,
+    sliceIndex + verticesAtOnce
+  )
 
-export async function getGlobalPageRanks() {
-  const result = await fetch('http://127.0.0.1:8000/').then(res => res.json())
-  return result
+  const newOutgoing = Object.keys(outgoing).slice(
+    sliceIndex,
+    sliceIndex + verticesAtOnce
+  )
+  return { incoming: newIncoming, outgoing: newOutgoing }
 }

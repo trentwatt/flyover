@@ -6,11 +6,7 @@ function App() {
     localStorage.clear()
     return () => localStorage.clear()
   })
-  return (
-    <div className="App">
-      <Graph />
-    </div>
-  )
+  return <Graph />
 }
 
 export default App
