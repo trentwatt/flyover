@@ -1,32 +1,28 @@
 export function networkReducer(state, action) {
-  const { globalPageRanks, graphData } = state
-  const { type: actionType, payload } = action
-  if (actionType === 'SET_GLOBAL_PAGERANKS') {
+  if (action.type === 'SET_GLOBAL_PAGERANKS') {
     return {
-      graphData,
-      globalPageRanks: payload,
+      graphData: state.graphData,
+      globalPageRanks: action.payload,
     }
   } else if (action.type === 'NODE_EXPANSION') {
-    if (!globalPageRanks) return state
-    // there is still a potential problem here.
-    // they can "use up" vertcices by clicking before load.
-    // currently handling it in UI but should be handling in state logic
+    if (!state.globalPageRanks) return state
     const {
       incoming,
       outgoing,
       nodeToExpand, // , type: expandNodeType },
       sensitivity,
-    } = payload
+    } = action.payload
     console.log({ sensitivity })
     // const oldNodes = nodes.filter(n => n.id !== expandNodeId)
     // incoming and outgoing should come pre-sliced
     // fetching, getting and setting local storage should happen in event handler/ middleware
     const newIncomingNodes = incoming.map(n => ({
-      id: `IN: ${n} ${Math.floor(Math.random() * 100)}`,
+      id: `IN: ${n} ${Math.floor(Math.random() * 1000)}`,
       name: n.split('.')[0],
       type: 'in',
       parent: nodeToExpand.id,
       leaf: true,
+      sliceIndex: 0,
       // parentNode: expandNodeNode,
     }))
 
@@ -36,6 +32,7 @@ export function networkReducer(state, action) {
       type: 'out',
       parent: nodeToExpand.id,
       leaf: true,
+      sliceIndex: 0,
       // parentNode: expandNodeNode,
     }))
     const newNodes = [...newIncomingNodes, ...newOutgoingNodes]
@@ -54,8 +51,8 @@ export function networkReducer(state, action) {
     const newLinks = [...newIncomingLinks, ...newOutgoingLinks]
     // const oldNodes = graphData.nodes.filter(n => n.id !== nodeToExpand.id)
     nodeToExpand.leaf = false
-    const existingNodes = graphData.nodes
-    const existingLinks = graphData.links
+    const existingNodes = state.graphData.nodes
+    const existingLinks = state.graphData.links
     existingLinks.forEach(link => {
       if (link.child === nodeToExpand.id) {
         link.leaf = false
@@ -76,6 +73,11 @@ export function networkReducer(state, action) {
         links: [...existingLinks, ...newLinks],
       },
     }
+  } else if (action.type === 'SENSITIVITY_UPDATE') {
+    console.log(action.payload)
+    return state
+  } else {
+    return state
   }
 }
 
@@ -105,15 +107,15 @@ export function getRelativePageRanks(
 }
 
 const verticesAtOnce = 2
-export async function getExpansion(globalPageRanks, expandNodeId) {
-  const expandNodeName = expandNodeId.split(' ')[1]
-  const storedValue = JSON.parse(localStorage.getItem(expandNodeName))
+export async function getExpansion(globalPageRanks, nodeToExpand) {
+  console.log({ nodeToExpand })
+  const storedValue = JSON.parse(localStorage.getItem(nodeToExpand.name))
   let incoming, outgoing, sliceIndex
   if (storedValue) {
     ;({ incoming, outgoing, sliceIndex } = storedValue)
   } else {
     ;({ incoming, outgoing } = await fetch(
-      `http://127.0.0.1:8000/nodes/${expandNodeName}`
+      `http://127.0.0.1:8000/nodes/${nodeToExpand.name}.gov`
     )
       .then(response => response.json())
       .then(subgraphPageRanks =>
@@ -122,7 +124,7 @@ export async function getExpansion(globalPageRanks, expandNodeId) {
     sliceIndex = 0
   }
   localStorage.setItem(
-    expandNodeName,
+    nodeToExpand.name,
     JSON.stringify({
       incoming,
       outgoing,

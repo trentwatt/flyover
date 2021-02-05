@@ -19,7 +19,13 @@ import { networkReducer, getExpansion } from './utilities'
 const initialNetwork = {
   graphData: {
     nodes: [
-      { id: 'ORIG: cdc.gov 000', name: 'cdc', type: 'orig', leaf: false },
+      {
+        id: 'ORIG: cdc.gov 0000',
+        name: 'cdc',
+        type: 'orig',
+        leaf: false,
+        sliceIndex: 0,
+      },
     ],
     links: [],
   },
@@ -30,14 +36,9 @@ export default function Graph() {
   const [sensitivity, setSensitivity] = useState(0.75)
   const [state, dispatch] = useReducer(networkReducer, initialNetwork)
   const { graphData, globalPageRanks } = state
-  // const [highlightNodes, setHighlightNodes] = useState(new Set())
-  // const [highlightLinks, setHighlightLinks] = useState(new Set())
   const [hoverNode, setHoverNode] = useState(null)
   const [lastHoverNode, setLastHoverNode] = useState(null)
-  // const updateHighlight = () => {
-  //   setHighlightNodes(highlightNodes)
-  //   setHighlightLinks(highlightLinks)
-  // }
+
   useEffect(() => {
     fetch('http://127.0.0.1:8000/')
       .then(response => response.json())
@@ -70,11 +71,12 @@ export default function Graph() {
 
   const handleNodeClick = useCallback(
     node => {
-      getExpansion(globalPageRanks, node.id).then(({ incoming, outgoing }) =>
-        dispatch({
-          type: 'NODE_EXPANSION',
-          payload: { incoming, outgoing, nodeToExpand: node, sensitivity },
-        })
+      getExpansion(globalPageRanks, node, sensitivity).then(
+        ({ incoming, outgoing }) =>
+          dispatch({
+            type: 'NODE_EXPANSION',
+            payload: { incoming, outgoing, nodeToExpand: node, sensitivity },
+          })
       )
     },
     [globalPageRanks, sensitivity]
@@ -85,30 +87,11 @@ export default function Graph() {
     if (node) {
       setLastHoverNode(node)
     }
-    // highlightNodes.clear()
-    // highlightLinks.clear()
-    // console.log(node)
-    // if (node) {
-    //   highlightNodes.add(node)
-    //   // node.neighbors.forEach(neighbor => highlightNodes.add(neighbor))
-    //   // node.links.forEach(link => highlightLinks.add(link))
-    // }
-    // setHoverNode(node || null)
-    // updateHighlight()
   }, [])
-  // const handleLinkHover = link => {
-  //   highlightNodes.clear()
-  //   highlightLinks.clear()
-  //   if (link) {
-  //     highlightLinks.add(link)
-  //     highlightNodes.add(link.source)
-  //     highlightNodes.add(link.target)
-  //   }
-  //   updateHighlight()
-  // }
+
   const handleSensitivityUpdate = sensitivity => {
     setSensitivity(sensitivity)
-    // dispatch({ type: 'SENSITIVITY_UPDATE', payload: 'INCOMMMING' })
+    dispatch({ type: 'SENSITIVITY_UPDATE', payload: 'INCOMMMING' })
   }
   const paintNode = (node, ctx, globalScale) => {
     const label = node.name
