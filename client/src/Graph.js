@@ -23,7 +23,9 @@ const initialNetwork = {
         id: 'ORIG: cdc.gov 0000',
         name: 'cdc',
         type: 'orig',
-        leaf: false,
+        ancestrality: 'leaf',
+        emanationsIn: [],
+        emanationsOut: [],
         sliceIndex: 0,
       },
     ],
@@ -50,7 +52,7 @@ export default function Graph() {
     document.title = lastHoverNode ? lastHoverNode.name : 'no node hovered'
   }, [lastHoverNode])
   useEffect(() => {
-    console.log(`node hovered: ${JSON.stringify(hoverNode, null, 2)}`)
+    // console.log(`node hovered: ${JSON.stringify(hoverNode, null, 2)}`)
   }, [hoverNode])
   useEffect(() => {
     const graph = graphRef.current
@@ -72,10 +74,16 @@ export default function Graph() {
   const handleNodeClick = useCallback(
     node => {
       getExpansion(globalPageRanks, node, sensitivity).then(
-        ({ incoming, outgoing }) =>
+        ({ incoming, outgoing, sliceIndex }) =>
           dispatch({
             type: 'NODE_EXPANSION',
-            payload: { incoming, outgoing, nodeToExpand: node, sensitivity },
+            payload: {
+              incoming,
+              outgoing,
+              nodeToExpand: node,
+              sensitivity,
+              sliceIndex,
+            },
           })
       )
     },
@@ -113,13 +121,22 @@ export default function Graph() {
     ctx.fillStyle = node.color
     ctx.fillText(label, node.x, node.y)
   }
+  const particlesForSensitivity = link =>
+    link._sensitivity <= 0.25
+      ? 1
+      : link._sensitivity <= 0.5
+      ? 2
+      : link._sensitivity <= 0.75
+      ? 3
+      : 4
+
   return globalPageRanks && graphData?.nodes?.length ? (
     <div className="App" style={{ display: 'flex', flexDirection: 'column' }}>
       <div style={{ height: '80vh' }}>
         {/* {React.memo( */}
         <ForceGraph2D
           ref={graphRef}
-          linkDirectionalParticles={l => (l.leaf ? 4 : 1)}
+          linkDirectionalParticles={particlesForSensitivity}
           linkColor="black"
           graphData={graphData}
           onNodeClick={handleNodeClick}
