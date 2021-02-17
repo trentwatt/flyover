@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 import * as d3 from 'd3'
 import { ForceGraph2D } from 'react-force-graph'
-import { networkReducer, getExpansion } from './utilities'
+import { networkReducer, getExpansion, getUpdatedExpansions } from './utilities'
 
 const initialNetwork = {
   graphData: {
@@ -24,20 +24,23 @@ const initialNetwork = {
         name: 'cdc',
         type: 'orig',
         ancestrality: 'leaf',
-        emanationsIn: [],
-        emanationsOut: [],
         sliceIndex: 0,
       },
     ],
+
     links: [],
   },
+  nodeDetails: { 'ORIG: cdc.gov 0000': {} },
+  edgeDetails: {},
+  emanationsIn: { 'ORIG: cdc.gov 0000': [] },
+  emanationsOut: { 'ORIG: cdc.gov 0000': [] },
 }
 
 export default function Graph() {
   const graphRef = useRef()
   const [sensitivity, setSensitivity] = useState(0.75)
   const [state, dispatch] = useReducer(networkReducer, initialNetwork)
-  const { graphData, globalPageRanks } = state
+  const { graphData, globalPageRanks, emanationsOut, emanationsIn } = state
   const [hoverNode, setHoverNode] = useState(null)
   const [lastHoverNode, setLastHoverNode] = useState(null)
 
@@ -97,10 +100,26 @@ export default function Graph() {
     }
   }, [])
 
-  const handleSensitivityUpdate = sensitivity => {
-    setSensitivity(sensitivity)
-    dispatch({ type: 'SENSITIVITY_UPDATE', payload: 'INCOMMMING' })
-  }
+  const handleSensitivityUpdate = useCallback(
+    sensitivity => {
+      if (!graphData.links.length) {
+        return
+      }
+      setSensitivity(sensitivity)
+      getUpdatedExpansions(
+        globalPageRanks,
+        emanationsIn,
+        emanationsOut,
+        sensitivity
+      ).then(({ add, remove }) =>
+        dispatch({
+          type: 'SENSITIVITY_UPDATE',
+          payload: { sensitivity, add, remove },
+        })
+      )
+    },
+    [emanationsIn, emanationsOut, globalPageRanks, graphData.links.length]
+  )
   const paintNode = (node, ctx, globalScale) => {
     const label = node.name
     const fontSize =
@@ -153,7 +172,7 @@ export default function Graph() {
         style={{ width: '20vw' }}
         <
       /> */}
-      <div>
+      <div style={{ width: '80vw', display: 'flex', justifyContent: 'center' }}>
         <Slider
           aria-label="slider-ex-1"
           min={0}

@@ -1,7 +1,34 @@
+import { v4 as uuid } from 'uuid'
+function nameForId(id) {
+  return id.split(' ')[1]
+}
+
+function displayNameForName(name) {
+  return name.split('.')[0]
+}
+
+function idForEdge(edge) {
+  return `${edge.type} ${edge.parent} ${edge.child}`
+}
+
+function nameForDisplayName(displayName) {
+  return `${displayName}.gov`
+}
+
+function genIdFromName(name, type) {
+  type = type.toLowerCase()
+  if (type !== 'in' && type !== 'out') {
+    throw new Error('wierd')
+  }
+  return `${type}: ${name} ${uuid()}`
+}
+
 export function networkReducer(state, action) {
   if (action.type === 'SET_GLOBAL_PAGERANKS') {
     return {
       graphData: state.graphData,
+      emanationsOut: state.emanationsOut,
+      emanationsIn: state.emanationsIn,
       globalPageRanks: action.payload,
     }
   } else if (action.type === 'NODE_EXPANSION') {
@@ -16,36 +43,28 @@ export function networkReducer(state, action) {
     // const oldNodes = nodes.filter(n => n.id !== expandNodeId)
     // incoming and outgoing should come pre-sliced
     // fetching, getting and setting local storage should happen in event handler/ middleware
-    const newIncomingNodes = incoming.map(n => ({
-      id: `IN: ${n} ${Math.floor(Math.random() * 1000)}`,
-      name: n.split('.')[0],
+    const newIncomingNodes = incoming.map(name => ({
+      id: genIdFromName(name, 'in'),
+      name: displayNameForName(name),
       type: 'in',
       parent: nodeToExpand.id,
-      ancestrality: 'leaf',
       sliceIndex: 0,
-      emanationsIn: [],
-      emanationsOut: [],
     }))
 
-    const newOutgoingNodes = outgoing.map(n => ({
-      id: `OUT: ${n} ${Math.floor(Math.random() * 1000)}`,
-      name: n.split('.')[0],
+    const newOutgoingNodes = outgoing.map(name => ({
+      id: genIdFromName(name, 'out'),
+      name: displayNameForName(name),
       type: 'out',
       parent: nodeToExpand.id,
-      ancestrality: 'leaf',
       sliceIndex: 0,
-      emanationsIn: [],
-      emanationsOut: [],
     }))
     const newNodes = [...newIncomingNodes, ...newOutgoingNodes]
     const newIncomingLinks = newIncomingNodes.map(({ id, name }) => ({
       source: id,
       target: nodeToExpand.id,
-      leaf: true,
       parent: nodeToExpand.id,
-      parentName: nodeToExpand.name,
       child: id,
-      childName: name,
+
       _sensitivity: sensitivity,
     }))
     const newOutgoingLinks = newOutgoingNodes.map(({ id, name }) => ({
@@ -62,23 +81,53 @@ export function networkReducer(state, action) {
     //
     // const oldNodes = graphData.nodes.filter(n => n.id !== nodeToExpand.id)
     //
-    if (nodeToExpand.ancestrality === 'leaf') {
-      nodeToExpand.ancestrality = 'parent'
-    }
+
     nodeToExpand.sliceIndex = sliceIndex
-    nodeToExpand.emanationsIn = [
-      ...nodeToExpand.emanationsIn,
-      ...newIncomingLinks,
-    ]
-    nodeToExpand.emanationsOut = [
-      ...nodeToExpand.emanationsOut,
-      ...newOutgoingLinks,
-    ]
+
+    const newEmanationsOut = {
+      ...state.emanationsOut,
+      [nodeToExpand.id]: [
+        ...state.emanationsOut[nodeToExpand.id],
+        ...newOutgoingNodes.map(n => ({ id: n.id, name: n.name, leaf: true })),
+      ],
+      ...newOutgoingNodes
+        .map(({ id }) => ({ [id]: [] }))
+        .reduce((a, b) => ({ ...a, ...b })),
+      ...newIncomingNodes
+        .map(({ id }) => ({ [id]: [] }))
+        .reduce((a, b) => ({ ...a, ...b })),
+    }
+
+    const newEmanationsIn = {
+      ...state.emanationsIn,
+      [nodeToExpand.id]: [
+        ...state.emanationsIn[nodeToExpand.id],
+        ...newIncomingNodes.map(n => ({ id: n.id, name: n.name, leaf: true })),
+      ],
+      ...newOutgoingNodes
+        .map(({ id }) => ({ [id]: [] }))
+        .reduce((a, b) => ({ ...a, ...b })),
+      ...newIncomingNodes
+        .map(({ id }) => ({ [id]: [] }))
+        .reduce((a, b) => ({ ...a, ...b })),
+    }
 
     const existingNodes = state.graphData.nodes
     existingNodes.forEach(node => {
       if (node.id === nodeToExpand.parent) {
-        nodeToExpand.ancestrality = 'grandparent+'
+        if (nodeToExpand.type === 'in') {
+          newEmanationsIn[nodeToExpand.parent].forEach(emanNode => {
+            if (emanNode.id === nodeToExpand.id) {
+              emanNode.leaf = false
+            }
+          })
+        } else if (nodeToExpand.type === 'out') {
+          newEmanationsOut[nodeToExpand.parent].forEach(emanNode => {
+            if (emanNode.id === nodeToExpand.id) {
+              emanNode.leaf = false
+            }
+          })
+        }
       }
     })
     const existingLinks = state.graphData.links
@@ -87,23 +136,97 @@ export function networkReducer(state, action) {
         link.leaf = false
       }
     })
+    const nodes = [...existingNodes, ...newNodes]
     return {
       ...state,
       graphData: {
-        nodes: [
-          ...existingNodes,
-          // ...oldNodes,
-          // {
-          //   ...nodeToExpand, // type: expandNodeType,
-          //   leaf: false,
-          // },
-          ...newNodes,
-        ],
+        nodes,
         links: [...existingLinks, ...newLinks],
       },
+      emanationsIn: newEmanationsIn,
+      emanationsOut: newEmanationsOut,
     }
   } else if (action.type === 'SENSITIVITY_UPDATE') {
-    return state
+    action.payload.add.length &&
+      console.log(`add: ${JSON.stringify(action.payload.add, null, 2)}`)
+    action.payload.remove.length &&
+      console.log(`remove: \n${JSON.stringify(action.payload.remove, null, 2)}`)
+    action.payload.remove.forEach(({ source, target, child }) => {
+      for (const link of state.graphData.links) {
+        if (link.source.id === source && link.target.id === target) {
+          link.shouldBeDeleted = true
+          break
+        }
+      }
+      for (const node of state.graphData.nodes) {
+        if (node.id === child) {
+          node.shouldBeDeleted = true
+        }
+      }
+    })
+    // console.log(state.graphData.links)
+    let updatedLinks = state.graphData.links.filter(
+      link => !link.shouldBeDeleted
+    )
+    let updatedNodes = state.graphData.nodes.filter(
+      node => !node.shouldBeDeleted
+    )
+    action.payload.add.forEach(({ source, target, parent, child }) => {
+      if (source === parent) {
+        //  i.e. it is outgoing
+        const childId = genIdFromName(child, 'out')
+        updatedLinks = [
+          ...updatedLinks,
+          {
+            source: source,
+            target: childId,
+            parent: parent,
+            child: childId,
+            _sensitivity: action.payload.sensitivity,
+          },
+        ]
+        updatedNodes = [
+          ...updatedNodes,
+          {
+            id: childId,
+            name: target,
+            type: 'out',
+            parent: parent,
+            sliceIndex: 0,
+          },
+        ]
+      } else {
+        // i.e. it is incoming
+        const childId = genIdFromName(child, 'in')
+        updatedLinks = [
+          ...updatedLinks,
+          {
+            source: childId,
+            target: parent,
+            parent: parent,
+            child: childId,
+            _sensitivity: action.payload.sensitivity,
+          },
+        ]
+        updatedNodes = [
+          ...updatedNodes,
+          {
+            id: childId,
+            name: source,
+            type: 'in',
+            parent: parent,
+            sliceIndex: 0,
+          },
+        ]
+      }
+    })
+    return {
+      ...state,
+      graphData: {
+        nodes: updatedNodes,
+        links: updatedLinks,
+      },
+    }
   } else {
     return state
   }
@@ -131,66 +254,114 @@ export function getRelativePageRanks(
 
 export async function getUpdatedExpansions(
   globalPageRanks,
-  nodes,
+  emanationsIn,
+  emanationsOut,
   sensitivity
 ) {
-  let add = {}
-  let remove = {}
-  nodes.forEach(node => {
-    const leavesIn = node.emanationsIn
-      .filter(link => link.leaf)
-      .map(link => link.childName)
-    const leavesOut = node.emanationsOut
-      .filter(link => link.leaf)
-      .map(link => link.childName)
-    const { incoming, outgoing } = JSON.parse(localStorage.getItem(node.name))
-    const topIncoming = getRelativePageRanks(
-      incoming,
-      globalPageRanks,
-      sensitivity
-    ).slice(0, leavesIn.length)
-    const topOutgoing = getRelativePageRanks(
-      outgoing,
-      globalPageRanks,
-      sensitivity
-    ).slice(0, leavesOut.length)
-    add = [
-      ...add,
-      ...topIncoming
-        .filter(child => !leavesIn.contains(child))
-        .map(n => ({ source: n, target: node.id })),
-      ...topOutgoing
-        .filter(child => !leavesOut.contains(child))
-        .map(n => ({ source: node.id, target: n })),
-    ]
-    remove = [
-      ...remove,
-      ...leavesIn.filter(child => !topIncoming.contains(child)),
-      ...leavesOut.filter(child => !topOutgoing.contains(child)),
-    ]
+  let add = []
+  let remove = []
+
+  Object.entries(emanationsOut).forEach(([nodeId, nodeEmanOut]) => {
+    console.log({ nodeId, nodeEmanOut })
+    const leavesOut = nodeEmanOut.filter(n => n.leaf)
+    const nonLeavesOut = nodeEmanOut.filter(n => !n.leaf)
+    const displayName = displayNameForName(nameForId(nodeId))
+    const storedValue = JSON.parse(localStorage.getItem(displayName))
+    if (leavesOut.length === 0 || !storedValue) {
+      return
+    }
+    const { outgoing } = storedValue
+    const topOutgoing = Object.entries(
+      getRelativePageRanks(outgoing, globalPageRanks, sensitivity)
+    )
+      .map(([vertex, score]) => vertex.split('.')[0])
+      .filter(x => !nonLeavesOut.map(n => n.name).includes(x))
+      .slice(0, leavesOut.length)
+    const addOutgoingEdges = topOutgoing
+      .filter(nodeName => !nodeEmanOut.map(n => n.name).includes(nodeName))
+      .map(nodeName => ({
+        source: nodeId,
+        target: nodeName,
+        parent: nodeId,
+        child: nodeName,
+      }))
+    const removeOutgoingEdges = leavesOut
+      .filter(child => !topOutgoing.includes(child.name))
+      .map(n => ({
+        source: nodeId,
+        target: n.id,
+        parent: nodeId,
+        child: n.id,
+      }))
+
+    add = [...add, ...addOutgoingEdges]
+    remove = [...remove, ...removeOutgoingEdges]
+  })
+  Object.entries(emanationsIn).forEach(([nodeId, nodeEmanIn]) => {
+    console.log({ nodeId, nodeEmanIn })
+    const leavesIn = nodeEmanIn.filter(n => n.leaf)
+    const nonLeavesIn = nodeEmanIn.filter(n => !n.leaf)
+
+    const storedValue = JSON.parse(localStorage.getItem(nameForId(nodeId)))
+    if (leavesIn.length === 0 || !storedValue) {
+      return
+    }
+    const { incoming } = storedValue
+    const topIncoming = Object.entries(
+      getRelativePageRanks(incoming, globalPageRanks, sensitivity)
+    )
+      .map(([vertex, score]) => vertex.split('.')[0])
+      .filter(x => !nonLeavesIn.map(n => n.name).includes(x))
+      .slice(0, leavesIn.length)
+
+    const addIncomingEdges = topIncoming
+      .filter(nodeName => !nodeEmanIn.map(n => n.name).includes(nodeName))
+      .map(nodeName => ({
+        source: nodeName,
+        parent: nodeId,
+        target: nodeId,
+        child: nodeName,
+      }))
+
+    const removeIncomingEdges = leavesIn
+      .filter(n => !topIncoming.includes(n.name))
+      .map(n => ({
+        source: n.id,
+        target: nodeId,
+        parent: nodeId,
+        child: n.id,
+      }))
+
+    add = [...add, ...addIncomingEdges]
+    remove = [...remove, ...removeIncomingEdges]
   })
   return { add, remove }
 }
 
-const verticesAtOnce = 2
-export async function getExpansion(globalPageRanks, nodeToExpand, sensitivity) {
-  // use caching based on total parameters here as well as api params
-  const storedValue = JSON.parse(localStorage.getItem(nodeToExpand.name))
+export async function getSubgraphScores(nodeName) {
+  const storedValue = JSON.parse(localStorage.getItem(nodeName))
   let incoming, outgoing
   if (storedValue) {
     ;({ incoming, outgoing } = storedValue)
   } else {
     ;({ incoming, outgoing } = await fetch(
-      `http://127.0.0.1:8000/nodes/${nodeToExpand.name}.gov`
+      `http://127.0.0.1:8000/nodes/${nodeName}.gov`
     ).then(response => response.json()))
     localStorage.setItem(
-      nodeToExpand.name,
+      nodeName,
       JSON.stringify({
         incoming,
         outgoing,
       })
     )
   }
+
+  return { incoming, outgoing }
+}
+const verticesAtOnce = 2
+export async function getExpansion(globalPageRanks, nodeToExpand, sensitivity) {
+  // use caching based on total parameters here as well as api params
+  const { incoming, outgoing } = await getSubgraphScores(nodeToExpand.name)
   const relativeIncoming = getRelativePageRanks(
     incoming,
     globalPageRanks,
