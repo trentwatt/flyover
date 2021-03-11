@@ -14,33 +14,15 @@ import {
 } from '@chakra-ui/react'
 import * as d3 from 'd3'
 import { ForceGraph2D } from 'react-force-graph'
-import { networkReducer, getExpansion, getUpdatedExpansions } from './utilities'
-
-const initialNetwork = {
-  graphData: {
-    nodes: [
-      {
-        id: 'ORIG: cdc.gov 0000',
-        name: 'cdc',
-        type: 'orig',
-        ancestrality: 'leaf',
-        sliceIndex: 0,
-      },
-    ],
-
-    links: [],
-  },
-  nodeDetails: { 'ORIG: cdc.gov 0000': {} },
-  edgeDetails: {},
-  emanationsIn: { 'ORIG: cdc.gov 0000': [] },
-  emanationsOut: { 'ORIG: cdc.gov 0000': [] },
-}
+import { nodeUpdate } from './utilities/nodeUpdate'
+import { sensUpdate } from './utilities/sensUpdate'
+import { initialState, networkReducer } from './utilities/reducer'
 
 export default function Graph() {
   const graphRef = useRef()
   const [sensitivity, setSensitivity] = useState(0.75)
-  const [state, dispatch] = useReducer(networkReducer, initialNetwork)
-  const { graphData, globalPageRanks, emanationsOut, emanationsIn } = state
+  const [state, dispatch] = useReducer(networkReducer, initialState)
+  const { graphData, globalPageRanks, nodeDetails } = state
   const [hoverNode, setHoverNode] = useState(null)
   const [lastHoverNode, setLastHoverNode] = useState(null)
 
@@ -54,9 +36,7 @@ export default function Graph() {
   useEffect(() => {
     document.title = lastHoverNode ? lastHoverNode.name : 'no node hovered'
   }, [lastHoverNode])
-  useEffect(() => {
-    // console.log(`node hovered: ${JSON.stringify(hoverNode, null, 2)}`)
-  }, [hoverNode])
+  useEffect(() => {}, [hoverNode])
   useEffect(() => {
     const graph = graphRef.current
 
@@ -76,21 +56,14 @@ export default function Graph() {
 
   const handleNodeClick = useCallback(
     node => {
-      getExpansion(globalPageRanks, node, sensitivity).then(
-        ({ incoming, outgoing, sliceIndex }) =>
-          dispatch({
-            type: 'NODE_EXPANSION',
-            payload: {
-              incoming,
-              outgoing,
-              nodeToExpand: node,
-              sensitivity,
-              sliceIndex,
-            },
-          })
+      console.log('handling node click')
+      nodeUpdate(globalPageRanks, nodeDetails, node, sensitivity).then(
+        edges =>
+          edges &&
+          edges.forEach(edge => dispatch({ type: 'ADD_EDGE', payload: edge }))
       )
     },
-    [globalPageRanks, sensitivity]
+    [globalPageRanks, sensitivity, nodeDetails]
   )
 
   const handleNodeHover = useCallback(node => {
@@ -101,24 +74,18 @@ export default function Graph() {
   }, [])
 
   const handleSensitivityUpdate = useCallback(
-    sensitivity => {
+    async sensitivity => {
       if (!graphData.links.length) {
         return
       }
       setSensitivity(sensitivity)
-      getUpdatedExpansions(
-        globalPageRanks,
-        emanationsIn,
-        emanationsOut,
-        sensitivity
-      ).then(({ add, remove }) =>
-        dispatch({
-          type: 'SENSITIVITY_UPDATE',
-          payload: { sensitivity, add, remove },
-        })
-      )
+      console.log('handling sensitivity update')
+      const { add, del } = sensUpdate(globalPageRanks, nodeDetails, sensitivity)
+      console.log({ addLen: add.length, delLen: del.length })
+      add.forEach(edge => dispatch({ type: 'ADD_EDGE', payload: edge }))
+      del.forEach(edge => dispatch({ type: 'DEL_EDGE', payload: edge }))
     },
-    [emanationsIn, emanationsOut, globalPageRanks, graphData.links.length]
+    [globalPageRanks, nodeDetails, graphData.links.length] // nodeDetails, globalPageRanks, graphData.links.length
   )
   const paintNode = (node, ctx, globalScale) => {
     const label = node.name
@@ -179,7 +146,7 @@ export default function Graph() {
           max={1}
           step={0.025}
           defaultValue={sensitivity}
-          onChangeEnd={handleSensitivityUpdate}
+          onChange={handleSensitivityUpdate}
         >
           <SliderTrack>
             <SliderFilledTrack />

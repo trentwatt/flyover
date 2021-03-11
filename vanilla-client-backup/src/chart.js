@@ -26,7 +26,6 @@ function getRotationForDatum(d) {
     Math.atan(dy / dx) * (180 / Math.PI) + 180 * (dx < 0)
   const clockwiseFromYAxis = 90 - counterClockwiseXAxis
   const directionAdjustedAngle = clockwiseFromYAxis + 180 * (d.type === 'in')
-  console.log(directionAdjustedAngle)
   return directionAdjustedAngle
 }
 
@@ -106,7 +105,6 @@ export async function createChart(originalPageranks) {
 
   return Object.assign(svg.node(), {
     update({ nodes, links }) {
-      // console.log(nodes)
       // Make a shallow copy to protect against mutation, while
       // recycling old nodes to preserve position and velocity.
       const old = new Map(node.data().map(d => [d.id, d]))
@@ -130,7 +128,6 @@ export async function createChart(originalPageranks) {
             .attr('stroke-width', 0.1)
             .attr('fill', 'black')
             .style('pointer-events', 'none')
-          // // console.log(circle)
           // return circle
           // enter.append('text').text(d => d && d.name)
           return g

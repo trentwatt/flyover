@@ -33,7 +33,6 @@ const HighlightGraph = () => {
       node.neighbors.forEach(neighbor => highlightNodes.add(neighbor))
       node.links.forEach(link => highlightLinks.add(link))
     }
-    console.log(node)
     setHoverNode(node || null)
     updateHighlight()
   }
