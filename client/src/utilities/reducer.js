@@ -5,51 +5,86 @@ import {
   displayNameForId,
 } from './utils'
 
-const initialNodeId = 'orig: cdc.gov 0000'
+// const initialNodeId = 'orig: cdc.gov 0000'
 
-export const initialState = {
-  graphData: {
-    nodes: [
-      {
-        id: initialNodeId,
-        name: displayNameForId(initialNodeId),
-      },
-    ],
+// export const initialState = {
+//   graphData: {
+//     nodes: [
+//       {
+//         id: initialNodeId,
+//         name: displayNameForId(initialNodeId),
+//       },
+//     ],
 
-    links: [],
-  },
-  nodeDetails: {
-    [initialNodeId]: {
-      childrenIn: [],
-      childrenOut: [],
-      leaf: true,
-      sliceIndex: 0,
+//     links: [],
+//   },
+//   nodeDetails: {
+//     [initialNodeId]: {
+//       childrenIn: [],
+//       childrenOut: [],
+//       leaf: true,
+//       sliceIndex: 0,
+//       inSliceIndex: 0,
+//       outSliceIndex: 0,
+//     },
+//   },
+//   linkDetails: {
+//     // id is `${type} ${parent_id} ${child_name}`
+//   },
+// }
+
+export const getInitialNetwork = initialNodeId => {
+  return {
+    graphData: {
+      nodes: [
+        {
+          id: initialNodeId,
+          name: displayNameForId(initialNodeId),
+        },
+      ],
+
+      links: [],
     },
-  },
-  linkDetails: {
-    // id is `${type} ${parent_id} ${child_name}`
-  },
+    nodeDetails: {
+      [initialNodeId]: {
+        childrenIn: [],
+        childrenOut: [],
+        leaf: true,
+        sliceIndex: 0,
+        inSliceIndex: 0,
+        outSliceIndex: 0,
+      },
+    },
+    linkDetails: {
+      // id is `${type} ${parent_id} ${child_name}`
+    },
+  }
 }
 
 export function networkReducer(state, action) {
+  console.log(action)
   if (action.type === 'SET_GLOBAL_PAGERANKS') {
     return {
       ...state,
       globalPageRanks: action.payload,
     }
   } else if (action.type === 'ADD_EDGE') {
+    if (state.linkDetails[idForLink(action.payload)]) {
+      return state
+    }
     const {
       graphData: { nodes, links },
       nodeDetails,
       linkDetails, // id is `${type} ${parent_id} ${child_name}`
     } = state
-    console.log(action)
-    const { type, parentId, childName, isExpansion } = action.payload
+    const {
+      type,
+      parentId,
+      childName,
+      isExpansion,
+      sensitivity,
+    } = action.payload
     const newLinkId = idForLink(action.payload)
-
-    if (linkDetails[idForLink(action.payload)]) {
-      return state
-    }
 
     const childId = genIdFromName(childName, type)
     const newNode = {
@@ -63,7 +98,7 @@ export function networkReducer(state, action) {
       type,
       childName: childName,
       id: newLinkId,
-      _sensitivity: action.payload.sensitivity,
+      _sensitivity: sensitivity,
     }
 
     const parentDetails = nodeDetails[parentId]
@@ -71,6 +106,7 @@ export function networkReducer(state, action) {
       ...parentDetails,
       leaf: false,
       sliceIndex: parentDetails.sliceIndex + !!isExpansion,
+
       childrenIn:
         type === 'in'
           ? [...parentDetails.childrenIn, childId]
@@ -100,7 +136,6 @@ export function networkReducer(state, action) {
     }
   } else if (action.type === 'DEL_EDGE') {
     const linkToDelete = action.payload
-    console.log(action)
     const linkId = idForLink(linkToDelete)
     const { [linkId]: _, ...linkDetails } = state.linkDetails
     const { [linkToDelete.childId]: __, ...nodeDetails } = state.nodeDetails
@@ -136,6 +171,13 @@ export function networkReducer(state, action) {
         [linkToDelete.parentId]: newParentDetails,
       },
     }
+  } else if (action.type === 'START_NEW') {
+    const { globalPageRanks } = state
+    const { startNodeName } = action.payload
+    const startNodeId = genIdFromName(startNodeName, 'orig')
+    const newGraph = getInitialNetwork(startNodeId)
+    console.log({ startNodeId })
+    return { globalPageRanks, ...newGraph }
   } else {
     return state
   }

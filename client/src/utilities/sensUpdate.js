@@ -4,8 +4,7 @@ export function sensUpdate(globalPageRanks, nodeDetails, sensitivity) {
   let del = []
 
   Object.entries(nodeDetails).forEach(
-    ([parentId, { childrenIn, childrenOut, sliceIndex: totSlice }]) => {
-      const sliceIndex = Math.ceil(totSlice / 2)
+    ([parentId, { childrenIn, childrenOut }]) => {
       const leavesInIds = childrenIn.filter(x => nodeDetails[x].leaf)
 
       const leavesOutIds = childrenOut.filter(x => nodeDetails[x].leaf)
@@ -29,12 +28,12 @@ export function sensUpdate(globalPageRanks, nodeDetails, sensitivity) {
         sensitivity
       )
         .map(({ node }) => node)
-        // .map(([nodeName]) => nodeName)
         .filter(x => !nonLeavesInNames.includes(x))
-        .slice(0, sliceIndex - nonLeavesInNames.length)
+        .slice(0, leavesInIds.length)
 
       topIncoming.forEach(
-        childName => (add = [...add, { parentId, childName, type: 'in' }])
+        childName =>
+          (add = [...add, { parentId, childName, sensitivity, type: 'in' }])
       )
       leavesInIds
         .filter(childId => !topIncoming.includes(nameForId(childId)))
@@ -47,10 +46,11 @@ export function sensUpdate(globalPageRanks, nodeDetails, sensitivity) {
       )
         .map(({ node }) => node)
         .filter(x => !nonLeavesOutNames.includes(x))
-        .slice(0, sliceIndex - nonLeavesOutNames.length)
+        .slice(0, leavesOutIds.length)
 
       topOutgoing.forEach(
-        childName => (add = [...add, { parentId, childName, type: 'out' }])
+        childName =>
+          (add = [...add, { parentId, childName, sensitivity, type: 'out' }])
       )
       leavesOutIds
         .filter(childId => !topOutgoing.includes(nameForId(childId)))

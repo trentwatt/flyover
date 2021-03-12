@@ -12,8 +12,7 @@ export async function nodeUpdate(
   nodeToExpand,
   sensitivity
 ) {
-  // use caching based on total parameters here as well as api params
-  const sliceIndex = Math.ceil(nodeDetails[nodeToExpand.id].sliceIndex / 2)
+  const sliceIndex = nodeDetails[nodeToExpand.id].childrenIn.length
 
   const { incomingPageRanks, outgoingPageRanks } = await getSubgraphPageRanks(
     nameForId(nodeToExpand.id)

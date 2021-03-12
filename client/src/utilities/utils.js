@@ -28,7 +28,7 @@ export function nameForDisplayName(displayName) {
 
 export function genIdFromName(name, type) {
   type = type.toLowerCase()
-  if (type !== 'in' && type !== 'out') {
+  if (type !== 'in' && type !== 'out' && type !== 'orig') {
     throw new Error('invalid node type')
   }
   return `${type}: ${name} ${uuid()}`
