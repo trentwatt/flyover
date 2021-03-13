@@ -5,34 +5,6 @@ import {
   displayNameForId,
 } from './utils'
 
-// const initialNodeId = 'orig: cdc.gov 0000'
-
-// export const initialState = {
-//   graphData: {
-//     nodes: [
-//       {
-//         id: initialNodeId,
-//         name: displayNameForId(initialNodeId),
-//       },
-//     ],
-
-//     links: [],
-//   },
-//   nodeDetails: {
-//     [initialNodeId]: {
-//       childrenIn: [],
-//       childrenOut: [],
-//       leaf: true,
-//       sliceIndex: 0,
-//       inSliceIndex: 0,
-//       outSliceIndex: 0,
-//     },
-//   },
-//   linkDetails: {
-//     // id is `${type} ${parent_id} ${child_name}`
-//   },
-// }
-
 export const getInitialNetwork = initialNodeId => {
   return {
     graphData: {
@@ -50,9 +22,9 @@ export const getInitialNetwork = initialNodeId => {
         childrenIn: [],
         childrenOut: [],
         leaf: true,
-        sliceIndex: 0,
-        inSliceIndex: 0,
-        outSliceIndex: 0,
+        // sliceIndex: 0,
+        // inSliceIndex: 0,
+        // outSliceIndex: 0,
       },
     },
     linkDetails: {
@@ -81,7 +53,7 @@ export function networkReducer(state, action) {
       type,
       parentId,
       childName,
-      isExpansion,
+      // isExpansion,
       sensitivity,
     } = action.payload
     const newLinkId = idForLink(action.payload)
@@ -105,7 +77,7 @@ export function networkReducer(state, action) {
     const newParentDetails = {
       ...parentDetails,
       leaf: false,
-      sliceIndex: parentDetails.sliceIndex + !!isExpansion,
+      // sliceIndex: parentDetails.sliceIndex + !!isExpansion,
 
       childrenIn:
         type === 'in'
@@ -130,7 +102,7 @@ export function networkReducer(state, action) {
           leaf: true,
           childrenIn: [],
           childrenOut: [],
-          sliceIndex: 0,
+          // sliceIndex: 0,
         },
       },
     }
@@ -152,11 +124,6 @@ export function networkReducer(state, action) {
       ),
     }
 
-    // remove it from graphData.nodes
-    // remove it from graphData.links
-    // remove it from linkDetails
-    // remove it from node details
-    // remove it from the children of its parent
     return {
       ...state,
       graphData: {
