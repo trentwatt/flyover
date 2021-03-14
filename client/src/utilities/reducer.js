@@ -139,8 +139,8 @@ export function networkReducer(state, action) {
     }
   } else if (action.type === "START_NEW") {
     const { globalPageRanks } = state
-    const { startNodeName } = action.payload
-    const startNodeId = genIdFromName(startNodeName, "orig")
+    const { nodeName } = action.payload
+    const startNodeId = genIdFromName(nodeName, "orig")
     const newGraph = getInitialNetwork(startNodeId)
 
     return { globalPageRanks, ...newGraph }

@@ -47,7 +47,7 @@ export default function Graph() {
     const nodeName = event.target.value
     if (allNodesSet.has(nodeName)) {
       console.log("asd")
-      dispatch({ type: "START_NEW", payload: { startNodeName: nodeName } })
+      dispatch({ type: "START_NEW", payload: { nodeName } })
       setTerm("")
     } else {
       setTerm(nodeName)
@@ -70,7 +70,7 @@ export default function Graph() {
         dispatch({ type: "SET_GLOBAL_PAGERANKS", payload: globalPageRanks })
       )
       .then(() =>
-        dispatch({ type: "START_NEW", payload: { startNodeName: "hhs.gov" } })
+        dispatch({ type: "START_NEW", payload: { nodeName: "hhs.gov" } })
       )
   }, [])
   useEffect(() => {
@@ -164,8 +164,17 @@ export default function Graph() {
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div>
         <h4>Start New Graph</h4>
-        <Combobox aria-label="Nodes">
+        <Combobox
+          aria-label="Nodes"
+          onSelect={nodeName => {
+            dispatch({
+              type: "START_NEW",
+              payload: { nodeName },
+            })
+          }}
+        >
           <ComboboxInput
+            selectOnClick={true}
             className="node-search-input"
             onChange={handleNodeSearchChange}
           />
