@@ -34,7 +34,7 @@ start_sensitivity = 0.75
 
 def labeled_pagerank(graph):
     result = zip(graph.vs["name"], graph.pagerank())
-    return Counter(dict(result))
+    return dict(Counter(dict(result)).most_common())
 
 
 original_pagerank = labeled_pagerank(graph)

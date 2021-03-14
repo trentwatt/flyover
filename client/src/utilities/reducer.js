@@ -3,7 +3,7 @@ import {
   displayNameForName,
   idForLink,
   displayNameForId,
-} from './utils'
+} from "./utils"
 
 export const getInitialNetwork = initialNodeId => {
   return {
@@ -34,13 +34,12 @@ export const getInitialNetwork = initialNodeId => {
 }
 
 export function networkReducer(state, action) {
-  console.log(action)
-  if (action.type === 'SET_GLOBAL_PAGERANKS') {
+  if (action.type === "SET_GLOBAL_PAGERANKS") {
     return {
       ...state,
       globalPageRanks: action.payload,
     }
-  } else if (action.type === 'ADD_EDGE') {
+  } else if (action.type === "ADD_EDGE") {
     if (state.linkDetails[idForLink(action.payload)]) {
       return state
     }
@@ -64,8 +63,8 @@ export function networkReducer(state, action) {
       name: displayNameForName(childName),
     }
     const newLink = {
-      source: type === 'out' ? parentId : childId,
-      target: type === 'out' ? childId : parentId,
+      source: type === "out" ? parentId : childId,
+      target: type === "out" ? childId : parentId,
       parentId: parentId,
       type,
       childName: childName,
@@ -80,11 +79,11 @@ export function networkReducer(state, action) {
       // sliceIndex: parentDetails.sliceIndex + !!isExpansion,
 
       childrenIn:
-        type === 'in'
+        type === "in"
           ? [...parentDetails.childrenIn, childId]
           : parentDetails.childrenIn,
       childrenOut:
-        type === 'out'
+        type === "out"
           ? [...parentDetails.childrenOut, childId]
           : parentDetails.childrenOut,
     }
@@ -106,7 +105,7 @@ export function networkReducer(state, action) {
         },
       },
     }
-  } else if (action.type === 'DEL_EDGE') {
+  } else if (action.type === "DEL_EDGE") {
     const linkToDelete = action.payload
     const linkId = idForLink(linkToDelete)
     const { [linkId]: _, ...linkDetails } = state.linkDetails
@@ -138,12 +137,12 @@ export function networkReducer(state, action) {
         [linkToDelete.parentId]: newParentDetails,
       },
     }
-  } else if (action.type === 'START_NEW') {
+  } else if (action.type === "START_NEW") {
     const { globalPageRanks } = state
     const { startNodeName } = action.payload
-    const startNodeId = genIdFromName(startNodeName, 'orig')
+    const startNodeId = genIdFromName(startNodeName, "orig")
     const newGraph = getInitialNetwork(startNodeId)
-    console.log({ startNodeId })
+
     return { globalPageRanks, ...newGraph }
   } else {
     return state

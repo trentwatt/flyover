@@ -5,47 +5,76 @@ import React, {
   useRef,
   useState,
   // useMemo,
-} from 'react'
-import {
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  Input,
-  Text,
-  Button,
-  Box,
-} from '@chakra-ui/react'
-import * as d3 from 'd3'
+} from "react"
+import { useThrottle } from "react-use"
 
-import { nodeUpdate } from './utilities/nodeUpdate'
-import { sensUpdate } from './utilities/sensUpdate'
-import { networkReducer } from './utilities/reducer'
-import { ForceGraph2D } from 'react-force-graph'
+import { Slider } from "@reach/slider"
+import "@reach/slider/styles.css"
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+  // ComboboxOptionText,
+} from "@reach/combobox"
+import "@reach/combobox/styles.css"
+import * as d3 from "d3"
+
+import { nodeUpdate } from "./utilities/nodeUpdate"
+import { sensUpdate } from "./utilities/sensUpdate"
+import { networkReducer } from "./utilities/reducer"
+import { ForceGraph2D } from "react-force-graph"
+
+const matchSorter = (allNodes, term, args) => {
+  console.log({ allNodes })
+  return allNodes.filter(node => node.includes(term))
+}
 
 export default function Graph() {
   const graphRef = useRef()
   const [sensitivity, setSensitivity] = useState(0.75)
   const [state, dispatch] = useReducer(networkReducer, {})
   const { graphData, globalPageRanks, nodeDetails } = state
+  const allNodes = globalPageRanks && Object.keys(globalPageRanks)
+  const allNodesSet = allNodes && new Set([...allNodes])
   const [hoverNode, setHoverNode] = useState(null)
   const [lastHoverNode, setLastHoverNode] = useState(null)
 
-  const [startNodeName, setStartNodeName] = useState('')
-  const handleChange = event => setStartNodeName(event.target.value)
+  const [term, setTerm] = React.useState("")
+  const results = useCityMatch(term)
+  const handleNodeSearchChange = event => {
+    const nodeName = event.target.value
+    if (allNodesSet.has(nodeName)) {
+      console.log("asd")
+      dispatch({ type: "START_NEW", payload: { startNodeName: nodeName } })
+      setTerm("")
+    } else {
+      setTerm(nodeName)
+    }
+  }
+  // const [startNodeName, setStartNodeName] = useState("");
+  // const handleChange = event => setStartNodeName(event.target.value);
+  function useCityMatch(term) {
+    const throttledTerm = useThrottle(term, 100)
+    return React.useMemo(
+      () => (term.trim() === "" ? null : matchSorter(allNodes, term)),
+      [throttledTerm]
+    )
+  }
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/')
+    fetch("http://127.0.0.1:8000/")
       .then(response => response.json())
       .then(globalPageRanks =>
-        dispatch({ type: 'SET_GLOBAL_PAGERANKS', payload: globalPageRanks })
+        dispatch({ type: "SET_GLOBAL_PAGERANKS", payload: globalPageRanks })
       )
       .then(() =>
-        dispatch({ type: 'START_NEW', payload: { startNodeName: 'cdc.gov' } })
+        dispatch({ type: "START_NEW", payload: { startNodeName: "hhs.gov" } })
       )
   }, [])
   useEffect(() => {
-    document.title = lastHoverNode ? lastHoverNode.name : 'no node hovered'
+    document.title = lastHoverNode ? lastHoverNode.name : "no node hovered"
   }, [lastHoverNode])
   useEffect(() => {}, [hoverNode])
   useEffect(() => {
@@ -54,23 +83,25 @@ export default function Graph() {
     if (graph) {
       graph
         .d3Force(
-          'link',
+          "link",
           d3
             .forceLink()
             .id(d => d.id)
             .distance(0)
             .strength(1)
         )
-        .d3Force('charge', d3.forceManyBody().strength(-50))
+        .d3Force("charge", d3.forceManyBody().strength(-50))
     }
   }, [])
 
   const handleNodeClick = useCallback(
     node => {
+      // node.fx = node.x
+      // node.fy = node.y
       nodeUpdate(globalPageRanks, nodeDetails, node, sensitivity).then(
         edges =>
           edges &&
-          edges.forEach(edge => dispatch({ type: 'ADD_EDGE', payload: edge }))
+          edges.forEach(edge => dispatch({ type: "ADD_EDGE", payload: edge }))
       )
     },
     [globalPageRanks, sensitivity, nodeDetails]
@@ -85,14 +116,15 @@ export default function Graph() {
 
   const handleSensitivityUpdate = useCallback(
     sensitivity => {
+      setSensitivity(sensitivity)
       if (!graphData?.links?.length) {
         return
       }
-      setSensitivity(sensitivity)
-      console.log('handling sensitivity update')
+
+      console.log("handling sensitivity update")
       const { add, del } = sensUpdate(globalPageRanks, nodeDetails, sensitivity)
-      add.forEach(edge => dispatch({ type: 'ADD_EDGE', payload: edge }))
-      del.forEach(edge => dispatch({ type: 'DEL_EDGE', payload: edge }))
+      add.forEach(edge => dispatch({ type: "ADD_EDGE", payload: edge }))
+      del.forEach(edge => dispatch({ type: "DEL_EDGE", payload: edge }))
     },
     [globalPageRanks, nodeDetails, graphData?.links?.length] // nodeDetails, globalPageRanks, graphData.links.length
   )
@@ -104,15 +136,15 @@ export default function Graph() {
     const textWidth = ctx.measureText(label).width
     const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2) // some padding
 
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'
+    ctx.fillStyle = "rgba(255, 255, 255, 0.8)"
     ctx.fillRect(
       node.x - bckgDimensions[0] / 2,
       node.y - bckgDimensions[1] / 2,
       ...bckgDimensions
     )
 
-    ctx.textAlign = 'center'
-    ctx.textBaseline = 'middle'
+    ctx.textAlign = "center"
+    ctx.textBaseline = "middle"
     ctx.fillStyle = node.color
     ctx.fillText(label, node.x, node.y)
   }
@@ -129,78 +161,67 @@ export default function Graph() {
   )
 
   return globalPageRanks && graphData?.nodes?.length ? (
-    <div className="App" style={{ display: 'flex', flexDirection: 'column' }}>
-      <Text mb="8px">Start New Path</Text>
-      <Input
-        value={startNodeName}
-        onChange={handleChange}
-        placeholder="Enter Start Node"
-        size="sm"
-      />
-      <Button
-        onClick={() =>
-          dispatch({ type: 'START_NEW', payload: { startNodeName } })
-        }
-        colorScheme="blue"
-      >
-        Start New
-      </Button>
-      {/* <Select placeholder="Select Start Node">
-        {globalPageRanks &&
-          Object.keys(globalPageRanks)
-            .sort()
-            .map(nodeName => (
-              <option key={nodeName} value={nodeName}>
-                {nodeName}
-              </option>
-            ))}
-      </Select> */}
-      <div style={{ height: '80vh' }}>
-        <ForceGraph2D
-          ref={graphRef}
-          linkDirectionalParticles={particlesForSensitivity}
-          linkColor="black"
-          graphData={graphData}
-          onNodeClick={handleNodeClick}
-          onNodeHover={handleNodeHover}
-          // onLinkHover={handleLinkHover}
-          nodeAutoColorBy="name"
-          nodeCanvasObject={paintNode}
-        />
-        {/* <MemoedGraph
-          {...{
-            graphRef,
-            particlesForSensitivity,
-            graphData,
-            handleNodeClick,
-            handleNodeHover,
-            paintNode,
-          }}
-        /> */}
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <div>
+        <h4>Start New Graph</h4>
+        <Combobox aria-label="Nodes">
+          <ComboboxInput
+            className="node-search-input"
+            onChange={handleNodeSearchChange}
+          />
+          {results && (
+            <ComboboxPopover className="shadow-popup">
+              {results.length > 0 ? (
+                <ComboboxList>
+                  {results.slice(0, 10).map((result, index) => (
+                    <ComboboxOption key={index} value={result} />
+                  ))}
+                </ComboboxList>
+              ) : (
+                <span style={{ display: "block", margin: 8 }}>
+                  No results found
+                </span>
+              )}
+            </ComboboxPopover>
+          )}
+        </Combobox>
       </div>
-      <Box>
+      <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <ForceGraph2D
+            width={window.innerWidth * 0.75}
+            height={window.innerHeight * 0.8}
+            ref={graphRef}
+            linkDirectionalParticles={particlesForSensitivity}
+            backgroundColor="dark"
+            linkColor="black"
+            graphData={graphData}
+            onNodeClick={handleNodeClick}
+            onNodeHover={handleNodeHover}
+            // onLinkHover={handleLinkHover}
+            nodeAutoColorBy="name"
+            nodeCanvasObject={paintNode}
+          />
+          <div style={{ margin: "24" }}>
+            <Slider
+              value={sensitivity}
+              onChange={handleSensitivityUpdate}
+              min={0}
+              max={1}
+              step={0.025}
+            />
+            <p>Sensitivity: {sensitivity}</p>
+          </div>
+        </div>
         <h1>{lastHoverNode && `${lastHoverNode.name}.gov`}</h1>
-      </Box>
-      {/* <iframe
-        src={lastHoverNode ? `https://${lastHoverNode}.gov` : 'about:blank'}
-        title="Preview"
-        style={{ width: '20vw' }}
-        <
-      /> */}
-      <div style={{ width: '80vw', display: 'flex', justifyContent: 'center' }}>
-        <Slider
-          aria-label="slider-ex-1"
-          min={0}
-          max={1}
-          step={0.025}
-          defaultValue={sensitivity}
-          onChange={handleSensitivityUpdate}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
+        <iframe
+          key={lastHoverNode && `${lastHoverNode.name}.gov`}
+          src={
+            lastHoverNode ? `https://${lastHoverNode.name}.gov` : "about:blank"
+          }
+          title="Preview"
+          style={{ width: "25vw", height: "80vh", overflow: "auto" }}
+        />
       </div>
     </div>
   ) : null
