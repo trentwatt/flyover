@@ -5,6 +5,8 @@ from collections import Counter
 from fastapi import FastAPI
 from pydantic import BaseModel  # pylint: disable=no-name-in-module
 from fastapi.middleware.cors import CORSMiddleware
+import requests
+from fastapi.responses import HTMLResponse
 
 
 app = FastAPI()
@@ -88,3 +90,18 @@ def get_subgraph_data(node):
 # def adjacent_pagerank(vertex, mode="ALL", normalize=base_normalize, sensitivity=0.75):
 #     subgraph = get_adjacent_subgraph(vertex, mode=mode)
 #     return relative_pagerank(subgraph, normalize=normalize, sensitivity=sensitivity)
+
+user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B137 Safari/601.1"
+
+
+@app.get("/proxy/{site}")
+def get_proxied_site(site):
+    r = requests.get(f"http://{site}", headers={"User-Agent": user_agent})
+    html_content = r.text.strip()
+    html_content = html_content.replace('href="/', f'href="https://{site}/')
+    html_content = html_content.replace('src="/', f'src="https://{site}/')
+    with open("h.html", "w") as f:
+        f.write(html_content)
+
+    return HTMLResponse(content=html_content, status_code=200)
+

@@ -6,6 +6,7 @@ import React, {
   useState,
   // useMemo,
 } from "react"
+
 import { useThrottle } from "react-use"
 
 import { Slider } from "@reach/slider"
@@ -46,7 +47,6 @@ export default function Graph() {
   const handleNodeSearchChange = event => {
     const nodeName = event.target.value
     if (allNodesSet.has(nodeName)) {
-      console.log("asd")
       dispatch({ type: "START_NEW", payload: { nodeName } })
       setTerm("")
     } else {
@@ -110,7 +110,7 @@ export default function Graph() {
   const handleNodeHover = useCallback(node => {
     setHoverNode(node || null)
     if (node) {
-      setLastHoverNode(node)
+      setLastHoverNode(`${node.name}.gov`)
     }
   }, [])
 
@@ -222,11 +222,14 @@ export default function Graph() {
             <p>Sensitivity: {sensitivity}</p>
           </div>
         </div>
-        <h1>{lastHoverNode && `${lastHoverNode.name}.gov`}</h1>
+        {/* <h1>{lastHoverNode}</h1> */}
+
         <iframe
-          key={lastHoverNode && `${lastHoverNode.name}.gov`}
+          key={lastHoverNode}
           src={
-            lastHoverNode ? `https://${lastHoverNode.name}.gov` : "about:blank"
+            lastHoverNode
+              ? `http://127.0.0.1:8000/proxy/${lastHoverNode}`
+              : "about:blank" // replace about.blank with a site that gives info
           }
           title="Preview"
           style={{ width: "25vw", height: "80vh", overflow: "auto" }}
