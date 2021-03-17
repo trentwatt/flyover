@@ -1,6 +1,6 @@
-import { v4 as uuid } from 'uuid'
+import { v4 as uuid } from "uuid"
 export function nameForId(id) {
-  return id.split(' ')[1]
+  return id.split(" ")[1]
 }
 
 export function jsonLog(x) {
@@ -9,13 +9,13 @@ export function jsonLog(x) {
 }
 
 export function displayNameForName(name) {
-  return name.split('.')[0]
+  return name.split(".")[0]
 }
 
 export function idForLink(link) {
-  if (!new Set(['in', 'out', 'orig']).has(link.type)) {
+  if (!new Set(["in", "out", "orig"]).has(link.type)) {
     console.log({ link })
-    throw new Error('invalid node type')
+    throw new Error("invalid node type")
   }
   return `${link.type} ${link.parentId} ${
     link.childName || nameForId(link.childId)
@@ -28,8 +28,8 @@ export function nameForDisplayName(displayName) {
 
 export function genIdFromName(name, type) {
   type = type.toLowerCase()
-  if (type !== 'in' && type !== 'out' && type !== 'orig') {
-    throw new Error('invalid node type')
+  if (type !== "in" && type !== "out" && type !== "orig") {
+    throw new Error("invalid node type")
   }
   return `${type}: ${name} ${uuid()}`
 }

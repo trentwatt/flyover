@@ -1,0 +1,1130 @@
+<!doctype html>
+<html class="no-js alert__has-cookie" lang="en-US">
+<head>
+	<meta charset="utf-8"><meta name="google" value="notranslate">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><script type="text/javascript">(window.NREUM||(NREUM={})).init={privacy:{cookies_enabled:true},distributed_tracing:{enabled:true}};(window.NREUM||(NREUM={})).loader_config={agentID:"81565824",accountID:"1820100",trustKey:"1820100",xpid:"VQ4FUVdTCBAIVVFUBQUGVQ==",licenseKey:"9360826e15",applicationID:"81062413"};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o||e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({1:[function(t,e,n){function r(t){try{c.console&&console.log(t)}catch(e){}}var o,i=t("ee"),a=t(28),c={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(c.console=!0,o.indexOf("dev")!==-1&&(c.dev=!0),o.indexOf("nr_dev")!==-1&&(c.nrDev=!0))}catch(s){}c.nrDev&&i.on("internal-error",function(t){r(t.stack)}),c.dev&&i.on("fn-err",function(t,e,n){r(n.stack)}),c.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(c,function(t,e){return t}).join(", ")))},{}],2:[function(t,e,n){function r(t,e,n,r,c){try{l?l-=1:o(c||new UncaughtException(t,e,n),!0)}catch(u){try{i("ierr",[u,s.now(),!0])}catch(d){}}return"function"==typeof f&&f.apply(this,a(arguments))}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}function o(t,e){var n=e?null:s.now();i("err",[t,n])}var i=t("handle"),a=t(29),c=t("ee"),s=t("loader"),u=t("gos"),f=window.onerror,d=!1,p="nr@seenError",l=0;s.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(h){"stack"in h&&(t(13),t(12),"addEventListener"in window&&t(6),s.xhrWrappable&&t(14),d=!0)}c.on("fn-start",function(t,e,n){d&&(l+=1)}),c.on("fn-err",function(t,e,n){d&&!n[p]&&(u(n,p,function(){return!0}),this.thrown=!0,o(n))}),c.on("fn-end",function(){d&&!this.thrown&&l>0&&(l-=1)}),c.on("internal-error",function(t){i("ierr",[t,s.now(),!0])})},{}],3:[function(t,e,n){t("loader").features.ins=!0},{}],4:[function(t,e,n){function r(){L++,T=g.hash,this[f]=y.now()}function o(){L--,g.hash!==T&&i(0,!0);var t=y.now();this[h]=~~this[h]+t-this[f],this[d]=t}function i(t,e){E.emit("newURL",[""+g,e])}function a(t,e){t.on(e,function(){this[e]=y.now()})}var c="-start",s="-end",u="-body",f="fn"+c,d="fn"+s,p="cb"+c,l="cb"+s,h="jsTime",m="fetch",v="addEventListener",w=window,g=w.location,y=t("loader");if(w[v]&&y.xhrWrappable){var x=t(10),b=t(11),E=t(8),R=t(6),O=t(13),N=t(7),P=t(14),M=t(9),S=t("ee"),C=S.get("tracer");t(16),y.features.spa=!0;var T,L=0;S.on(f,r),b.on(p,r),M.on(p,r),S.on(d,o),b.on(l,o),M.on(l,o),S.buffer([f,d,"xhr-done","xhr-resolved"]),R.buffer([f]),O.buffer(["setTimeout"+s,"clearTimeout"+c,f]),P.buffer([f,"new-xhr","send-xhr"+c]),N.buffer([m+c,m+"-done",m+u+c,m+u+s]),E.buffer(["newURL"]),x.buffer([f]),b.buffer(["propagate",p,l,"executor-err","resolve"+c]),C.buffer([f,"no-"+f]),M.buffer(["new-jsonp","cb-start","jsonp-error","jsonp-end"]),a(P,"send-xhr"+c),a(S,"xhr-resolved"),a(S,"xhr-done"),a(N,m+c),a(N,m+"-done"),a(M,"new-jsonp"),a(M,"jsonp-end"),a(M,"cb-start"),E.on("pushState-end",i),E.on("replaceState-end",i),w[v]("hashchange",i,!0),w[v]("load",i,!0),w[v]("popstate",function(){i(0,L>1)},!0)}},{}],5:[function(t,e,n){function r(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var o=t("ee"),i=t("handle"),a=t(13),c=t(12),s="learResourceTimings",u="addEventListener",f="resourcetimingbufferfull",d="bstResource",p="resource",l="-start",h="-end",m="fn"+l,v="fn"+h,w="bstTimer",g="pushState",y=t("loader");y.features.stn=!0,t(8),"addEventListener"in window&&t(6);var x=NREUM.o.EV;o.on(m,function(t,e){var n=t[0];n instanceof x&&(this.bstStart=y.now())}),o.on(v,function(t,e){var n=t[0];n instanceof x&&i("bst",[n,e,this.bstStart,y.now()])}),a.on(m,function(t,e,n){this.bstStart=y.now(),this.bstType=n}),a.on(v,function(t,e){i(w,[e,this.bstStart,y.now(),this.bstType])}),c.on(m,function(){this.bstStart=y.now()}),c.on(v,function(t,e){i(w,[e,this.bstStart,y.now(),"requestAnimationFrame"])}),o.on(g+l,function(t){this.time=y.now(),this.startPath=location.pathname+location.hash}),o.on(g+h,function(t){i("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),u in window.performance&&(window.performance["c"+s]?window.performance[u](f,function(t){i(d,[window.performance.getEntriesByType(p)]),window.performance["c"+s]()},!1):window.performance[u]("webkit"+f,function(t){i(d,[window.performance.getEntriesByType(p)]),window.performance["webkitC"+s]()},!1)),document[u]("scroll",r,{passive:!0}),document[u]("keypress",r,!1),document[u]("click",r,!1)}},{}],6:[function(t,e,n){function r(t){for(var e=t;e&&!e.hasOwnProperty(f);)e=Object.getPrototypeOf(e);e&&o(e)}function o(t){c.inPlace(t,[f,d],"-",i)}function i(t,e){return t[1]}var a=t("ee").get("events"),c=t("wrap-function")(a,!0),s=t("gos"),u=XMLHttpRequest,f="addEventListener",d="removeEventListener";e.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(u.prototype)):u.prototype.hasOwnProperty(f)&&(o(window),o(u.prototype)),a.on(f+"-start",function(t,e){var n=t[1],r=s(n,"nr@wrapped",function(){function t(){if("function"==typeof n.handleEvent)return n.handleEvent.apply(n,arguments)}var e={object:t,"function":n}[typeof n];return e?c(e,"fn-",null,e.name||"anonymous"):n});this.wrapped=t[1]=r}),a.on(d+"-start",function(t){t[1]=this.wrapped||t[1]})},{}],7:[function(t,e,n){function r(t,e,n){var r=t[e];"function"==typeof r&&(t[e]=function(){var t=i(arguments),e={};o.emit(n+"before-start",[t],e);var a;e[m]&&e[m].dt&&(a=e[m].dt);var c=r.apply(this,t);return o.emit(n+"start",[t,a],c),c.then(function(t){return o.emit(n+"end",[null,t],c),t},function(t){throw o.emit(n+"end",[t],c),t})})}var o=t("ee").get("fetch"),i=t(29),a=t(28);e.exports=o;var c=window,s="fetch-",u=s+"body-",f=["arrayBuffer","blob","json","text","formData"],d=c.Request,p=c.Response,l=c.fetch,h="prototype",m="nr@context";d&&p&&l&&(a(f,function(t,e){r(d[h],e,u),r(p[h],e,u)}),r(c,"fetch",s),o.on(s+"end",function(t,e){var n=this;if(e){var r=e.headers.get("content-length");null!==r&&(n.rxSize=r),o.emit(s+"done",[null,e],n)}else o.emit(s+"done",[t],n)}))},{}],8:[function(t,e,n){var r=t("ee").get("history"),o=t("wrap-function")(r);e.exports=r;var i=window.history&&window.history.constructor&&window.history.constructor.prototype,a=window.history;i&&i.pushState&&i.replaceState&&(a=i),o.inPlace(a,["pushState","replaceState"],"-")},{}],9:[function(t,e,n){function r(t){function e(){s.emit("jsonp-end",[],p),t.removeEventListener("load",e,!1),t.removeEventListener("error",n,!1)}function n(){s.emit("jsonp-error",[],p),s.emit("jsonp-end",[],p),t.removeEventListener("load",e,!1),t.removeEventListener("error",n,!1)}var r=t&&"string"==typeof t.nodeName&&"script"===t.nodeName.toLowerCase();if(r){var o="function"==typeof t.addEventListener;if(o){var a=i(t.src);if(a){var f=c(a),d="function"==typeof f.parent[f.key];if(d){var p={};u.inPlace(f.parent,[f.key],"cb-",p),t.addEventListener("load",e,!1),t.addEventListener("error",n,!1),s.emit("new-jsonp",[t.src],p)}}}}}function o(){return"addEventListener"in window}function i(t){var e=t.match(f);return e?e[1]:null}function a(t,e){var n=t.match(p),r=n[1],o=n[3];return o?a(o,e[r]):e[r]}function c(t){var e=t.match(d);return e&&e.length>=3?{key:e[2],parent:a(e[1],window)}:{key:t,parent:window}}var s=t("ee").get("jsonp"),u=t("wrap-function")(s);if(e.exports=s,o()){var f=/[?&](?:callback|cb)=([^&#]+)/,d=/(.*)\.([^.]+)/,p=/^(\w+)(\.|$)(.*)$/,l=["appendChild","insertBefore","replaceChild"];Node&&Node.prototype&&Node.prototype.appendChild?u.inPlace(Node.prototype,l,"dom-"):(u.inPlace(HTMLElement.prototype,l,"dom-"),u.inPlace(HTMLHeadElement.prototype,l,"dom-"),u.inPlace(HTMLBodyElement.prototype,l,"dom-")),s.on("dom-start",function(t){r(t[0])})}},{}],10:[function(t,e,n){var r=t("ee").get("mutation"),o=t("wrap-function")(r),i=NREUM.o.MO;e.exports=r,i&&(window.MutationObserver=function(t){return this instanceof i?new i(o(t,"fn-")):i.apply(this,arguments)},MutationObserver.prototype=i.prototype)},{}],11:[function(t,e,n){function r(t){var e=i.context(),n=c(t,"executor-",e,null,!1),r=new u(n);return i.context(r).getCtx=function(){return e},r}var o=t("wrap-function"),i=t("ee").get("promise"),a=t("ee").getOrSetContext,c=o(i),s=t(28),u=NREUM.o.PR;e.exports=i,u&&(window.Promise=r,["all","race"].forEach(function(t){var e=u[t];u[t]=function(n){function r(t){return function(){i.emit("propagate",[null,!o],a,!1,!1),o=o||!t}}var o=!1;s(n,function(e,n){Promise.resolve(n).then(r("all"===t),r(!1))});var a=e.apply(u,arguments),c=u.resolve(a);return c}}),["resolve","reject"].forEach(function(t){var e=u[t];u[t]=function(t){var n=e.apply(u,arguments);return t!==n&&i.emit("propagate",[t,!0],n,!1,!1),n}}),u.prototype["catch"]=function(t){return this.then(null,t)},u.prototype=Object.create(u.prototype,{constructor:{value:r}}),s(Object.getOwnPropertyNames(u),function(t,e){try{r[e]=u[e]}catch(n){}}),o.wrapInPlace(u.prototype,"then",function(t){return function(){var e=this,n=o.argsToArray.apply(this,arguments),r=a(e);r.promise=e,n[0]=c(n[0],"cb-",r,null,!1),n[1]=c(n[1],"cb-",r,null,!1);var s=t.apply(this,n);return r.nextPromise=s,i.emit("propagate",[e,!0],s,!1,!1),s}}),i.on("executor-start",function(t){t[0]=c(t[0],"resolve-",this,null,!1),t[1]=c(t[1],"resolve-",this,null,!1)}),i.on("executor-err",function(t,e,n){t[1](n)}),i.on("cb-end",function(t,e,n){i.emit("propagate",[n,!0],this.nextPromise,!1,!1)}),i.on("propagate",function(t,e,n){this.getCtx&&!e||(this.getCtx=function(){if(t instanceof Promise)var e=i.context(t);return e&&e.getCtx?e.getCtx():this})}),r.toString=function(){return""+u})},{}],12:[function(t,e,n){var r=t("ee").get("raf"),o=t("wrap-function")(r),i="equestAnimationFrame";e.exports=r,o.inPlace(window,["r"+i,"mozR"+i,"webkitR"+i,"msR"+i],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],13:[function(t,e,n){function r(t,e,n){t[0]=a(t[0],"fn-",null,n)}function o(t,e,n){this.method=n,this.timerDuration=isNaN(t[1])?0:+t[1],t[0]=a(t[0],"fn-",this,n)}var i=t("ee").get("timer"),a=t("wrap-function")(i),c="setTimeout",s="setInterval",u="clearTimeout",f="-start",d="-";e.exports=i,a.inPlace(window,[c,"setImmediate"],c+d),a.inPlace(window,[s],s+d),a.inPlace(window,[u,"clearImmediate"],u+d),i.on(s+f,r),i.on(c+f,o)},{}],14:[function(t,e,n){function r(t,e){d.inPlace(e,["onreadystatechange"],"fn-",c)}function o(){var t=this,e=f.context(t);t.readyState>3&&!e.resolved&&(e.resolved=!0,f.emit("xhr-resolved",[],t)),d.inPlace(t,g,"fn-",c)}function i(t){y.push(t),h&&(b?b.then(a):v?v(a):(E=-E,R.data=E))}function a(){for(var t=0;t<y.length;t++)r([],y[t]);y.length&&(y=[])}function c(t,e){return e}function s(t,e){for(var n in t)e[n]=t[n];return e}t(6);var u=t("ee"),f=u.get("xhr"),d=t("wrap-function")(f),p=NREUM.o,l=p.XHR,h=p.MO,m=p.PR,v=p.SI,w="readystatechange",g=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],y=[];e.exports=f;var x=window.XMLHttpRequest=function(t){var e=new l(t);try{f.emit("new-xhr",[e],e),e.addEventListener(w,o,!1)}catch(n){try{f.emit("internal-error",[n])}catch(r){}}return e};if(s(l,x),x.prototype=l.prototype,d.inPlace(x.prototype,["open","send"],"-xhr-",c),f.on("send-xhr-start",function(t,e){r(t,e),i(e)}),f.on("open-xhr-start",r),h){var b=m&&m.resolve();if(!v&&!m){var E=1,R=document.createTextNode(E);new h(a).observe(R,{characterData:!0})}}else u.on("fn-end",function(t){t[0]&&t[0].type===w||a()})},{}],15:[function(t,e,n){function r(t){if(!c(t))return null;var e=window.NREUM;if(!e.loader_config)return null;var n=(e.loader_config.accountID||"").toString()||null,r=(e.loader_config.agentID||"").toString()||null,u=(e.loader_config.trustKey||"").toString()||null;if(!n||!r)return null;var h=l.generateSpanId(),m=l.generateTraceId(),v=Date.now(),w={spanId:h,traceId:m,timestamp:v};return(t.sameOrigin||s(t)&&p())&&(w.traceContextParentHeader=o(h,m),w.traceContextStateHeader=i(h,v,n,r,u)),(t.sameOrigin&&!f()||!t.sameOrigin&&s(t)&&d())&&(w.newrelicHeader=a(h,m,v,n,r,u)),w}function o(t,e){return"00-"+e+"-"+t+"-01"}function i(t,e,n,r,o){var i=0,a="",c=1,s="",u="";return o+"@nr="+i+"-"+c+"-"+n+"-"+r+"-"+t+"-"+a+"-"+s+"-"+u+"-"+e}function a(t,e,n,r,o,i){var a="btoa"in window&&"function"==typeof window.btoa;if(!a)return null;var c={v:[0,1],d:{ty:"Browser",ac:r,ap:o,id:t,tr:e,ti:n}};return i&&r!==i&&(c.d.tk=i),btoa(JSON.stringify(c))}function c(t){return u()&&s(t)}function s(t){var e=!1,n={};if("init"in NREUM&&"distributed_tracing"in NREUM.init&&(n=NREUM.init.distributed_tracing),t.sameOrigin)e=!0;else if(n.allowed_origins instanceof Array)for(var r=0;r<n.allowed_origins.length;r++){var o=h(n.allowed_origins[r]);if(t.hostname===o.hostname&&t.protocol===o.protocol&&t.port===o.port){e=!0;break}}return e}function u(){return"init"in NREUM&&"distributed_tracing"in NREUM.init&&!!NREUM.init.distributed_tracing.enabled}function f(){return"init"in NREUM&&"distributed_tracing"in NREUM.init&&!!NREUM.init.distributed_tracing.exclude_newrelic_header}function d(){return"init"in NREUM&&"distributed_tracing"in NREUM.init&&NREUM.init.distributed_tracing.cors_use_newrelic_header!==!1}function p(){return"init"in NREUM&&"distributed_tracing"in NREUM.init&&!!NREUM.init.distributed_tracing.cors_use_tracecontext_headers}var l=t(25),h=t(17);e.exports={generateTracePayload:r,shouldGenerateTrace:c}},{}],16:[function(t,e,n){function r(t){var e=this.params,n=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;r<p;r++)t.removeEventListener(d[r],this.listener,!1);e.aborted||(n.duration=a.now()-this.startTime,this.loadCaptureCalled||4!==t.readyState?null==e.status&&(e.status=0):i(this,t),n.cbTime=this.cbTime,f.emit("xhr-done",[t],t),c("xhr",[e,n,this.startTime]))}}function o(t,e){var n=s(e),r=t.params;r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.parsedOrigin=s(e),t.sameOrigin=t.parsedOrigin.sameOrigin}function i(t,e){t.params.status=e.status;var n=v(e,t.lastSize);if(n&&(t.metrics.rxSize=n),t.sameOrigin){var r=e.getResponseHeader("X-NewRelic-App-Data");r&&(t.params.cat=r.split(", ").pop())}t.loadCaptureCalled=!0}var a=t("loader");if(a.xhrWrappable){var c=t("handle"),s=t(17),u=t(15).generateTracePayload,f=t("ee"),d=["load","error","abort","timeout"],p=d.length,l=t("id"),h=t(21),m=t(20),v=t(18),w=window.XMLHttpRequest;a.features.xhr=!0,t(14),t(7),f.on("new-xhr",function(t){var e=this;e.totalCbs=0,e.called=0,e.cbTime=0,e.end=r,e.ended=!1,e.xhrGuids={},e.lastSize=null,e.loadCaptureCalled=!1,t.addEventListener("load",function(n){i(e,t)},!1),h&&(h>34||h<10)||window.opera||t.addEventListener("progress",function(t){e.lastSize=t.loaded},!1)}),f.on("open-xhr-start",function(t){this.params={method:t[0]},o(this,t[1]),this.metrics={}}),f.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid);var n=u(this.parsedOrigin);if(n){var r=!1;n.newrelicHeader&&(e.setRequestHeader("newrelic",n.newrelicHeader),r=!0),n.traceContextParentHeader&&(e.setRequestHeader("traceparent",n.traceContextParentHeader),n.traceContextStateHeader&&e.setRequestHeader("tracestate",n.traceContextStateHeader),r=!0),r&&(this.dt=n)}}),f.on("send-xhr-start",function(t,e){var n=this.metrics,r=t[0],o=this;if(n&&r){var i=m(r);i&&(n.txSize=i)}this.startTime=a.now(),this.listener=function(t){try{"abort"!==t.type||o.loadCaptureCalled||(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof e.onload))&&o.end(e)}catch(n){try{f.emit("internal-error",[n])}catch(r){}}};for(var c=0;c<p;c++)e.addEventListener(d[c],this.listener,!1)}),f.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),f.on("xhr-load-added",function(t,e){var n=""+l(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),f.on("xhr-load-removed",function(t,e){var n=""+l(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),f.on("addEventListener-end",function(t,e){e instanceof w&&"load"===t[0]&&f.emit("xhr-load-added",[t[1],t[2]],e)}),f.on("removeEventListener-end",function(t,e){e instanceof w&&"load"===t[0]&&f.emit("xhr-load-removed",[t[1],t[2]],e)}),f.on("fn-start",function(t,e,n){e instanceof w&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=a.now()))}),f.on("fn-end",function(t,e){this.xhrCbStart&&f.emit("xhr-cb-time",[a.now()-this.xhrCbStart,this.onload,e],e)}),f.on("fetch-before-start",function(t){function e(t,e){var n=!1;return e.newrelicHeader&&(t.set("newrelic",e.newrelicHeader),n=!0),e.traceContextParentHeader&&(t.set("traceparent",e.traceContextParentHeader),e.traceContextStateHeader&&t.set("tracestate",e.traceContextStateHeader),n=!0),n}var n,r=t[1]||{};"string"==typeof t[0]?n=t[0]:t[0]&&t[0].url?n=t[0].url:window.URL&&t[0]&&t[0]instanceof URL&&(n=t[0].href),n&&(this.parsedOrigin=s(n),this.sameOrigin=this.parsedOrigin.sameOrigin);var o=u(this.parsedOrigin);if(o&&(o.newrelicHeader||o.traceContextParentHeader))if("string"==typeof t[0]||window.URL&&t[0]&&t[0]instanceof URL){var i={};for(var a in r)i[a]=r[a];i.headers=new Headers(r.headers||{}),e(i.headers,o)&&(this.dt=o),t.length>1?t[1]=i:t.push(i)}else t[0]&&t[0].headers&&e(t[0].headers,o)&&(this.dt=o)})}},{}],17:[function(t,e,n){var r={};e.exports=function(t){if(t in r)return r[t];var e=document.createElement("a"),n=window.location,o={};e.href=t,o.port=e.port;var i=e.href.split("://");!o.port&&i[1]&&(o.port=i[1].split("/")[0].split("@").pop().split(":")[1]),o.port&&"0"!==o.port||(o.port="https"===i[0]?"443":"80"),o.hostname=e.hostname||n.hostname,o.pathname=e.pathname,o.protocol=i[0],"/"!==o.pathname.charAt(0)&&(o.pathname="/"+o.pathname);var a=!e.protocol||":"===e.protocol||e.protocol===n.protocol,c=e.hostname===document.domain&&e.port===n.port;return o.sameOrigin=a&&(!e.hostname||c),"/"===o.pathname&&(r[t]=o),o}},{}],18:[function(t,e,n){function r(t,e){var n=t.responseType;return"json"===n&&null!==e?e:"arraybuffer"===n||"blob"===n||"json"===n?o(t.response):"text"===n||""===n||void 0===n?o(t.responseText):void 0}var o=t(20);e.exports=r},{}],19:[function(t,e,n){function r(){}function o(t,e,n){return function(){return i(t,[u.now()].concat(c(arguments)),e?null:this,n),e?void 0:this}}var i=t("handle"),a=t(28),c=t(29),s=t("ee").get("tracer"),u=t("loader"),f=NREUM;"undefined"==typeof window.newrelic&&(newrelic=f);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],p="api-",l=p+"ixn-";a(d,function(t,e){f[e]=o(p+e,!0,"api")}),f.addPageAction=o(p+"addPageAction",!0),f.setCurrentRouteName=o(p+"routeName",!0),e.exports=newrelic,f.interaction=function(){return(new r).get()};var h=r.prototype={createTracer:function(t,e){var n={},r=this,o="function"==typeof e;return i(l+"tracer",[u.now(),t,n],r),function(){if(s.emit((o?"":"no-")+"fn-start",[u.now(),r,o],n),o)try{return e.apply(this,arguments)}catch(t){throw s.emit("fn-err",[arguments,this,t],n),t}finally{s.emit("fn-end",[u.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){h[e]=o(l+e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),i("err",[t,u.now(),!1,e])}},{}],20:[function(t,e,n){e.exports=function(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(e){return}}}},{}],21:[function(t,e,n){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),e.exports=r},{}],22:[function(t,e,n){function r(){return c.exists&&performance.now?Math.round(performance.now()):(i=Math.max((new Date).getTime(),i))-a}function o(){return i}var i=(new Date).getTime(),a=i,c=t(30);e.exports=r,e.exports.offset=a,e.exports.getLastTimestamp=o},{}],23:[function(t,e,n){function r(t){return!(!t||!t.protocol||"file:"===t.protocol)}e.exports=r},{}],24:[function(t,e,n){function r(t,e){var n=t.getEntries();n.forEach(function(t){"first-paint"===t.name?d("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&d("timing",["fcp",Math.floor(t.startTime)])})}function o(t,e){var n=t.getEntries();n.length>0&&d("lcp",[n[n.length-1]])}function i(t){t.getEntries().forEach(function(t){t.hadRecentInput||d("cls",[t])})}function a(t){if(t instanceof h&&!v){var e=Math.round(t.timeStamp),n={type:t.type};e<=p.now()?n.fid=p.now()-e:e>p.offset&&e<=Date.now()?(e-=p.offset,n.fid=p.now()-e):e=p.now(),v=!0,d("timing",["fi",e,n])}}function c(t){d("pageHide",[p.now(),t])}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var s,u,f,d=t("handle"),p=t("loader"),l=t(27),h=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){s=new PerformanceObserver(r);try{s.observe({entryTypes:["paint"]})}catch(m){}u=new PerformanceObserver(o);try{u.observe({entryTypes:["largest-contentful-paint"]})}catch(m){}f=new PerformanceObserver(i);try{f.observe({type:"layout-shift",buffered:!0})}catch(m){}}if("addEventListener"in document){var v=!1,w=["click","keydown","mousedown","pointerdown","touchstart"];w.forEach(function(t){document.addEventListener(t,a,!1)})}l(c)}},{}],25:[function(t,e,n){function r(){function t(){return e?15&e[n++]:16*Math.random()|0}var e=null,n=0,r=window.crypto||window.msCrypto;r&&r.getRandomValues&&(e=r.getRandomValues(new Uint8Array(31)));for(var o,i="xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",a="",c=0;c<i.length;c++)o=i[c],"x"===o?a+=t().toString(16):"y"===o?(o=3&t()|8,a+=o.toString(16)):a+=o;return a}function o(){return a(16)}function i(){return a(32)}function a(t){function e(){return n?15&n[r++]:16*Math.random()|0}var n=null,r=0,o=window.crypto||window.msCrypto;o&&o.getRandomValues&&Uint8Array&&(n=o.getRandomValues(new Uint8Array(31)));for(var i=[],a=0;a<t;a++)i.push(e().toString(16));return i.join("")}e.exports={generateUuid:r,generateSpanId:o,generateTraceId:i}},{}],26:[function(t,e,n){function r(t,e){if(!o)return!1;if(t!==o)return!1;if(!e)return!0;if(!i)return!1;for(var n=i.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var o=null,i=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var c=navigator.userAgent,s=c.match(a);s&&c.indexOf("Chrome")===-1&&c.indexOf("Chromium")===-1&&(o="Safari",i=s[1])}e.exports={agent:o,version:i,match:r}},{}],27:[function(t,e,n){function r(t){function e(){t(a&&document[a]?document[a]:document[o]?"hidden":"visible")}"addEventListener"in document&&i&&document.addEventListener(i,e,!1)}e.exports=r;var o,i,a;"undefined"!=typeof document.hidden?(o="hidden",i="visibilitychange",a="visibilityState"):"undefined"!=typeof document.msHidden?(o="msHidden",i="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(o="webkitHidden",i="webkitvisibilitychange",a="webkitVisibilityState")},{}],28:[function(t,e,n){function r(t,e){var n=[],r="",i=0;for(r in t)o.call(t,r)&&(n[i]=e(r,t[r]),i+=1);return n}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],29:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(o<0?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=r},{}],30:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,e,n){function r(){}function o(t){function e(t){return t&&t instanceof r?t:t?u(t,s,a):a()}function n(n,r,o,i,a){if(a!==!1&&(a=!0),!l.aborted||i){t&&a&&t(n,r,o);for(var c=e(o),s=m(n),u=s.length,f=0;f<u;f++)s[f].apply(c,r);var p=d[y[n]];return p&&p.push([x,n,r,c]),c}}function i(t,e){g[t]=m(t).concat(e)}function h(t,e){var n=g[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function m(t){return g[t]||[]}function v(t){return p[t]=p[t]||o(n)}function w(t,e){f(t,function(t,n){e=e||"feature",y[n]=e,e in d||(d[e]=[])})}var g={},y={},x={on:i,addEventListener:i,removeEventListener:h,emit:n,get:v,listeners:m,context:e,buffer:w,abort:c,aborted:!1};return x}function i(t){return u(t,s,a)}function a(){return new r}function c(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var s="nr@context",u=t("gos"),f=t(28),d={},p={},l=e.exports=o();e.exports.getOrSetContext=i,l.backlog=d},{}],gos:[function(t,e,n){function r(t,e,n){if(o.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[e]=r,r}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){o.buffer([t],r),o.emit(t,e,n)}var o=t("ee").get("handle");e.exports=r,r.ee=o},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!E++){var t=b.info=NREUM.info,e=l.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return u.abort();s(y,function(e,n){t[e]||(t[e]=n)});var n=a();c("mark",["onload",n+b.offset],null,"api"),c("timing",["load",n]);var r=l.createElement("script");r.src="https://"+t.agent,e.parentNode.insertBefore(r,e)}}function o(){"complete"===l.readyState&&i()}function i(){c("mark",["domContent",a()+b.offset],null,"api")}var a=t(22),c=t("handle"),s=t(28),u=t("ee"),f=t(26),d=t(23),p=window,l=p.document,h="addEventListener",m="attachEvent",v=p.XMLHttpRequest,w=v&&v.prototype;if(d(p.location)){NREUM.o={ST:setTimeout,SI:p.setImmediate,CT:clearTimeout,XHR:v,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var g=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-spa-1208.min.js"},x=v&&w&&w[h]&&!/CriOS/.test(navigator.userAgent),b=e.exports={offset:a.getLastTimestamp(),now:a,origin:g,features:{},xhrWrappable:x,userAgent:f};t(19),t(24),l[h]?(l[h]("DOMContentLoaded",i,!1),p[h]("load",r,!1)):(l[m]("onreadystatechange",o),p[m]("onload",r)),c("mark",["firstbyte",a.getLastTimestamp()],null,"api");var E=0}},{}],"wrap-function":[function(t,e,n){function r(t,e){function n(e,n,r,s,u){function nrWrapper(){var i,a,f,p;try{a=this,i=d(arguments),f="function"==typeof r?r(i,a):r||{}}catch(l){o([l,"",[i,a,s],f],t)}c(n+"start",[i,a,s],f,u);try{return p=e.apply(a,i)}catch(h){throw c(n+"err",[i,a,h],f,u),h}finally{c(n+"end",[i,a,p],f,u)}}return a(e)?e:(n||(n=""),nrWrapper[p]=e,i(e,nrWrapper,t),nrWrapper)}function r(t,e,r,o,i){r||(r="");var c,s,u,f="-"===r.charAt(0);for(u=0;u<e.length;u++)s=e[u],c=t[s],a(c)||(t[s]=n(c,f?s+r:r,o,s,i))}function c(n,r,i,a){if(!h||e){var c=h;h=!0;try{t.emit(n,r,i,e,a)}catch(s){o([s,n,r,i],t)}h=c}}return t||(t=f),n.inPlace=r,n.flag=p,n}function o(t,e){e||(e=f);try{e.emit("internal-error",t)}catch(n){}}function i(t,e,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(t);return r.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(i){o([i],n)}for(var a in t)l.call(t,a)&&(e[a]=t[a]);return e}function a(t){return!(t&&t instanceof Function&&t.apply&&!t[p])}function c(t,e){var n=e(t);return n[p]=t,i(t,n,f),n}function s(t,e,n){var r=t[e];t[e]=c(r,n)}function u(){for(var t=arguments.length,e=new Array(t),n=0;n<t;++n)e[n]=arguments[n];return e}var f=t("ee"),d=t(29),p="nr@original",l=Object.prototype.hasOwnProperty,h=!1;e.exports=r,e.exports.wrapFunction=c,e.exports.wrapInPlace=s,e.exports.argsToArray=u},{}]},{},["loader",2,16,5,3,4]);</script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+	
+	<!-- If you're reading this, we need your help building back better. https://usds.gov/ -->
+
+	<title>The White House</title>
+	<meta name="description" content="Learn how the Biden-Harris Administration is tackling our nation’s challenges and building our country back better from this crisis." />
+	<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+	<link rel="canonical" href="https://www.whitehouse.gov/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="The White House" />
+	<meta property="og:description" content="Learn how the Biden-Harris Administration is tackling our nation’s challenges and building our country back better from this crisis." />
+	<meta property="og:url" content="https://www.whitehouse.gov/" />
+	<meta property="og:site_name" content="The White House" />
+	<meta property="article:publisher" content="https://www.facebook.com/WhiteHouse/" />
+	<meta property="article:modified_time" content="2021-01-17T19:18:27+00:00" />
+	<meta property="og:image" content="https://www.whitehouse.gov/wp-content/uploads/2021/01/wh_social-share.png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="@whitehouse" />
+	<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.whitehouse.gov/#organization","name":"The White House","url":"https://www.whitehouse.gov/","sameAs":["https://www.facebook.com/WhiteHouse/","https://www.instagram.com/whitehouse/","https://www.youtube.com/whitehouse","https://twitter.com/whitehouse"],"logo":{"@type":"ImageObject","@id":"https://www.whitehouse.gov/#logo","inLanguage":"en-US","url":"https://www.whitehouse.gov/wp-content/uploads/2021/01/cropped-cropped-wh_favicon.png","width":512,"height":512,"caption":"The White House"},"image":{"@id":"https://www.whitehouse.gov/#logo"}},{"@type":"WebSite","@id":"https://www.whitehouse.gov/#website","url":"https://www.whitehouse.gov/","name":"The White House","description":"","publisher":{"@id":"https://www.whitehouse.gov/#organization"},"potentialAction":[{"@type":"SearchAction","target":"https://www.whitehouse.gov/?s={search_term_string}","query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"WebPage","@id":"https://www.whitehouse.gov/#webpage","url":"https://www.whitehouse.gov/","name":"The White House","isPartOf":{"@id":"https://www.whitehouse.gov/#website"},"about":{"@id":"https://www.whitehouse.gov/#organization"},"datePublished":"2021-01-13T18:18:46+00:00","dateModified":"2021-01-17T19:18:27+00:00","description":"Learn how the Biden-Harris Administration is tackling our nation\u2019s challenges and building our country back better from this crisis.","inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.whitehouse.gov/"]}]}]}</script>
+
+
+	<link rel="preload" href="https://www.whitehouse.gov/wp-content/themes/whitehouse/assets/fonts/Decimal-Book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+	<link rel="preload" href="https://www.whitehouse.gov/wp-content/themes/whitehouse/assets/fonts/Decimal-Semibold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+	<link rel="preload" href="https://www.whitehouse.gov/wp-content/themes/whitehouse/assets/fonts/Decimal-Medium_Web.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+	<link rel="preload" href="https://www.whitehouse.gov/wp-content/themes/whitehouse/assets/fonts/Decimal-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+	<link rel="preload" href="https://www.whitehouse.gov/wp-content/themes/whitehouse/assets/fonts/MercuryTextG2-Semibold-Pro_Web.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+	<link rel="preload" href="https://www.whitehouse.gov/wp-content/themes/whitehouse/assets/fonts/MercurySSm-Book-Pro_Web.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+	<link rel="preload" href="https://www.whitehouse.gov/wp-content/themes/whitehouse/assets/fonts/MercurySSm-Bold-Pro_Web.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel='stylesheet' id='wp-block-library-css'  href='https://www.whitehouse.gov/wp-includes/css/dist/block-library/style.min.css?ver=5.6.2' type='text/css' media='all' />
+<link rel='stylesheet' id='theme_css-css'  href='https://www.whitehouse.gov/wp-content/themes/whitehouse/assets/css/style.min.css?ver=7595b81.1615300361' type='text/css' media='all' />
+<link rel="alternate" hreflang="es-MX" href="https://www.whitehouse.gov/es/"><link rel="alternate" hreflang="en-US" href="https://www.whitehouse.gov/"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="apple-mobile-web-app-title" content="The White House">
+<meta name="application-name" content="The White House">
+		<style type="text/css" id="wp-custom-css">
+			.body-content .font-signature table td {font-family:MercurySSm-Book-Pro_Web,serif !important; font-size:16px;}		</style>
+		<script>/*bundle-header.js*/(function(){var e=document.documentElement,n=e.style;e.className=e.className.replace("no-js","js");var t=function(){return n.setProperty("--vh","".concat(.01*window.innerHeight,"px"))};t(),window.setVHUnit=t,window.llItems=[]})()</script>
+
+	<!-- We participate in the US government's analytics program. See the data at analytics.usa.gov. -->
+	<script async src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=EOP" id="_fed_an_ua_tag"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-12099831-10"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'UA-12099831-10');
+	window.gtag_id = 'UA-12099831-10';
+	</script>
+	<link rel="preconnect" href="https://s.go-mpulse.net">
+
+                          <script>!function(a){var e="https://s.go-mpulse.net/boomerang/",t="addEventListener";if("False"=="True")a.BOOMR_config=a.BOOMR_config||{},a.BOOMR_config.PageParams=a.BOOMR_config.PageParams||{},a.BOOMR_config.PageParams.pci=!0,e="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="2HLG7-AJR3H-5NUAK-82W8H-ZYXA7",function(){function n(e){a.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!a.BOOMR||!a.BOOMR.version&&!a.BOOMR.snippetExecuted){a.BOOMR=a.BOOMR||{},a.BOOMR.snippetExecuted=!0;var i,_,o,r=document.createElement("iframe");if(a[t])a[t]("load",n,!1);else if(a.attachEvent)a.attachEvent("onload",n);r.src="javascript:void(0)",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="width:0;height:0;border:0;display:none;",o=document.getElementsByTagName("script")[0],o.parentNode.insertBefore(r,o);try{_=r.contentWindow.document}catch(O){i=document.domain,r.src="javascript:var d=document.open();d.domain='"+i+"';void(0);",_=r.contentWindow.document}_.open()._l=function(){var a=this.createElement("script");if(i)this.domain=i;a.id="boomr-if-as",a.src=e+"2HLG7-AJR3H-5NUAK-82W8H-ZYXA7",BOOMR_lstart=(new Date).getTime(),this.body.appendChild(a)},_.write("<bo"+'dy onload="document._l();">'),_.close()}}(),"".length>0)if(a&&"performance"in a&&a.performance&&"function"==typeof a.performance.setResourceTimingBufferSize)a.performance.setResourceTimingBufferSize();!function(){if(BOOMR=a.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var e=""=="true"?1:0,t="",n="eyaqmragqbd4ajqacqdoqaadqjqe7hfq-f-1a3840882-clienttons-s.akamaihd.net",i={"ak.v":"30","ak.cp":"1136160","ak.ai":parseInt("689495",10),"ak.ol":"0","ak.cr":20,"ak.ipv":6,"ak.proto":"http/1.1","ak.rid":"1f33d6b5","ak.r":34266,"ak.a2":e,"ak.m":"dscb","ak.n":"essl","ak.bpcip":"2601:644:680:47c0::","ak.cport":54408,"ak.gh":"184.26.53.134","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.csrc":"-","ak.acc":"reno","ak.t":"1615830192","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==dxPzctjD0Zle71OJFVqJvGKGJhg4Y85DngU0+dHCqPtgsbxq5+wLlPYY4pFSdPV5NPtQShLf8/AKIRsMAEnLk4P43cqjzDv1hwyCeQqeqbtVOtkh8AjOdFRhrPf1yznGeSufR+711IyuJspmd5wUPqAtmH7ju/ErJOLtaEhRoIzsedCaPgUfP3JpebktnBkTGpmOkmvPyUWDeWcqyEEHVhzd4TRo57yKpZXW1xI7fYRCbLatXa46fc0GDEwI2JQ/u2oaSR6c1QchxIklGr5UboY6vT7C/o0zFHlSvpDUDzbZsd1xMIANcVTG++QV1E8i4OWHFlgnnFgHMM+JxGKdIiRvb5L0UGfGMeO80KOsh8TqTt/JBgNnRSphisvq8aUxgouSUrNn7/Rrac/ngx9P7cwPqK2xLgbgOWoeJFf6+kw=","ak.pv":"1","ak.dpoabenc":""};if(""!==t)i["ak.ruds"]=t;var _={i:!1,av:function(e){var t="http.initiator";if(e&&(!e[t]||"spa_hard"===e[t]))i["ak.feo"]=void 0!==a.aFeoApplied?1:0,BOOMR.addVar(i)},rv:function(){var a=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.r","ak.acc","ak.t"];BOOMR.removeVar(a)}};BOOMR.plugins.AK={akVars:i,akDNSPreFetchDomain:n,init:function(){if(!_.i){var a=BOOMR.subscribe;a("before_beacon",_.av,null,null),a("onbeacon",_.rv,null,null),_.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="home page-template-default page page-id-619 wp-embed-responsive no-con no-font"><script>
+if ((document.cookie.match('(^|; )contrast-cookie=([^;]*)') || 0)[2] === 'true') {
+	document.body.className = document.body.className.replace(' no-con', '');
+	document.body.className += ' accessibility__contrast';
+}
+if ((document.cookie.match('(^|; )font-size-cookie=([^;]*)') || 0)[2] === 'true') {
+	document.body.className = document.body.className.replace(' no-font', '');
+	document.body.className += ' accessibility__fontsize';
+}
+</script>
+
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	
+<div class="acctoggle" role="toolbar" aria-label="High Contrast and Font Size Options">
+	<noscript>
+		<span class="sr-only">You have JavaScript disabled. Please enable JavaScript to use this feature.</span>
+	</noscript>
+	<div class="acctoggle__ctrl">
+		<div class="tool">
+			<span>Toggle High Contrast</span>
+		</div>
+		<button class="acctoggle__contrast">
+			
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.7 28.7" role="img" aria-labelledby="high-contrast-svg-title">
+	<title id="high-contrast-svg-title">
+		Toggle High Contrast	</title>
+	<path d="M14.3 0C6.5 0 0 6.5 0 14.3c0 7.9 6.5 14.3 14.3 14.3 7.9 0 14.3-6.5 14.3-14.3C28.7 6.5 22.2 0 14.3 0zm0 3.6c6 0 10.8 4.8 10.8 10.8 0 6-4.8 10.8-10.8 10.8V3.6z"/>
+</svg>
+		</button>
+	</div>
+	<div class="acctoggle__ctrl">
+		<div class="tool">
+			<span>Toggle Large Font Size</span>
+		</div>
+		<button class="acctoggle__fontsize">
+			
+<svg viewBox="0 0 24 19" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="large-font-svg-title">
+<title id="large-font-svg-title">
+	Toggle Large Font Size</title>
+<path d="M10.667 2.637v15.825H8V2.637H0V0h18.667v2.637h-8zM24 9.231h-9.333v2.637H18v6.594h2.667v-6.594H24V9.231z" fill="currentColor"/>
+</svg>
+		</button>
+	</div>
+</div>
+<div class="alert-bar"></div>
+<script>
+(function(opts){!function(e){"function"==typeof define&&define.amd?define("bundleActionnetworkLabels",e):e()}((function(){"use strict";opts||(opts={liveNow:"Live Now",route:"/live.json",link:"/live/"});var e=function(e){var t=document.createElement("div");t.className="alert-bar has-link ready-to-alert alert-bar--is-simple alert-bar--is-live",t.innerHTML='\n <div class="container-fluid">\n <a class="alert-bar__simple__link" href="'.concat(opts.link,'">\n <span class="screen-reader-text">').concat(opts.liveNow?opts.liveNow:"Live Now",": ").concat(e.title,'</span>\n </a>\n <p><span aria-hidden="true">').concat(opts.liveNow?opts.liveNow:"Live Now",": ").concat(e.title,"</span></p>\n </div>\n ");var n=document.querySelector(".alert-bar");if(n)n.parentNode.replaceChild(t,n);else{var o=document.querySelector("#page");o?o.parentNode.insertBefore(t,o):document.body.insertBefore(t,document.body.firstChild)}},t=function(t){var n=new XMLHttpRequest;n.open("GET",opts.route),n.setRequestHeader("Accept","application/json"),t&&n.setRequestHeader("If-Modified-Since",new Date(t).toGMTString()),n.onload=function(){var t;try{t=JSON.parse(n.responseText)}catch(e){return}e(t),sessionStorage.setItem("live",n.responseText)},n.send()};if(sessionStorage.liveTimestamp&&sessionStorage.live){try{var n=JSON.parse(sessionStorage.live);e(n)}catch(e){}if(sessionStorage.liveTimestamp){var o=Number(sessionStorage.liveTimestamp);Date.now()-o>6e4&&t(o)}}else t()}));})({"liveNow":"Live Now","link":"https:\/\/www.whitehouse.gov\/live\/","route":"https:\/\/www.whitehouse.gov\/live.json"} );
+</script>
+<div id="page" class="site-wrap">
+
+	<header id="masthead" data-js-social-hide class="site-header sticky-header cond-front">
+<div class="site-header__inner">
+	<div class="container-fluid">
+
+		<div class="row site-header__row justify-content-between align-items-stretch">
+			<div class="site-header__item site-header__main-logo">
+				<a class="site-header__item_inner" href="https://www.whitehouse.gov/" rel="home">
+					<div class="desktop__logo">
+						<span>The White House</span>
+					</div>
+					<div class="mobile__logo">
+						<span class="screen-reader-text">The White House</span>
+						
+<svg version="1.1" id="wh-gov-604f9728af926" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1231 180" style="enable-background:new 0 0 1231 180;" xml:space="preserve">
+<g>
+	<g class="st0">
+		<path d="M200.9,126h1.5l30-102.8l-18.7-9V4.5h60.7v9.7l-21.7,10.5L200.9,177h-22.5l-39-113.3H138L94.5,177H72L23.2,21.8L0,14.3
+			V4.5h86.2v9l-20.2,6l30,107.3h0.7l33.7-90l-6-15.8l-18-7.5v-9h80.2v9l-20.2,6.8L200.9,126z"/>
+		<path d="M446.1,21l-22.5-6V4.5h88.5V15l-25.5,6v138.8l25.5,6v9.8h-88.5v-9.8l22.5-6V96h-72v63.8l22.5,6v9.8h-88.5v-9.8l25.5-6V21
+			l-25.5-6V4.5h89.2V15l-22.5,6v57.8h72V21H446.1z"/>
+		<path d="M577.3,180c-9.7,0-17.2-7.5-17.2-17.2c0-9,7.5-17.2,17.2-17.2c9.7,0,17.2,7.5,17.2,17.2C594.5,171.7,587,180,577.3,180z"
+			/>
+		<path d="M770.7,57.8c-16.5-31.5-32.2-45-56.2-45c-27.7,0-51.7,24.8-51.7,74.2c0,51,24.7,77.2,60.7,77.2c13.5,0,22.5-3.8,32.2-9
+			v-43.5l-25.5-6V96h74.2v9.8l-22.5,6v66l-8.2,1.5l-13.5-13.5c-13.5,8.2-27,13.5-47.2,13.5c-46.5,0-83.2-33-83.2-86.2
+			c0-51.8,38.2-92.2,89.2-92.2c16.5,0,30,3.8,40.5,9l8.2-9.8h9l1.5,57L770.7,57.8z"/>
+		<path d="M931.9,179.3c-54,0-83.2-41.2-83.2-89.3c0-48,33-89.2,84.7-89.2c54,0,83.2,41.2,83.2,89.2
+			C1016.6,138.8,982.9,179.3,931.9,179.3z M929.7,12c-24.7,0-49.5,18-49.5,78c0,60,28.5,78,55.5,78c24.7,0,49.5-24.8,49.5-78
+			C985.2,36.8,956.7,12,929.7,12z"/>
+		<path d="M1146.3,177h-13.5l-60.7-155.3l-24.7-6.8V4.5h81v9.7l-26.2,6l45,121.5l45-119.3l-20.2-7.5V4.5h59.2v9.7l-22.5,7.5
+			L1146.3,177z"/>
+	</g>
+</g>
+</svg>
+					</div>
+				</a>
+			</div><!-- main-logo -->
+			<div class="center-logo">
+				<a class="" href="https://www.whitehouse.gov/" rel="home">
+					<span class="screen-reader-text">The White House</span>
+					<svg id="wh-oval-604f9728af97b" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 343 243" style="enable-background:new 0 0 343 243;" xml:space="preserve">
+<style type="text/css">
+	#wh-oval-604f9728af97b .st0{fill:#0A2458;}
+	#wh-oval-604f9728af97b .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
+	#wh-oval-604f9728af97b .st2{opacity:0.5;fill:#FFFFFF;}
+	#wh-oval-604f9728af97b .st3{fill:#FFFFFF;}
+</style>
+<g>
+	<ellipse class="st0" cx="171.5" cy="121.5" rx="168.6" ry="118.7"/>
+	<path class="st1" d="M171.5,229.5c87.3,0,158-48.4,158-108s-70.7-108-158-108s-158,48.4-158,108S84.2,229.5,171.5,229.5z
+		 M290.8,209c-31.1,21.3-73.3,34-119.3,34s-88.2-12.7-119.3-34C21.1,187.8,0,157.1,0,121.5S21.1,55.2,52.2,34
+		C83.3,12.7,125.5,0,171.5,0s88.2,12.7,119.3,34c31,21.2,52.2,51.9,52.2,87.5S321.8,187.8,290.8,209z"/>
+</g>
+<g>
+	<g>
+		<rect x="168.3" y="134.4" class="st2" width="2.7" height="8.5"/>
+		<rect x="168.3" y="143.9" class="st2" width="2.7" height="8.5"/>
+		<rect x="172" y="143.9" class="st2" width="2.7" height="8.5"/>
+		<rect x="172" y="134.4" class="st2" width="2.7" height="8.4"/>
+		<path class="st2" d="M212.5,92.7h-81.9c-0.6,0-1.1,0.5-1.1,1.1v66c0,0.6,0.5,1.1,1.1,1.1h81.8c0.7,0,1.2-0.5,1.2-1.2v-66
+			C213.6,93.2,213.1,92.7,212.5,92.7z M191.8,118.7c0-0.2,0.1-0.2,0.2-0.3c0.2-0.2,0.4-0.7,0.4-1.2v-7.2c0-0.4-0.2-0.8-0.4-1.2
+			c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.2-0.1,0.2-0.2,0.3
+			c-0.2,0.3-0.4,0.7-0.4,1.2v7.1c0,0.4,0.2,0.8,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+			c-0.2,0-0.3-0.2-0.3-0.3V118.7z M166.6,118.7c0-0.2,0.1-0.2,0.2-0.3c0.2-0.2,0.4-0.7,0.4-1.2v-7.1c0-0.4-0.2-0.8-0.4-1.2
+			c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.2-0.1,0.2-0.2,0.3
+			c-0.2,0.2-0.4,0.7-0.4,1.2v7.2c0,0.4,0.2,0.8,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+			c-0.2,0-0.3-0.2-0.3-0.3V118.7z M141.5,118.7c0-0.2,0.1-0.2,0.2-0.3c0.2-0.2,0.4-0.7,0.4-1.2v-7.1c0-0.4-0.2-0.8-0.4-1.2
+			c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.2-0.1,0.2-0.2,0.3
+			c-0.2,0.2-0.4,0.7-0.4,1.2v7.2c0,0.4,0.2,0.8,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+			c-0.2,0-0.3-0.2-0.3-0.3V118.7z M151.3,131.9c0,0.2-0.1,0.2-0.2,0.3c-0.2,0.2-0.4,0.7-0.4,1.2v8.7c0,0.4,0.2,0.8,0.4,1.2
+			c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.2,0.1-0.2,0.2-0.3
+			c0.2-0.2,0.4-0.7,0.4-1.2v-8.7c0-0.4-0.2-0.8-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1
+			c0.2,0,0.3,0.2,0.3,0.3V131.9z M151.8,127.9c-0.1,0.2-0.2,0.2-0.2,0.2h-10c-0.2,0-0.3-0.1-0.4-0.2c-0.1-0.2-0.1-0.4,0.1-0.5
+			c1.5-1.2,3.3-1.9,5.2-1.9c1.9,0,3.7,0.7,5.2,1.9C151.8,127.5,151.9,127.7,151.8,127.9z M176.3,154.1c-3.2,0-6.4,0-9.6,0
+			c-0.2,0-0.5-0.2-0.5-0.5c0-6.9,0-13.7,0-20.7c0.1-6.9,10.4-6.9,10.5,0c0,6.9,0,13.7,0.1,20.7C176.8,153.9,176.5,154.1,176.3,154.1
+			z M201.5,131.9c0,0.2-0.1,0.2-0.2,0.3c-0.2,0.2-0.4,0.7-0.4,1.2v8.7c0,0.4,0.2,0.8,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2
+			c0,0.2-0.2,0.3-0.3,0.3h-9.1c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.2,0.1-0.2,0.2-0.3c0.2-0.2,0.4-0.7,0.4-1.2v-8.7
+			c0-0.4-0.2-0.8-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3V131.9z M202,127.9
+			c-0.1,0.2-0.2,0.2-0.2,0.2h-10c-0.2,0-0.3-0.1-0.4-0.2c-0.1-0.2-0.1-0.4,0.1-0.5c1.5-1.2,3.3-1.9,5.2-1.9c1.9,0,3.7,0.7,5.2,1.9
+			C202,127.5,202.1,127.7,202,127.9z"/>
+	</g>
+	<path class="st3" d="M192.6,72.3l2.4,1h20.3l0.8-1.1c0.2-0.2,0-0.4-0.2-0.4h-23.2C192.4,71.8,192.3,72.3,192.6,72.3z"/>
+	<path class="st3" d="M222.2,79.1v3.1c0,0.2,0.2,0.4,0.3,0.4h7.2c0.2,0,0.3-0.2,0.4-0.4v-3.1l1.2-1.7c0.2-0.2,0-0.6-0.2-0.6h-10
+		c-0.3,0-0.5,0.3-0.2,0.6L222.2,79.1z"/>
+	<path class="st3" d="M215.1,166.4h-40h-7.3h-39.9c-0.2,0-0.5,0.2-0.5,0.5v3.7c0,0.2,0.2,0.5,0.5,0.5h40h7.3h40
+		c0.2,0,0.5-0.2,0.5-0.5v-3.7C215.6,166.6,215.4,166.4,215.1,166.4z"/>
+	<path class="st3" d="M197.3,74.3l17.5,6.8c0.2,0.1,0.4-0.1,0.4-0.2v-2.1c0-0.1,0-0.1-0.1-0.2l-0.3-0.5c0-0.1-0.1-0.1-0.1-0.2v-3.7
+		L197.3,74.3L197.3,74.3z"/>
+	<path class="st3" d="M127.7,73.3H148l2.4-1c0.2-0.1,0.2-0.5-0.1-0.5h-23.2c-0.2,0-0.3,0.2-0.2,0.4L127.7,73.3z"/>
+	<path class="st3" d="M112.8,79.1v3.1c0,0.2,0.2,0.4,0.4,0.4h7.2c0.2,0,0.3-0.2,0.3-0.4v-3.1l1.2-1.7c0.2-0.2,0-0.6-0.2-0.6h-10
+		c-0.3,0-0.5,0.3-0.2,0.6L112.8,79.1z"/>
+	<path class="st3" d="M293.8,153.5h-79.4c-0.2-0.7-0.5-1.3-0.7-2h-7.8c-0.2,0-0.4,0.2-0.5,0.4c-0.2,0.6-0.4,1.2-0.7,1.8
+		c-0.2,0.6-0.6,1.2-1,1.7v3.2h-14.1v-3.2c-0.7-1.2-1.2-2.3-1.6-3.6c-0.1-0.2-0.2-0.4-0.5-0.4H180c-0.2,0-0.4,0.2-0.5,0.4
+		c-0.3,1.2-0.8,2.4-1.6,3.6v3.2h-5h-2.7h-5v-3.2c-0.7-1.1-1.2-2.3-1.6-3.6c-0.1-0.2-0.2-0.4-0.5-0.4h-7.5c-0.2,0-0.4,0.2-0.5,0.4
+		c-0.3,1.2-0.9,2.4-1.6,3.6v3.2h-14.1v-3.2c-0.3-0.6-0.7-1.2-1-1.7c-0.2-0.6-0.5-1.2-0.7-1.8c-0.1-0.2-0.2-0.4-0.5-0.4h-7.8
+		c-0.2,0.7-0.4,1.3-0.7,2H49.2c-0.4,0-0.7,0.3-0.7,0.7v6.8c0,0.4,0.3,0.7,0.7,0.7h78.2v2.6c0,0.4,0.3,0.7,0.7,0.7h42.1h2.7H215
+		c0.4,0,0.7-0.3,0.7-0.7v-2.6h78.2c0.4,0,0.7-0.3,0.7-0.7v-6.8C294.5,153.9,294.2,153.5,293.8,153.5z"/>
+	<path class="st3" d="M128.2,78.3l-0.3,0.5c0,0.1-0.1,0.1-0.1,0.2v2.1c0,0.2,0.2,0.3,0.4,0.2l17.5-6.8h-17.4L128.2,78.3
+		C128.3,78.2,128.3,78.2,128.2,78.3z"/>
+	<path class="st3" d="M187.5,107.8c0-0.2,0-0.5,0-0.7c0-3.7,0-7.1,0-7.1c0.2-1.2,0.5-2.3,1-3.5H179c0.5,1.1,0.8,2.2,1,3.5V119v3.8
+		v26.5v0.1c0,0.4,0.3,0.7,0.7,0.7h6.2c0.4,0,0.7-0.3,0.7-0.7c0,0,0-26.1,0-40.4C187.5,108.6,187.5,108.2,187.5,107.8z"/>
+	<path class="st3" d="M163.1,105.6c0.2-6.7,0.5-7.8,1-9h-9.6c0.5,1.1,0.8,2.2,1,3.5c0,0,0,1.1,0,3c0,14.2,0,46.4,0,46.4
+		c0,0.4,0.3,0.7,0.7,0.7h6.2c0.4,0,0.7-0.3,0.7-0.7v-0.1v-27v-3.3L163.1,105.6L163.1,105.6z"/>
+	<path class="st3" d="M56.4,87.7c0-0.3,0.3-0.7,0.7-0.7h11.6c0.4,0,0.7,0.2,0.7,0.7v2.9c0,0.3-0.3,0.7-0.7,0.7H57.1
+		c-0.4,0-0.7-0.2-0.7-0.7V87.7z M75.2,87.7c0-0.3,0.3-0.7,0.7-0.7h11.6c0.4,0,0.7,0.2,0.7,0.7v2.9c0,0.3-0.3,0.7-0.7,0.7H75.8
+		c-0.4,0-0.7-0.2-0.7-0.7L75.2,87.7L75.2,87.7z M93.9,87.7c0-0.3,0.3-0.7,0.7-0.7h11.6c0.4,0,0.7,0.2,0.7,0.7v2.9
+		c0,0.3-0.3,0.7-0.7,0.7H94.6c-0.4,0-0.7-0.2-0.7-0.7V87.7z M112.6,87.7c0-0.3,0.3-0.7,0.7-0.7h13.5c0.4,0,0.7,0.2,0.7,0.7v1.9h87.8
+		v-1.8c0-0.3,0.3-0.7,0.7-0.7h13.5c0.4,0,0.7,0.2,0.7,0.7v2.9c0,0.3-0.3,0.7-0.7,0.7H113.3c-0.4,0-0.7-0.2-0.7-0.7V87.7z M135,83.7
+		l36.5-14.7L208,83.7h-6.1l-15.2-6.1l-15.2-6.1l-15.2,6.1L141,83.7H135z M236.1,87.7c0-0.3,0.3-0.7,0.7-0.7h11.6
+		c0.4,0,0.7,0.2,0.7,0.7v2.9c0,0.3-0.3,0.7-0.7,0.7h-11.6c-0.4,0-0.7-0.2-0.7-0.7V87.7z M254.8,87.7c0-0.3,0.3-0.7,0.7-0.7h11.6
+		c0.4,0,0.7,0.2,0.7,0.7v2.9c0,0.3-0.3,0.7-0.7,0.7h-11.6c-0.4,0-0.7-0.2-0.7-0.7V87.7z M273.6,87.7c0-0.3,0.3-0.7,0.7-0.7h11.6
+		c0.4,0,0.7,0.2,0.7,0.7v2.9c0,0.3-0.3,0.7-0.7,0.7h-11.6c-0.4,0-0.7-0.2-0.7-0.7V87.7z M218.5,127.6l5.2-2.2c0.1,0,0.1,0,0.2,0
+		s0.1,0,0.2,0l5.2,2.2c0.2,0.1,0.2,0.2,0.2,0.4c0,0.2-0.2,0.2-0.3,0.2h-10.5c-0.2,0-0.3-0.1-0.3-0.2
+		C218.2,127.8,218.3,127.6,218.5,127.6z M219,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.2c0-0.5-0.2-0.9-0.4-1.2
+		c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.1c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3V118.7z M237.3,127.4c0.2-0.2,0.3-0.2,0.5-0.4c1.4-1,3-1.5,4.7-1.5c1.9,0,3.7,0.7,5.2,1.9l0.1,0.1
+		c0.1,0.1,0.1,0.2,0.1,0.3s-0.1,0.2-0.2,0.2c0,0,0,0-0.1,0c0,0,0,0-0.1,0h-0.1h-10c-0.1,0-0.2-0.1-0.2-0.1c-0.1-0.1-0.1-0.1-0.1-0.2
+		C237.2,127.7,237.2,127.5,237.3,127.4z M237.7,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.2c0-0.5-0.2-0.9-0.4-1.2
+		c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.1c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3H238
+		c-0.2,0-0.3-0.2-0.3-0.3V118.7z M255.9,127.6l5.3-2.2c0.1,0,0.1,0,0.2,0h0.1c0,0,0,0,0.1,0l5.2,2.2c0.1,0,0.1,0.1,0.2,0.1
+		c0.1,0.1,0.1,0.2,0.1,0.2c0,0.1-0.1,0.2-0.2,0.2c-0.1,0-0.1,0.1-0.2,0.1h-10.5c-0.1,0-0.2,0-0.2-0.1c-0.1,0-0.1-0.1-0.2-0.2V128
+		C255.7,127.9,255.7,127.7,255.9,127.6z M256.5,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.2c0-0.5-0.2-0.9-0.4-1.2
+		c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.1c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3V118.7z M274.8,127.4c0.2-0.2,0.3-0.2,0.5-0.4c1.4-1,3-1.5,4.7-1.5c1.9,0,3.7,0.7,5.2,1.9l0.1,0.1
+		c0.1,0.1,0.1,0.2,0.1,0.3s-0.1,0.2-0.2,0.2c0,0,0,0-0.1,0c0,0,0,0-0.1,0H285h-10c-0.1,0-0.2-0.1-0.2-0.1c-0.1-0.1-0.1-0.1-0.1-0.2
+		C274.6,127.7,274.7,127.5,274.8,127.4z M275.2,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.2c0-0.5-0.2-0.9-0.4-1.2
+		c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.1c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3V118.7z M284.9,131.9c0,0.1-0.1,0.2-0.2,0.3c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2
+		c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3
+		c0.2-0.3,0.4-0.7,0.4-1.2v-8.7c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1
+		c0.2,0,0.3,0.2,0.3,0.3V131.9z M266.2,131.9c0,0.1-0.1,0.2-0.2,0.3c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2
+		c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3
+		c0.2-0.3,0.4-0.7,0.4-1.2v-8.7c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1
+		c0.2,0,0.3,0.2,0.3,0.3V131.9z M247.4,131.9c0,0.1-0.1,0.2-0.2,0.3c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2
+		c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3H238c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3
+		c0.2-0.3,0.4-0.7,0.4-1.2v-8.7c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1
+		c0.2,0,0.3,0.2,0.3,0.3V131.9z M228.7,131.9c0,0.1-0.1,0.2-0.2,0.3c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2
+		c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3
+		c0.2-0.3,0.4-0.7,0.4-1.2v-8.7c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1
+		c0.2,0,0.3,0.2,0.3,0.3V131.9z M124.4,128.3h-10.5c-0.2,0-0.3-0.1-0.3-0.2c0-0.2,0.1-0.3,0.2-0.4l5.2-2.2c0.1,0,0.1,0,0.2,0
+		c0.1,0,0.1,0,0.2,0l5.2,2.2c0.2,0.1,0.2,0.2,0.2,0.4C124.7,128.2,124.6,128.3,124.4,128.3z M124,131.9c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-8.7c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3
+		v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3V131.9z M105.8,127.9c0,0.1-0.1,0.1-0.1,0.2l-0.1,0.1
+		c-0.1,0-0.1,0.1-0.2,0.1h-10c-0.1,0-0.1,0-0.2-0.1c-0.2-0.1-0.2-0.2-0.2-0.2s0-0.2,0-0.3c0,0,0-0.1,0.1-0.1c0,0,0-0.1,0.1-0.1
+		c0.3-0.3,0.7-0.6,1.2-0.8c0,0,0.1,0,0.1-0.1c1.2-0.7,2.6-1.1,4-1.1c1.9,0,3.7,0.7,5.2,1.9C105.8,127.5,105.9,127.7,105.8,127.9z
+		 M105.3,131.9c0,0.1-0.1,0.2-0.2,0.3c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2
+		c0,0.2-0.2,0.3-0.3,0.3h-9.1c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-8.7
+		c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3V131.9z M87.1,128.2
+		c-0.1,0-0.1,0.1-0.2,0.1H76.4c-0.1,0-0.1,0-0.2,0s-0.2-0.1-0.2-0.2V128c0-0.2,0.1-0.3,0.2-0.4l5.2-2.2c0,0,0,0,0.1,0h0.1
+		c0.1,0,0.1,0,0.2,0l5.2,2.2c0.2,0.1,0.2,0.2,0.2,0.4C87.2,128.1,87.2,128.2,87.1,128.2z M86.6,131.9c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-8.7c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3
+		v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3V131.9z M68.4,127.9c0,0.1-0.1,0.2-0.2,0.2c-0.1,0-0.1,0.1-0.2,0.1H58
+		c0,0,0,0-0.1,0h-0.1c-0.1-0.1-0.2-0.2-0.2-0.2c-0.1-0.2,0-0.3,0.1-0.4c0,0,0,0,0.1-0.1c0.2-0.1,0.2-0.2,0.4-0.3
+		c0.1-0.1,0.2-0.1,0.2-0.2c0.2-0.1,0.2-0.2,0.4-0.2c0.1-0.1,0.2-0.2,0.4-0.2c1.2-0.6,2.4-0.9,3.7-0.9c1.9,0,3.7,0.7,5.2,1.9
+		C68.4,127.5,68.4,127.7,68.4,127.9z M67.8,131.9c0,0.1-0.1,0.2-0.2,0.3c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2
+		c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3
+		c0.2-0.3,0.4-0.7,0.4-1.2v-8.7c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1
+		c0.2,0,0.3,0.2,0.3,0.3V131.9z M58.1,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.1c0-0.5-0.2-0.9-0.4-1.2
+		c-0.1-0.1-0.2-0.2-0.2-0.3v-1.5c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.2c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3L58.1,118.7L58.1,118.7z M76.8,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.1
+		c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.5c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.2c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3V118.7z M95.6,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.1c0-0.5-0.2-0.9-0.4-1.2
+		c-0.1-0.1-0.2-0.2-0.2-0.3v-1.5c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.2c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3V118.7z M114.3,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.1c0-0.5-0.2-0.9-0.4-1.2
+		c-0.1-0.1-0.2-0.2-0.2-0.3v-1.5c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.2c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3V118.7z M49.2,85.9h2.1c0,0,0.1,0,0.1,0.1v8.5c0,0.2,0.2,0.3,0.4,0.3h76.1c0.3,0.6,0.7,1.2,0.9,1.8
+		c-4.8,0-79.5,0-79.5,0c-0.2,0-0.5,0.2-0.5,0.5v2.4c0,0.3,0.2,0.5,0.5,0.5h80.3c0,0,0,0.7,0,2.2H51.6c-0.2,0-0.2,0.1-0.2,0.2v47.7
+		c0.2,0,85.2,0,85.2,0c0.4,0,0.7-0.3,0.7-0.7v-0.1c0-0.4,0.1-48.9,0.1-48.9c0-0.3,0-0.4,0-0.4c0.1-0.9,0.3-1.8,0.6-2.7
+		c0.3-0.9,0.7-1.7,1.2-2.6h29.8h5.2h29.8c0.5,0.8,0.9,1.7,1.2,2.6s0.5,1.7,0.6,2.7c0,0,0,0.2,0,0.4c0,0,0.1,48.5,0.1,48.9v0.1
+		c0,0.4,0.3,0.7,0.7,0.7l83.1-0.1h0.2h1.6c0.2,0,0.2-0.1,0.2-0.2v-47.4c0-0.2-0.1-0.2-0.2-0.2h-78.1c0-1.3,0-2.1,0-2.2h80.3
+		c0.3,0,0.5-0.2,0.5-0.5v-2.4c0-0.2-0.2-0.5-0.5-0.5c0,0-74.7,0-79.5,0c0.2-0.6,0.6-1.2,0.9-1.8h76.2c0.2,0,0.4-0.1,0.4-0.3V86
+		c0,0,0-0.1,0.1-0.1h2.1c0.3,0,0.5-0.2,0.5-0.5v-1.1c0-0.3-0.2-0.5-0.5-0.5H218c-0.3,0-0.7-0.1-1-0.2l-44.7-18.1v-2.9v-0.9
+		c0.9-0.2,2.2-0.5,3.2-0.2c5.1,1.7,6.2,1.1,6.2,1c-0.9-1.2-0.6-3.9-0.6-3.9c0.3-2.4,0.2-2.9,0.2-3c-0.2,0.1-1.6,0.9-5-0.2
+		c-1.8-0.6-3.2-0.7-4-0.8c0-0.5-0.4-0.8-0.9-0.8c-0.4,0.1-0.7,0.4-0.7,0.9v10.7l-44.7,18.1c-0.3,0.2-0.7,0.2-1,0.2H49.2
+		c-0.3,0-0.5,0.2-0.5,0.5v1.1C48.7,85.7,48.9,85.9,49.2,85.9z"/>
+	<polygon class="st3" points="198.6,96.5 171.5,126.9 144.4,96.5 144.4,96.5 144,96.7 171.2,127.3 171.2,127.2 171.7,127.2
+		171.8,127.3 198.9,96.8 198.9,96.7 	"/>
+	<path class="st3" d="M172.3,125.7h-1.7c-0.4,0-0.6,0.3-0.6,0.6v4.8c0,0.4,0.3,0.6,0.6,0.6h1.7c0.4,0,0.6-0.3,0.6-0.6v-4.8
+		C172.9,125.9,172.7,125.7,172.3,125.7z"/>
+</g>
+</svg>
+				</a>
+			</div>
+						<div class="site-header__menu-wrap">
+				<nav
+				class="col primary-menu  over-four-items over-fourty-characters over-fifty-characters"
+				data-itemcount="5"
+				data-textlength="53" aria-label="Primary Navigation"
+				>
+
+					<ul class="mobile-home-link">
+						<li class="navlink">
+							<a aria-current="page" href="https://www.whitehouse.gov">
+								Home							</a>
+						</li>
+					</ul>
+
+					<ul id="primary-navigation" class="row menu site-header__item_inner"><li id="menu-item-61" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-61 navlink top-level-menu-item"><a href="https://www.whitehouse.gov/administration/">Administration</a></li>
+<li id="menu-item-64" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-64 navlink top-level-menu-item"><a href="https://www.whitehouse.gov/priorities/">Priorities</a></li>
+<li id="menu-item-2221" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2221 navlink top-level-menu-item"><a href="https://www.whitehouse.gov/priorities/covid-19/">COVID-19</a></li>
+<li id="menu-item-2787" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2787 navlink top-level-menu-item"><a href="https://www.whitehouse.gov/briefing-room/">Briefing Room</a></li>
+<li id="menu-item-199" class="site-id-2 mlp-language-nav-item menu-item menu-item-type-mlp_language menu-item-object-mlp_language menu-item-199 navlink top-level-menu-item"><a rel="alternate" href="https://www.whitehouse.gov/es/" lang="es-MX">Español</a></li>
+</ul>				</nav>
+
+				<div class="site-header__menu-wrap__footer">
+									<div class="site-header__menu-wrap__footer__social">
+						<nav class="col-xs-12 col-md-6" aria-label="Social Navigation">
+						<ul id="social-navigation-footer" class="social-simple"><li id="menu-item-87" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-87 col-auto top-level-menu-item"><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/whitehouse/" class="external-link"><svg aria-hidden="true" tabindex="-1" viewBox="0 0 21 20" xmlns="http://www.w3.org/2000/svg"><path d="M6.928 6.27c.974-.974 2.148-1.461 3.523-1.461s2.535.487 3.48 1.46c.975.946 1.462 2.106 1.462 3.481s-.487 2.55-1.461 3.523c-.946.946-2.106 1.418-3.48 1.418-1.376 0-2.55-.472-3.524-1.418C5.982 12.3 5.51 11.125 5.51 9.75s.472-2.535 1.418-3.48zm1.246 5.757c.63.63 1.39.946 2.277.946.888 0 1.647-.315 2.277-.946.63-.63.946-1.389.946-2.277 0-.888-.315-1.647-.945-2.277a3.104 3.104 0 00-2.278-.946c-.888 0-1.647.315-2.277.946-.63.63-.945 1.389-.945 2.277 0 .888.315 1.647.945 2.277zM16.38 3.82c.229.2.344.459.344.774s-.115.587-.344.816a.981.981 0 01-.774.344c-.315 0-.587-.115-.816-.344a1.115 1.115 0 01-.344-.816.98.98 0 01.344-.774c.23-.229.501-.343.816-.343.316 0 .573.114.774.343zm3.652 1.977c.029.773.043 2.091.043 3.953 0 1.862-.014 3.18-.043 3.953-.086 1.748-.616 3.108-1.59 4.082-.945.945-2.291 1.447-4.039 1.504-.773.057-2.09.086-3.953.086-1.862 0-3.18-.029-3.953-.086-1.747-.086-3.094-.602-4.039-1.547a4.148 4.148 0 01-.902-1.203 7.057 7.057 0 01-.516-1.332 7.744 7.744 0 01-.129-1.504C.855 12.93.826 11.612.826 9.75c0-1.862.029-3.194.086-3.996.086-1.719.602-3.05 1.547-3.996C3.404.784 4.751.254 6.499.168 7.27.139 8.588.125 10.45.125s3.18.014 3.953.043c1.748.086 3.094.616 4.04 1.59.973.945 1.503 2.291 1.59 4.039zm-2.062 9.625c.086-.23.157-.516.215-.86.057-.372.1-.802.128-1.289.03-.515.043-.93.043-1.246v-1.332-.945-.945-1.332c0-.315-.014-.716-.043-1.203a12.168 12.168 0 00-.128-1.29 4.652 4.652 0 00-.215-.902c-.344-.888-.96-1.504-1.848-1.848a4.654 4.654 0 00-.902-.214c-.344-.058-.774-.1-1.29-.13a21.227 21.227 0 00-1.202-.042H8.174c-.315 0-.73.014-1.246.043-.487.028-.917.071-1.29.129a4.68 4.68 0 00-.859.214c-.888.344-1.504.96-1.847 1.848-.086.23-.158.53-.215.902-.057.344-.1.774-.13 1.29a21.23 21.23 0 00-.042 1.203v5.155c.029.43.057.803.086 1.118a11.384 11.384 0 00.3 1.676c.373.888.989 1.504 1.848 1.848.23.085.516.157.86.214.372.058.802.1 1.289.13.515.028.916.042 1.203.042h4.597c.316 0 .717-.014 1.204-.043.515-.028.945-.071 1.289-.129a4.65 4.65 0 00.902-.215c.888-.372 1.504-.988 1.848-1.847z"/></svg><span class="screen-reader-text">Instagram<span class="screen-reader-text">Opens in a new window</span></span></a></li>
+<li id="menu-item-88" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-88 col-auto top-level-menu-item"><a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/WhiteHouse/" class="external-link"><svg aria-hidden="true" tabindex="-1" viewBox="0 0 11 19" xmlns="http://www.w3.org/2000/svg"><path d="M9.722 10.375H7.086v7.875H3.57v-7.875H.722v-3.27H3.57v-2.46c0-.938.176-1.735.527-2.391A3.454 3.454 0 015.574.777C6.23.426 6.98.25 7.824.25c.375 0 .773.023 1.195.07.422.024.75.059.985.106l.351.035v2.777H8.95c-.656 0-1.137.176-1.441.528-.282.328-.422.738-.422 1.23v2.11h3.129l-.493 3.269z"/></svg><span class="screen-reader-text">Facebook<span class="screen-reader-text">Opens in a new window</span></span></a></li>
+<li id="menu-item-89" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-89 col-auto top-level-menu-item"><a target="_blank" rel="noopener noreferrer" href="https://twitter.com/whitehouse" class="external-link"><svg aria-hidden="true" tabindex="-1" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1684 408q-67 98-162 167 1 14 1 42 0 130-38 259.5T1369.5 1125 1185 1335.5t-258 146-323 54.5q-271 0-496-145 35 4 78 4 225 0 401-138-105-2-188-64.5T285 1033q33 5 61 5 43 0 85-11-112-23-185.5-111.5T172 710v-4q68 38 146 41-66-44-105-115t-39-154q0-88 44-163 121 149 294.5 238.5T884 653q-8-38-8-74 0-134 94.5-228.5T1199 256q140 0 236 102 109-21 205-78-37 115-142 178 93-10 186-50z"/></svg><span class="screen-reader-text">Twitter<span class="screen-reader-text">Opens in a new window</span></span></a></li>
+<li id="menu-item-90" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-90 col-auto top-level-menu-item"><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/whitehouse" class="external-link"><svg aria-hidden="true" tabindex="-1" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.156 1.906a2.126 2.126 0 00-1.5-1.531C14.312 0 9 0 9 0S3.656 0 2.312.375a2.126 2.126 0 00-1.5 1.531C.438 3.22.438 6.031.438 6.031s0 2.782.376 4.125c.187.75.78 1.313 1.5 1.5C3.655 12 9 12 9 12s5.313 0 6.656-.344a2.084 2.084 0 001.5-1.5c.375-1.344.375-4.125.375-4.125s0-2.812-.375-4.125zM7.25 8.563V3.5l4.438 2.531L7.25 8.563z"/></svg><span class="screen-reader-text">YouTube<span class="screen-reader-text">Opens in a new window</span></span></a></li>
+</ul>						</nav><!-- social -->
+					</div>
+													<nav class="site-header__menu-wrap__footer__menu">
+					<ul id="header-secondary" class="row menu"><li id="menu-item-109" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-109 small-text top-level-menu-item"><a href="https://www.whitehouse.gov/contact/">Contact Us</a></li>
+<li id="menu-item-1791" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1791 small-text top-level-menu-item"><a href="https://www.whitehouse.gov/privacy/">Privacy Policy</a></li>
+<li id="menu-item-699" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-699 small-text top-level-menu-item"><a href="https://www.whitehouse.gov/copyright/">Copyright Policy</a></li>
+<li id="menu-item-107" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-107 small-text top-level-menu-item"><a href="https://www.whitehouse.gov/accessibility/">Accessibility Statement</a></li>
+</ul>					</nav>
+								</div>
+
+			</div><!-- site-header-menu-wrap -->
+			
+			<div class="mobile-menu-toggle">
+				<button class="mobile-menu-toggle__control js-mobile-menu-control js-open-main-menu" aria-labelledby="mm-label">
+
+					<div class="hamburger-control__wrapper">
+
+						<span class="hamburger-control__top" aria-hidden="true">
+							<span class="hamburger-control__top__inner"></span>
+						</span>
+
+						<span id="mm-label" class="hamburger-control__title">
+							<span class="menu-text">Menu</span>
+							<span class="close-text">Close</span>
+						</span>
+
+						<span class="hamburger-control" aria-hidden="true">
+							<span class="hamburger-control__inner"></span>
+						</span>
+
+					</div>
+
+				</button>
+			</div><!-- mobile menu toggle -->
+			<form data-searchform role="search" method="get" class="search-form" action="https://www.whitehouse.gov/">
+	<label for="search-field-id-604f9728bf122"><span class="screen-reader-text">To search this site, enter a search term</span></label>
+	<button class="search-close-icon" aria-label="Close" aria-hidden="true">
+		<svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1.26074" width="16.2296" height="1" transform="rotate(45 1.26074 0)" fill="black"/>
+<rect x="0.737305" y="11.5178" width="16.2296" height="1" transform="rotate(-45 0.737305 11.5178)" fill="black"/>
+</svg>
+	</button>
+	<button class="search-icon" aria-label="Search"><svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="17" cy="17" r="17" fill="black"/>
+<path d="M15.7545 21.3039C16.9965 21.305 18.2026 20.8872 19.1779 20.118L22.8589 23.8L23.8002 22.8584L20.1192 19.1764C20.8936 18.1878 21.3101 16.9659 21.3006 15.71C21.2911 14.4542 20.8563 13.2386 20.067 12.2619C19.2778 11.2852 18.1808 10.605 16.9552 10.3324C15.7296 10.0598 14.4479 10.2109 13.3192 10.761C12.1906 11.3112 11.2817 12.2278 10.7411 13.3613C10.2005 14.4948 10.06 15.7782 10.3427 17.0018C10.6253 18.2255 11.3144 19.3171 12.2973 20.0985C13.2802 20.8798 14.499 21.3048 15.7545 21.3039ZM15.7545 11.5325C16.5888 11.5325 17.4043 11.7799 18.098 12.2436C18.7917 12.7072 19.3324 13.3662 19.6516 14.1372C19.9709 14.9082 20.0544 15.7566 19.8917 16.5751C19.7289 17.3936 19.3272 18.1454 18.7372 18.7356C18.1473 19.3257 17.3957 19.7275 16.5774 19.8903C15.7592 20.0531 14.911 19.9696 14.1402 19.6502C13.3695 19.3309 12.7107 18.79 12.2472 18.0961C11.7837 17.4023 11.5363 16.5865 11.5363 15.7519C11.5363 14.6329 11.9807 13.5596 12.7718 12.7683C13.5628 11.977 14.6357 11.5325 15.7545 11.5325Z" fill="white"/>
+</svg>
+</button>
+	<input class="search-field" id="search-field-id-604f9728bf122" type="text" name="s" aria-required="false"  name="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required placeholder="Search&hellip;" />
+	<button class="search-submit" aria-hidden="true"><svg width="63" height="68" viewBox="0 0 63 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.00171813 0L63 33.7444C63 33.7444 0.660551 67.4376 0.00520349 67.9931L0.00171813 68C-0.0014293 68 -0.000243773 67.9977 0.00520349 67.9931L17.0642 34L0.00171813 0Z" fill="currentColor"/>
+</svg>
+<span class="screen-reader-text">Search</span></button>
+</form>
+			</div>
+	</div>
+</div>
+
+
+<div class="mobile-overlay mobile-nav-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="dialog2Title">
+	<div class="screen-reader-text">
+		<h2 id="dialog2Title">Mobile Menu Overlay</h2>
+	</div>
+	<div class="overlay-header">
+		<div class="overlay-logo">
+			<a href="https://www.whitehouse.gov/" rel="home">
+				
+<svg id="wh-oval-nofill-604f9728bf226" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 343 243" style="enable-background:new 0 0 343 243;" xml:space="preserve">
+<style type="text/css">
+	#wh-oval-nofill-604f9728bf226 .st0{fill-rule:evenodd;clip-rule:evenodd;fill:#0A2458;}
+	#wh-oval-nofill-604f9728bf226 .st1{opacity:0.5;fill:#0A2458;}
+	#wh-oval-nofill-604f9728bf226 .st2{fill:#0A2458;}
+</style>
+<path class="st0" d="M171.5,229.5c87.3,0,158-48.4,158-108s-70.7-108-158-108s-158,48.4-158,108S84.2,229.5,171.5,229.5z M290.8,209
+	c-31.1,21.3-73.3,34-119.3,34s-88.2-12.7-119.3-34C21.1,187.8,0,157.1,0,121.5S21.1,55.2,52.2,34C83.3,12.7,125.5,0,171.5,0
+	s88.2,12.7,119.3,34c31,21.2,52.2,51.9,52.2,87.5S321.8,187.8,290.8,209z"/>
+<g>
+	<g>
+		<rect x="168.3" y="134.4" class="st1" width="2.7" height="8.5"/>
+		<rect x="168.3" y="143.9" class="st1" width="2.7" height="8.5"/>
+		<rect x="172" y="143.9" class="st1" width="2.7" height="8.5"/>
+		<rect x="172" y="134.4" class="st1" width="2.7" height="8.4"/>
+		<path class="st1" d="M212.5,92.7h-81.9c-0.6,0-1.1,0.5-1.1,1.1v66c0,0.6,0.5,1.1,1.1,1.1h81.8c0.7,0,1.2-0.5,1.2-1.2v-66
+			C213.6,93.2,213.1,92.7,212.5,92.7z M191.8,118.7c0-0.2,0.1-0.2,0.2-0.3c0.2-0.2,0.4-0.7,0.4-1.2v-7.2c0-0.4-0.2-0.8-0.4-1.2
+			c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.2-0.1,0.2-0.2,0.3
+			c-0.2,0.3-0.4,0.7-0.4,1.2v7.1c0,0.4,0.2,0.8,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+			c-0.2,0-0.3-0.2-0.3-0.3V118.7z M166.6,118.7c0-0.2,0.1-0.2,0.2-0.3c0.2-0.2,0.4-0.7,0.4-1.2v-7.1c0-0.4-0.2-0.8-0.4-1.2
+			c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.2-0.1,0.2-0.2,0.3
+			c-0.2,0.2-0.4,0.7-0.4,1.2v7.2c0,0.4,0.2,0.8,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+			c-0.2,0-0.3-0.2-0.3-0.3V118.7z M141.5,118.7c0-0.2,0.1-0.2,0.2-0.3c0.2-0.2,0.4-0.7,0.4-1.2v-7.1c0-0.4-0.2-0.8-0.4-1.2
+			c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.2-0.1,0.2-0.2,0.3
+			c-0.2,0.2-0.4,0.7-0.4,1.2v7.2c0,0.4,0.2,0.8,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+			c-0.2,0-0.3-0.2-0.3-0.3V118.7z M151.3,131.9c0,0.2-0.1,0.2-0.2,0.3c-0.2,0.2-0.4,0.7-0.4,1.2v8.7c0,0.4,0.2,0.8,0.4,1.2
+			c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.2,0.1-0.2,0.2-0.3
+			c0.2-0.2,0.4-0.7,0.4-1.2v-8.7c0-0.4-0.2-0.8-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1
+			c0.2,0,0.3,0.2,0.3,0.3V131.9z M151.8,127.9c-0.1,0.2-0.2,0.2-0.2,0.2h-10c-0.2,0-0.3-0.1-0.4-0.2c-0.1-0.2-0.1-0.4,0.1-0.5
+			c1.5-1.2,3.3-1.9,5.2-1.9c1.9,0,3.7,0.7,5.2,1.9C151.8,127.5,151.9,127.7,151.8,127.9z M176.3,154.1c-3.2,0-6.4,0-9.6,0
+			c-0.2,0-0.5-0.2-0.5-0.5c0-6.9,0-13.7,0-20.7c0.1-6.9,10.4-6.9,10.5,0c0,6.9,0,13.7,0.1,20.7C176.8,153.9,176.5,154.1,176.3,154.1
+			z M201.5,131.9c0,0.2-0.1,0.2-0.2,0.3c-0.2,0.2-0.4,0.7-0.4,1.2v8.7c0,0.4,0.2,0.8,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2
+			c0,0.2-0.2,0.3-0.3,0.3h-9.1c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.2,0.1-0.2,0.2-0.3c0.2-0.2,0.4-0.7,0.4-1.2v-8.7
+			c0-0.4-0.2-0.8-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3V131.9z M202,127.9
+			c-0.1,0.2-0.2,0.2-0.2,0.2h-10c-0.2,0-0.3-0.1-0.4-0.2c-0.1-0.2-0.1-0.4,0.1-0.5c1.5-1.2,3.3-1.9,5.2-1.9c1.9,0,3.7,0.7,5.2,1.9
+			C202,127.5,202.1,127.7,202,127.9z"/>
+	</g>
+	<path class="st2" d="M192.6,72.3l2.4,1h20.3l0.8-1.1c0.2-0.2,0-0.4-0.2-0.4h-23.2C192.4,71.8,192.3,72.3,192.6,72.3z"/>
+	<path class="st2" d="M222.2,79.1v3.1c0,0.2,0.2,0.4,0.3,0.4h7.2c0.2,0,0.3-0.2,0.4-0.4v-3.1l1.2-1.7c0.2-0.2,0-0.6-0.2-0.6h-10
+		c-0.3,0-0.5,0.3-0.2,0.6L222.2,79.1z"/>
+	<path class="st2" d="M215.1,166.4h-40h-7.3h-39.9c-0.2,0-0.5,0.2-0.5,0.5v3.7c0,0.2,0.2,0.5,0.5,0.5h40h7.3h40
+		c0.2,0,0.5-0.2,0.5-0.5v-3.7C215.6,166.6,215.4,166.4,215.1,166.4z"/>
+	<path class="st2" d="M197.3,74.3l17.5,6.8c0.2,0.1,0.4-0.1,0.4-0.2v-2.1c0-0.1,0-0.1-0.1-0.2l-0.3-0.5c0-0.1-0.1-0.1-0.1-0.2v-3.7
+		L197.3,74.3L197.3,74.3z"/>
+	<path class="st2" d="M127.7,73.3H148l2.4-1c0.2-0.1,0.2-0.5-0.1-0.5h-23.2c-0.2,0-0.3,0.2-0.2,0.4L127.7,73.3z"/>
+	<path class="st2" d="M112.8,79.1v3.1c0,0.2,0.2,0.4,0.4,0.4h7.2c0.2,0,0.3-0.2,0.3-0.4v-3.1l1.2-1.7c0.2-0.2,0-0.6-0.2-0.6h-10
+		c-0.3,0-0.5,0.3-0.2,0.6L112.8,79.1z"/>
+	<path class="st2" d="M293.8,153.5h-79.4c-0.2-0.7-0.5-1.3-0.7-2h-7.8c-0.2,0-0.4,0.2-0.5,0.4c-0.2,0.6-0.4,1.2-0.7,1.8
+		c-0.2,0.6-0.6,1.2-1,1.7v3.2h-14.1v-3.2c-0.7-1.2-1.2-2.3-1.6-3.6c-0.1-0.2-0.2-0.4-0.5-0.4H180c-0.2,0-0.4,0.2-0.5,0.4
+		c-0.3,1.2-0.8,2.4-1.6,3.6v3.2h-5h-2.7h-5v-3.2c-0.7-1.1-1.2-2.3-1.6-3.6c-0.1-0.2-0.2-0.4-0.5-0.4h-7.5c-0.2,0-0.4,0.2-0.5,0.4
+		c-0.3,1.2-0.9,2.4-1.6,3.6v3.2h-14.1v-3.2c-0.3-0.6-0.7-1.2-1-1.7c-0.2-0.6-0.5-1.2-0.7-1.8c-0.1-0.2-0.2-0.4-0.5-0.4h-7.8
+		c-0.2,0.7-0.4,1.3-0.7,2H49.2c-0.4,0-0.7,0.3-0.7,0.7v6.8c0,0.4,0.3,0.7,0.7,0.7h78.2v2.6c0,0.4,0.3,0.7,0.7,0.7h42.1h2.7H215
+		c0.4,0,0.7-0.3,0.7-0.7v-2.6h78.2c0.4,0,0.7-0.3,0.7-0.7v-6.8C294.5,153.9,294.2,153.5,293.8,153.5z"/>
+	<path class="st2" d="M128.2,78.3l-0.3,0.5c0,0.1-0.1,0.1-0.1,0.2v2.1c0,0.2,0.2,0.3,0.4,0.2l17.5-6.8h-17.4L128.2,78.3
+		C128.3,78.2,128.3,78.2,128.2,78.3z"/>
+	<path class="st2" d="M187.5,107.8c0-0.2,0-0.5,0-0.7c0-3.7,0-7.1,0-7.1c0.2-1.2,0.5-2.3,1-3.5H179c0.5,1.1,0.8,2.2,1,3.5V119v3.8
+		v26.5v0.1c0,0.4,0.3,0.7,0.7,0.7h6.2c0.4,0,0.7-0.3,0.7-0.7c0,0,0-26.1,0-40.4C187.5,108.6,187.5,108.2,187.5,107.8z"/>
+	<path class="st2" d="M163.1,105.6c0.2-6.7,0.5-7.8,1-9h-9.6c0.5,1.1,0.8,2.2,1,3.5c0,0,0,1.1,0,3c0,14.2,0,46.4,0,46.4
+		c0,0.4,0.3,0.7,0.7,0.7h6.2c0.4,0,0.7-0.3,0.7-0.7v-0.1v-27v-3.3L163.1,105.6L163.1,105.6z"/>
+	<path class="st2" d="M56.4,87.7c0-0.3,0.3-0.7,0.7-0.7h11.6c0.4,0,0.7,0.2,0.7,0.7v2.9c0,0.3-0.3,0.7-0.7,0.7H57.1
+		c-0.4,0-0.7-0.2-0.7-0.7V87.7z M75.2,87.7c0-0.3,0.3-0.7,0.7-0.7h11.6c0.4,0,0.7,0.2,0.7,0.7v2.9c0,0.3-0.3,0.7-0.7,0.7H75.8
+		c-0.4,0-0.7-0.2-0.7-0.7L75.2,87.7L75.2,87.7z M93.9,87.7c0-0.3,0.3-0.7,0.7-0.7h11.6c0.4,0,0.7,0.2,0.7,0.7v2.9
+		c0,0.3-0.3,0.7-0.7,0.7H94.6c-0.4,0-0.7-0.2-0.7-0.7V87.7z M112.6,87.7c0-0.3,0.3-0.7,0.7-0.7h13.5c0.4,0,0.7,0.2,0.7,0.7v1.9h87.8
+		v-1.8c0-0.3,0.3-0.7,0.7-0.7h13.5c0.4,0,0.7,0.2,0.7,0.7v2.9c0,0.3-0.3,0.7-0.7,0.7H113.3c-0.4,0-0.7-0.2-0.7-0.7V87.7z M135,83.7
+		l36.5-14.7L208,83.7h-6.1l-15.2-6.1l-15.2-6.1l-15.2,6.1L141,83.7H135z M236.1,87.7c0-0.3,0.3-0.7,0.7-0.7h11.6
+		c0.4,0,0.7,0.2,0.7,0.7v2.9c0,0.3-0.3,0.7-0.7,0.7h-11.6c-0.4,0-0.7-0.2-0.7-0.7V87.7z M254.8,87.7c0-0.3,0.3-0.7,0.7-0.7h11.6
+		c0.4,0,0.7,0.2,0.7,0.7v2.9c0,0.3-0.3,0.7-0.7,0.7h-11.6c-0.4,0-0.7-0.2-0.7-0.7V87.7z M273.6,87.7c0-0.3,0.3-0.7,0.7-0.7h11.6
+		c0.4,0,0.7,0.2,0.7,0.7v2.9c0,0.3-0.3,0.7-0.7,0.7h-11.6c-0.4,0-0.7-0.2-0.7-0.7V87.7z M218.5,127.6l5.2-2.2c0.1,0,0.1,0,0.2,0
+		s0.1,0,0.2,0l5.2,2.2c0.2,0.1,0.2,0.2,0.2,0.4c0,0.2-0.2,0.2-0.3,0.2h-10.5c-0.2,0-0.3-0.1-0.3-0.2
+		C218.2,127.8,218.3,127.6,218.5,127.6z M219,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.2c0-0.5-0.2-0.9-0.4-1.2
+		c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.1c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3V118.7z M237.3,127.4c0.2-0.2,0.3-0.2,0.5-0.4c1.4-1,3-1.5,4.7-1.5c1.9,0,3.7,0.7,5.2,1.9l0.1,0.1
+		c0.1,0.1,0.1,0.2,0.1,0.3s-0.1,0.2-0.2,0.2c0,0,0,0-0.1,0c0,0,0,0-0.1,0h-0.1h-10c-0.1,0-0.2-0.1-0.2-0.1c-0.1-0.1-0.1-0.1-0.1-0.2
+		C237.2,127.7,237.2,127.5,237.3,127.4z M237.7,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.2c0-0.5-0.2-0.9-0.4-1.2
+		c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.1c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3H238
+		c-0.2,0-0.3-0.2-0.3-0.3V118.7z M255.9,127.6l5.3-2.2c0.1,0,0.1,0,0.2,0h0.1c0,0,0,0,0.1,0l5.2,2.2c0.1,0,0.1,0.1,0.2,0.1
+		c0.1,0.1,0.1,0.2,0.1,0.2c0,0.1-0.1,0.2-0.2,0.2c-0.1,0-0.1,0.1-0.2,0.1h-10.5c-0.1,0-0.2,0-0.2-0.1c-0.1,0-0.1-0.1-0.2-0.2V128
+		C255.7,127.9,255.7,127.7,255.9,127.6z M256.5,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.2c0-0.5-0.2-0.9-0.4-1.2
+		c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.1c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3V118.7z M274.8,127.4c0.2-0.2,0.3-0.2,0.5-0.4c1.4-1,3-1.5,4.7-1.5c1.9,0,3.7,0.7,5.2,1.9l0.1,0.1
+		c0.1,0.1,0.1,0.2,0.1,0.3s-0.1,0.2-0.2,0.2c0,0,0,0-0.1,0c0,0,0,0-0.1,0H285h-10c-0.1,0-0.2-0.1-0.2-0.1c-0.1-0.1-0.1-0.1-0.1-0.2
+		C274.6,127.7,274.7,127.5,274.8,127.4z M275.2,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.2c0-0.5-0.2-0.9-0.4-1.2
+		c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.1c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3V118.7z M284.9,131.9c0,0.1-0.1,0.2-0.2,0.3c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2
+		c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3
+		c0.2-0.3,0.4-0.7,0.4-1.2v-8.7c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1
+		c0.2,0,0.3,0.2,0.3,0.3V131.9z M266.2,131.9c0,0.1-0.1,0.2-0.2,0.3c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2
+		c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3
+		c0.2-0.3,0.4-0.7,0.4-1.2v-8.7c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1
+		c0.2,0,0.3,0.2,0.3,0.3V131.9z M247.4,131.9c0,0.1-0.1,0.2-0.2,0.3c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2
+		c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3H238c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3
+		c0.2-0.3,0.4-0.7,0.4-1.2v-8.7c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1
+		c0.2,0,0.3,0.2,0.3,0.3V131.9z M228.7,131.9c0,0.1-0.1,0.2-0.2,0.3c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2
+		c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3
+		c0.2-0.3,0.4-0.7,0.4-1.2v-8.7c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1
+		c0.2,0,0.3,0.2,0.3,0.3V131.9z M124.4,128.3h-10.5c-0.2,0-0.3-0.1-0.3-0.2c0-0.2,0.1-0.3,0.2-0.4l5.2-2.2c0.1,0,0.1,0,0.2,0
+		c0.1,0,0.1,0,0.2,0l5.2,2.2c0.2,0.1,0.2,0.2,0.2,0.4C124.7,128.2,124.6,128.3,124.4,128.3z M124,131.9c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-8.7c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3
+		v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3V131.9z M105.8,127.9c0,0.1-0.1,0.1-0.1,0.2l-0.1,0.1
+		c-0.1,0-0.1,0.1-0.2,0.1h-10c-0.1,0-0.1,0-0.2-0.1c-0.2-0.1-0.2-0.2-0.2-0.2s0-0.2,0-0.3c0,0,0-0.1,0.1-0.1c0,0,0-0.1,0.1-0.1
+		c0.3-0.3,0.7-0.6,1.2-0.8c0,0,0.1,0,0.1-0.1c1.2-0.7,2.6-1.1,4-1.1c1.9,0,3.7,0.7,5.2,1.9C105.8,127.5,105.9,127.7,105.8,127.9z
+		 M105.3,131.9c0,0.1-0.1,0.2-0.2,0.3c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2
+		c0,0.2-0.2,0.3-0.3,0.3h-9.1c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-8.7
+		c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3V131.9z M87.1,128.2
+		c-0.1,0-0.1,0.1-0.2,0.1H76.4c-0.1,0-0.1,0-0.2,0s-0.2-0.1-0.2-0.2V128c0-0.2,0.1-0.3,0.2-0.4l5.2-2.2c0,0,0,0,0.1,0h0.1
+		c0.1,0,0.1,0,0.2,0l5.2,2.2c0.2,0.1,0.2,0.2,0.2,0.4C87.2,128.1,87.2,128.2,87.1,128.2z M86.6,131.9c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-8.7c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3
+		v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3V131.9z M68.4,127.9c0,0.1-0.1,0.2-0.2,0.2c-0.1,0-0.1,0.1-0.2,0.1H58
+		c0,0,0,0-0.1,0h-0.1c-0.1-0.1-0.2-0.2-0.2-0.2c-0.1-0.2,0-0.3,0.1-0.4c0,0,0,0,0.1-0.1c0.2-0.1,0.2-0.2,0.4-0.3
+		c0.1-0.1,0.2-0.1,0.2-0.2c0.2-0.1,0.2-0.2,0.4-0.2c0.1-0.1,0.2-0.2,0.4-0.2c1.2-0.6,2.4-0.9,3.7-0.9c1.9,0,3.7,0.7,5.2,1.9
+		C68.4,127.5,68.4,127.7,68.4,127.9z M67.8,131.9c0,0.1-0.1,0.2-0.2,0.3c-0.2,0.3-0.4,0.7-0.4,1.2v8.7c0,0.5,0.2,0.9,0.4,1.2
+		c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1c-0.2,0-0.3-0.2-0.3-0.3v-3.2c0-0.1,0.1-0.2,0.2-0.3
+		c0.2-0.3,0.4-0.7,0.4-1.2v-8.7c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.4c0-0.2,0.2-0.3,0.3-0.3h9.1
+		c0.2,0,0.3,0.2,0.3,0.3V131.9z M58.1,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.1c0-0.5-0.2-0.9-0.4-1.2
+		c-0.1-0.1-0.2-0.2-0.2-0.3v-1.5c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.2c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3L58.1,118.7L58.1,118.7z M76.8,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.1
+		c0-0.5-0.2-0.9-0.4-1.2c-0.1-0.1-0.2-0.2-0.2-0.3v-1.5c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.2c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3V118.7z M95.6,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.1c0-0.5-0.2-0.9-0.4-1.2
+		c-0.1-0.1-0.2-0.2-0.2-0.3v-1.5c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.2c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3V118.7z M114.3,118.7c0-0.1,0.1-0.2,0.2-0.3c0.2-0.3,0.4-0.7,0.4-1.2v-7.1c0-0.5-0.2-0.9-0.4-1.2
+		c-0.1-0.1-0.2-0.2-0.2-0.3v-1.5c0-0.2,0.2-0.3,0.3-0.3h9.1c0.2,0,0.3,0.2,0.3,0.3v1.4c0,0.1-0.1,0.2-0.2,0.3
+		c-0.2,0.3-0.4,0.7-0.4,1.2v7.2c0,0.5,0.2,0.9,0.4,1.2c0.1,0.1,0.2,0.2,0.2,0.3v3.2c0,0.2-0.2,0.3-0.3,0.3h-9.1
+		c-0.2,0-0.3-0.2-0.3-0.3V118.7z M49.2,85.9h2.1c0,0,0.1,0,0.1,0.1v8.5c0,0.2,0.2,0.3,0.4,0.3h76.1c0.3,0.6,0.7,1.2,0.9,1.8
+		c-4.8,0-79.5,0-79.5,0c-0.2,0-0.5,0.2-0.5,0.5v2.4c0,0.3,0.2,0.5,0.5,0.5h80.3c0,0,0,0.7,0,2.2H51.6c-0.2,0-0.2,0.1-0.2,0.2v47.7
+		c0.2,0,85.2,0,85.2,0c0.4,0,0.7-0.3,0.7-0.7v-0.1c0-0.4,0.1-48.9,0.1-48.9c0-0.3,0-0.4,0-0.4c0.1-0.9,0.3-1.8,0.6-2.7
+		c0.3-0.9,0.7-1.7,1.2-2.6h29.8h5.2h29.8c0.5,0.8,0.9,1.7,1.2,2.6s0.5,1.7,0.6,2.7c0,0,0,0.2,0,0.4c0,0,0.1,48.5,0.1,48.9v0.1
+		c0,0.4,0.3,0.7,0.7,0.7l83.1-0.1h0.2h1.6c0.2,0,0.2-0.1,0.2-0.2v-47.4c0-0.2-0.1-0.2-0.2-0.2h-78.1c0-1.3,0-2.1,0-2.2h80.3
+		c0.3,0,0.5-0.2,0.5-0.5v-2.4c0-0.2-0.2-0.5-0.5-0.5c0,0-74.7,0-79.5,0c0.2-0.6,0.6-1.2,0.9-1.8h76.2c0.2,0,0.4-0.1,0.4-0.3V86
+		c0,0,0-0.1,0.1-0.1h2.1c0.3,0,0.5-0.2,0.5-0.5v-1.1c0-0.3-0.2-0.5-0.5-0.5H218c-0.3,0-0.7-0.1-1-0.2l-44.7-18.1v-2.9v-0.9
+		c0.9-0.2,2.2-0.5,3.2-0.2c5.1,1.7,6.2,1.1,6.2,1c-0.9-1.2-0.6-3.9-0.6-3.9c0.3-2.4,0.2-2.9,0.2-3c-0.2,0.1-1.6,0.9-5-0.2
+		c-1.8-0.6-3.2-0.7-4-0.8c0-0.5-0.4-0.8-0.9-0.8c-0.4,0.1-0.7,0.4-0.7,0.9v10.7l-44.7,18.1c-0.3,0.2-0.7,0.2-1,0.2H49.2
+		c-0.3,0-0.5,0.2-0.5,0.5v1.1C48.7,85.7,48.9,85.9,49.2,85.9z"/>
+	<polygon class="st2" points="198.6,96.5 171.5,126.9 144.4,96.5 144.4,96.5 144,96.7 171.2,127.3 171.2,127.2 171.7,127.2
+		171.8,127.3 198.9,96.8 198.9,96.7 	"/>
+	<path class="st2" d="M172.3,125.7h-1.7c-0.4,0-0.6,0.3-0.6,0.6v4.8c0,0.4,0.3,0.6,0.6,0.6h1.7c0.4,0,0.6-0.3,0.6-0.6v-4.8
+		C172.9,125.9,172.7,125.7,172.3,125.7z"/>
+</g>
+</svg>
+			</a>
+		</div>
+	</div>
+	<div class="mobile-overlay__inner">
+		<div class="container">
+			<div class="row">
+				<div class="mobile-nav-menus">
+					<div class="menu-left">
+
+												<nav class="primary-mobile-menu" aria-label="Primary Navigation" role="navigation">
+							<ul id="menu-primary-expanded-navigation" class="menu primary-menu"><li id="menu-item-69" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-69 top-level-menu-item"><a href="https://www.whitehouse.gov/administration/">Administration</a><button class="dropdown-trigger" aria-expanded="false">
+<svg width="63" height="68" viewBox="0 0 63 68" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.00171813 0L63 33.7444C63 33.7444 0.660551 67.4376 0.00520349 67.9931L0.00171813 68C-0.0014293 68 -0.000243773 67.9977 0.00520349 67.9931L17.0642 34L0.00171813 0Z" fill="black"/></svg>
+<span class="screen-reader-text">Show submenu for &#8220;Administration&#8221;”</span>
+</button>
+<ul class="sub-menu">
+	<li id="menu-item-802" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-802"><a href="https://www.whitehouse.gov/administration/president-biden/">President Joe Biden</a></li>
+	<li id="menu-item-803" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-803"><a href="https://www.whitehouse.gov/administration/vice-president-harris/">Vice President Kamala Harris</a></li>
+	<li id="menu-item-804" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-804"><a href="https://www.whitehouse.gov/administration/dr-jill-biden/">First Lady Dr. Jill Biden</a></li>
+	<li id="menu-item-805" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-805"><a href="https://www.whitehouse.gov/administration/douglas-emhoff/">Second Gentleman Douglas Emhoff</a></li>
+	<li id="menu-item-806" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-806"><a href="https://www.whitehouse.gov/administration/cabinet/">The Cabinet</a></li>
+</ul>
+</li>
+<li id="menu-item-68" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-68 top-level-menu-item"><a href="https://www.whitehouse.gov/administration/executive-office-of-the-president/">Executive Offices</a><button class="dropdown-trigger" aria-expanded="false">
+<svg width="63" height="68" viewBox="0 0 63 68" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.00171813 0L63 33.7444C63 33.7444 0.660551 67.4376 0.00520349 67.9931L0.00171813 68C-0.0014293 68 -0.000243773 67.9977 0.00520349 67.9931L17.0642 34L0.00171813 0Z" fill="black"/></svg>
+<span class="screen-reader-text">Show submenu for &#8220;Executive Offices&#8221;”</span>
+</button>
+<ul class="sub-menu">
+	<li id="menu-item-793" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-793"><a href="https://www.whitehouse.gov/cea/">Council of Economic Advisers</a></li>
+	<li id="menu-item-794" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-794"><a href="https://www.whitehouse.gov/ceq/">Council on Environmental Quality</a></li>
+	<li id="menu-item-795" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-795"><a href="https://www.whitehouse.gov/dpc/">Domestic Policy Council</a></li>
+	<li id="menu-item-796" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-796"><a href="https://www.whitehouse.gov/nec/">National Economic Council</a></li>
+	<li id="menu-item-797" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-797"><a href="https://www.whitehouse.gov/nsc/">National Security Council</a></li>
+	<li id="menu-item-798" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-798"><a href="https://www.whitehouse.gov/iga/">Office of Intergovernmental Affairs</a></li>
+	<li id="menu-item-799" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-799"><a href="https://www.whitehouse.gov/omb/">Office of Management and Budget</a></li>
+	<li id="menu-item-119" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-119"><a href="https://www.whitehouse.gov/ondcp/">Office of National Drug Control Policy</a></li>
+	<li id="menu-item-800" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-800"><a href="https://www.whitehouse.gov/ope/">Office of Public Engagement</a></li>
+	<li id="menu-item-801" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-801"><a href="https://www.whitehouse.gov/ostp/">Office of Science and Technology Policy</a></li>
+</ul>
+</li>
+<li id="menu-item-65" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-65 top-level-menu-item"><a href="https://www.whitehouse.gov/priorities/">Priorities</a></li>
+</ul>
+
+<ul class='menu primary-menu'>
+<li id="menu-item-2783" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2783 top-level-menu-item"><a href="https://www.whitehouse.gov/briefing-room/">Briefing Room</a></li>
+<li id="menu-item-42" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-42 top-level-menu-item"><a href="https://www.whitehouse.gov/about-the-white-house/">The White House</a><button class="dropdown-trigger" aria-expanded="false">
+<svg width="63" height="68" viewBox="0 0 63 68" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.00171813 0L63 33.7444C63 33.7444 0.660551 67.4376 0.00520349 67.9931L0.00171813 68C-0.0014293 68 -0.000243773 67.9977 0.00520349 67.9931L17.0642 34L0.00171813 0Z" fill="black"/></svg>
+<span class="screen-reader-text">Show submenu for &#8220;The White House&#8221;”</span>
+</button>
+<ul class="sub-menu">
+	<li id="menu-item-45" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="https://www.whitehouse.gov/about-the-white-house/presidents/">Presidents</a></li>
+	<li id="menu-item-812" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-812"><a href="https://www.whitehouse.gov/about-the-white-house/first-families/">First Families</a></li>
+	<li id="menu-item-44" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-44"><a href="https://www.whitehouse.gov/about-the-white-house/the-grounds/">The Grounds</a></li>
+	<li id="menu-item-43" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-43"><a href="https://www.whitehouse.gov/about-the-white-house/our-government/">Our Government</a></li>
+</ul>
+</li>
+<li id="menu-item-72" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-72 top-level-menu-item"><a href="https://www.whitehouse.gov/get-involved/">Get Involved</a><button class="dropdown-trigger" aria-expanded="false">
+<svg width="63" height="68" viewBox="0 0 63 68" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.00171813 0L63 33.7444C63 33.7444 0.660551 67.4376 0.00520349 67.9931L0.00171813 68C-0.0014293 68 -0.000243773 67.9977 0.00520349 67.9931L17.0642 34L0.00171813 0Z" fill="black"/></svg>
+<span class="screen-reader-text">Show submenu for &#8220;Get Involved&#8221;”</span>
+</button>
+<ul class="sub-menu">
+	<li id="menu-item-86" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-86"><a href="https://www.whitehouse.gov/get-involved/write-or-call/">Write or Call The White House</a></li>
+	<li id="menu-item-813" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-813"><a href="https://www.whitehouse.gov/get-involved/join-us/">Join Us</a></li>
+	<li id="menu-item-814" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-814"><a href="https://www.whitehouse.gov/get-involved/fellows/">White House Fellows</a></li>
+</ul>
+</li>
+</ul>
+
+<ul class='menu primary-menu'>
+<li id="menu-item-1799" class="site-id-2 mlp-language-nav-item menu-item menu-item-type-mlp_language menu-item-object-mlp_language menu-item-1799 top-level-menu-item"><a rel="alternate" href="https://www.whitehouse.gov/es/" lang="es-MX">Español</a></li>
+</ul>							</nav><!-- .main-mobile-menu -->
+											</div>
+					<div class="menu-right">
+													<nav class="secondary-mobile-menu" aria-label="Secondary Navigation" role="navigation">
+							<ul id="secondary-navigation-overlay" class="menu secondary-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-109 top-level-menu-item"><a href="https://www.whitehouse.gov/contact/">Contact Us</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1791 top-level-menu-item"><a href="https://www.whitehouse.gov/privacy/">Privacy Policy</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-699 top-level-menu-item"><a href="https://www.whitehouse.gov/copyright/">Copyright Policy</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-107 top-level-menu-item"><a href="https://www.whitehouse.gov/accessibility/">Accessibility Statement</a></li>
+</ul>							</nav><!-- .secondary -->
+																			<div class="site-header__menu-wrap__footer__social">
+								<nav class="col-xs-12" aria-label="Social Navigation">
+									<ul id="social-navigation" class="social-simple"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-87 col-auto top-level-menu-item"><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/whitehouse/" class="external-link"><svg aria-hidden="true" tabindex="-1" viewBox="0 0 21 20" xmlns="http://www.w3.org/2000/svg"><path d="M6.928 6.27c.974-.974 2.148-1.461 3.523-1.461s2.535.487 3.48 1.46c.975.946 1.462 2.106 1.462 3.481s-.487 2.55-1.461 3.523c-.946.946-2.106 1.418-3.48 1.418-1.376 0-2.55-.472-3.524-1.418C5.982 12.3 5.51 11.125 5.51 9.75s.472-2.535 1.418-3.48zm1.246 5.757c.63.63 1.39.946 2.277.946.888 0 1.647-.315 2.277-.946.63-.63.946-1.389.946-2.277 0-.888-.315-1.647-.945-2.277a3.104 3.104 0 00-2.278-.946c-.888 0-1.647.315-2.277.946-.63.63-.945 1.389-.945 2.277 0 .888.315 1.647.945 2.277zM16.38 3.82c.229.2.344.459.344.774s-.115.587-.344.816a.981.981 0 01-.774.344c-.315 0-.587-.115-.816-.344a1.115 1.115 0 01-.344-.816.98.98 0 01.344-.774c.23-.229.501-.343.816-.343.316 0 .573.114.774.343zm3.652 1.977c.029.773.043 2.091.043 3.953 0 1.862-.014 3.18-.043 3.953-.086 1.748-.616 3.108-1.59 4.082-.945.945-2.291 1.447-4.039 1.504-.773.057-2.09.086-3.953.086-1.862 0-3.18-.029-3.953-.086-1.747-.086-3.094-.602-4.039-1.547a4.148 4.148 0 01-.902-1.203 7.057 7.057 0 01-.516-1.332 7.744 7.744 0 01-.129-1.504C.855 12.93.826 11.612.826 9.75c0-1.862.029-3.194.086-3.996.086-1.719.602-3.05 1.547-3.996C3.404.784 4.751.254 6.499.168 7.27.139 8.588.125 10.45.125s3.18.014 3.953.043c1.748.086 3.094.616 4.04 1.59.973.945 1.503 2.291 1.59 4.039zm-2.062 9.625c.086-.23.157-.516.215-.86.057-.372.1-.802.128-1.289.03-.515.043-.93.043-1.246v-1.332-.945-.945-1.332c0-.315-.014-.716-.043-1.203a12.168 12.168 0 00-.128-1.29 4.652 4.652 0 00-.215-.902c-.344-.888-.96-1.504-1.848-1.848a4.654 4.654 0 00-.902-.214c-.344-.058-.774-.1-1.29-.13a21.227 21.227 0 00-1.202-.042H8.174c-.315 0-.73.014-1.246.043-.487.028-.917.071-1.29.129a4.68 4.68 0 00-.859.214c-.888.344-1.504.96-1.847 1.848-.086.23-.158.53-.215.902-.057.344-.1.774-.13 1.29a21.23 21.23 0 00-.042 1.203v5.155c.029.43.057.803.086 1.118a11.384 11.384 0 00.3 1.676c.373.888.989 1.504 1.848 1.848.23.085.516.157.86.214.372.058.802.1 1.289.13.515.028.916.042 1.203.042h4.597c.316 0 .717-.014 1.204-.043.515-.028.945-.071 1.289-.129a4.65 4.65 0 00.902-.215c.888-.372 1.504-.988 1.848-1.847z"/></svg><span class="screen-reader-text">Instagram<span class="screen-reader-text">Opens in a new window</span></span></a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-88 col-auto top-level-menu-item"><a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/WhiteHouse/" class="external-link"><svg aria-hidden="true" tabindex="-1" viewBox="0 0 11 19" xmlns="http://www.w3.org/2000/svg"><path d="M9.722 10.375H7.086v7.875H3.57v-7.875H.722v-3.27H3.57v-2.46c0-.938.176-1.735.527-2.391A3.454 3.454 0 015.574.777C6.23.426 6.98.25 7.824.25c.375 0 .773.023 1.195.07.422.024.75.059.985.106l.351.035v2.777H8.95c-.656 0-1.137.176-1.441.528-.282.328-.422.738-.422 1.23v2.11h3.129l-.493 3.269z"/></svg><span class="screen-reader-text">Facebook<span class="screen-reader-text">Opens in a new window</span></span></a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-89 col-auto top-level-menu-item"><a target="_blank" rel="noopener noreferrer" href="https://twitter.com/whitehouse" class="external-link"><svg aria-hidden="true" tabindex="-1" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1684 408q-67 98-162 167 1 14 1 42 0 130-38 259.5T1369.5 1125 1185 1335.5t-258 146-323 54.5q-271 0-496-145 35 4 78 4 225 0 401-138-105-2-188-64.5T285 1033q33 5 61 5 43 0 85-11-112-23-185.5-111.5T172 710v-4q68 38 146 41-66-44-105-115t-39-154q0-88 44-163 121 149 294.5 238.5T884 653q-8-38-8-74 0-134 94.5-228.5T1199 256q140 0 236 102 109-21 205-78-37 115-142 178 93-10 186-50z"/></svg><span class="screen-reader-text">Twitter<span class="screen-reader-text">Opens in a new window</span></span></a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-90 col-auto top-level-menu-item"><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/whitehouse" class="external-link"><svg aria-hidden="true" tabindex="-1" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.156 1.906a2.126 2.126 0 00-1.5-1.531C14.312 0 9 0 9 0S3.656 0 2.312.375a2.126 2.126 0 00-1.5 1.531C.438 3.22.438 6.031.438 6.031s0 2.782.376 4.125c.187.75.78 1.313 1.5 1.5C3.655 12 9 12 9 12s5.313 0 6.656-.344a2.084 2.084 0 001.5-1.5c.375-1.344.375-4.125.375-4.125s0-2.812-.375-4.125zM7.25 8.563V3.5l4.438 2.531L7.25 8.563z"/></svg><span class="screen-reader-text">YouTube<span class="screen-reader-text">Opens in a new window</span></span></a></li>
+</ul>								</nav><!-- social -->
+							</div>
+												<div class="address">
+							<p>
+								<strong>The White House</strong><br>
+								1600 Pennsylvania Ave NW<br>
+								Washington, DC 20500
+							</p>
+						</div>
+					</div>
+				</div><!-- .mobile-nav-menus -->
+			</div><!-- .row -->
+		</div><!-- .container -->
+	</div><!-- .main-mobile-menu-inner -->
+	<img class="svgloader" src="https://www.whitehouse.gov/wp-content/themes/whitehouse/assets/img/wh-outline.svg" onload="var c=this;!window.fetch?window.llItems.push(c):fetch(c.currentSrc||c.src).then(function(x){return x.text();}).then(function(svgText){c.outerHTML = svgText;});" /></div><!-- .menuOverlay -->
+
+</header>
+	<main id="content" class="site-main">
+
+<section class="homepage-content post-1082 homepage type-homepage status-publish hentry">
+
+	
+<section class="home-topper-section social-hide is-style-sidebar-right">
+	<form data-searchform role="search" method="get" class="search-form" action="https://www.whitehouse.gov/">
+	<label for="search-field-id-604f9728cc7d6"><span class="screen-reader-text">To search this site, enter a search term</span></label>
+	<button class="search-close-icon" aria-label="Close" aria-hidden="true">
+		<svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1.26074" width="16.2296" height="1" transform="rotate(45 1.26074 0)" fill="black"/>
+<rect x="0.737305" y="11.5178" width="16.2296" height="1" transform="rotate(-45 0.737305 11.5178)" fill="black"/>
+</svg>
+	</button>
+	<button class="search-icon" aria-label="Search"><svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="17" cy="17" r="17" fill="black"/>
+<path d="M15.7545 21.3039C16.9965 21.305 18.2026 20.8872 19.1779 20.118L22.8589 23.8L23.8002 22.8584L20.1192 19.1764C20.8936 18.1878 21.3101 16.9659 21.3006 15.71C21.2911 14.4542 20.8563 13.2386 20.067 12.2619C19.2778 11.2852 18.1808 10.605 16.9552 10.3324C15.7296 10.0598 14.4479 10.2109 13.3192 10.761C12.1906 11.3112 11.2817 12.2278 10.7411 13.3613C10.2005 14.4948 10.06 15.7782 10.3427 17.0018C10.6253 18.2255 11.3144 19.3171 12.2973 20.0985C13.2802 20.8798 14.499 21.3048 15.7545 21.3039ZM15.7545 11.5325C16.5888 11.5325 17.4043 11.7799 18.098 12.2436C18.7917 12.7072 19.3324 13.3662 19.6516 14.1372C19.9709 14.9082 20.0544 15.7566 19.8917 16.5751C19.7289 17.3936 19.3272 18.1454 18.7372 18.7356C18.1473 19.3257 17.3957 19.7275 16.5774 19.8903C15.7592 20.0531 14.911 19.9696 14.1402 19.6502C13.3695 19.3309 12.7107 18.79 12.2472 18.0961C11.7837 17.4023 11.5363 16.5865 11.5363 15.7519C11.5363 14.6329 11.9807 13.5596 12.7718 12.7683C13.5628 11.977 14.6357 11.5325 15.7545 11.5325Z" fill="white"/>
+</svg>
+</button>
+	<input class="search-field" id="search-field-id-604f9728cc7d6" type="text" name="s" aria-required="false"  name="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required placeholder="Search&hellip;" />
+	<button class="search-submit" aria-hidden="true"><svg width="63" height="68" viewBox="0 0 63 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.00171813 0L63 33.7444C63 33.7444 0.660551 67.4376 0.00520349 67.9931L0.00171813 68C-0.0014293 68 -0.000243773 67.9977 0.00520349 67.9931L17.0642 34L0.00171813 0Z" fill="currentColor"/>
+</svg>
+<span class="screen-reader-text">Search</span></button>
+</form>
+	<div class="home-topper">
+
+		<div class="container home-topper__main">
+			<div class="row">
+				<div class="home-topper__content" data-beat="1" data-beat-home="1">
+
+					<div class="home-topper__content__label">
+						<p class="ui-label-base">Updates from the Biden Administration</p>
+					</div>
+
+											<h1 class="home-topper__title small">
+							Get the latest from the White House						</h1>
+					
+											<div class="home-topper__content__quick-links">
+							<ul>
+																<li class="link-icon-wrapper">
+									<a
+										class="link link__arrow"
+										rel="noopener noreferrer"										href="https://www.facebook.com/WhiteHouse/"
+										target="_blank"									>
+										<span>
+											Follow the White House on Facebook											<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M44.2418 0H10.1727V5.75816H40.2111L0 45.9693L4.03071 50L44.2418 9.78887V39.8273H50V5.75816V0H44.2418Z" fill="black"/>
+</svg>
+										</span>
+									</a>
+								</li>
+																<li class="link-icon-wrapper">
+									<a
+										class="link link__arrow"
+										rel="noopener noreferrer"										href="http://twitter.com/whitehouse"
+										target="_blank"									>
+										<span>
+											Follow the White House on Twitter											<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M44.2418 0H10.1727V5.75816H40.2111L0 45.9693L4.03071 50L44.2418 9.78887V39.8273H50V5.75816V0H44.2418Z" fill="black"/>
+</svg>
+										</span>
+									</a>
+								</li>
+															</ul>
+						</div>
+					
+									</div><!-- home-topper__content -->
+
+							</div><!-- row -->
+		</div><!-- container -->
+
+		<div class="home-topper__image">
+			<div class="home-topper__image__inner home-topper__image__inner--primary no-mobile-image">
+
+			
+				
+				<picture>
+					<source
+						media="(min-width: 768px)"
+						srcset="https://www.whitehouse.gov/wp-content/uploads/2021/01/home-topper-2800x1560.jpg 2800w, https://www.whitehouse.gov/wp-content/uploads/2021/01/home-topper-390x217.jpg 390w, https://www.whitehouse.gov/wp-content/uploads/2021/01/home-topper-1400x780.jpg 1400w, https://www.whitehouse.gov/wp-content/uploads/2021/01/home-topper-1820x1014.jpg 1820w"
+						sizes="(max-width: 2800px) 100vw, 2800px"
+					/>
+
+					
+					<img
+						width="1400"
+						height="780"
+						class="object-fit-cover"
+						src="https://www.whitehouse.gov/wp-content/uploads/2021/01/home-topper-1400x780.jpg"
+						srcset="https://www.whitehouse.gov/wp-content/uploads/2021/01/home-topper-2800x1560.jpg 2800w, https://www.whitehouse.gov/wp-content/uploads/2021/01/home-topper-390x217.jpg 390w, https://www.whitehouse.gov/wp-content/uploads/2021/01/home-topper-1400x780.jpg 1400w, https://www.whitehouse.gov/wp-content/uploads/2021/01/home-topper-1820x1014.jpg 1820w"
+						alt="With an American flag as the backdrop, President Biden stands in profile with his hands clasped at a podium"
+						object-fit-cover="https://www.whitehouse.gov/wp-content/uploads/2021/01/home-topper-1400x780.jpg"
+						sizes="100vw"
+					/>
+				</picture>
+						</div>
+		</div>
+	</div>
+</section>
+
+
+
+<section data-module class="home__featured-news">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-6 col-lg-4 one-featured-item">
+				
+<article class="news-item qpost-2747">
+	<div class="news-item__media">	
+					<div class="img-wrapper responsive-embed responsive-embed-1by1">
+				<a href="https://www.whitehouse.gov/briefing-room/speeches-remarks/2021/01/20/inaugural-address-by-president-joseph-r-biden-jr/">
+					<img width="1200" height="1200" src="https://www.whitehouse.gov/wp-content/uploads/2021/01/eo_1-1-1200x1200.jpg" class="lazy-load" alt="President Joe Biden wearing a suit, standing in front of an American flag" loading="lazy" sizes="(max-width: 1200px) 100vw, 1200px" srcset="https://www.whitehouse.gov/wp-content/uploads/2021/01/eo_1-1-1200x1200.jpg 1200w, https://www.whitehouse.gov/wp-content/uploads/2021/01/eo_1-1-300x300.jpg 300w, https://www.whitehouse.gov/wp-content/uploads/2021/01/eo_1-1-600x600.jpg 600w" />				</a>
+			</div>
+			</div><!-- end .news-item__featured-media -->
+
+	<h2 class="news-item__title-container">
+		<a class="news-item__title acctext--con" href="https://www.whitehouse.gov/briefing-room/speeches-remarks/2021/01/20/inaugural-address-by-president-joseph-r-biden-jr/">
+			Inaugural Address by President Joseph R. Biden, Jr.		</a>
+	</h2>
+	<div class="news-item__meta shared-meta">
+		<time class="posted-on entry-date published updated">January 20, 2021</time>		<span class="separator">&#8226;</span>
+		<span class="tax-links cat-links"><a href="https://www.whitehouse.gov/briefing-room/./speeches-remarks/" rel="category tag">Speeches and Remarks</a></span>	</div>
+
+			<div class="news-item__deck deck acctext--con">
+			<p>
+				<p>The Inaugural Address of the 46th President of the United States, as delivered at the United States Capitol.</p>
+			</p>
+		</div>
+	</article>
+			</div>
+
+			<div class="col-xs-12 col-md-6 col-lg-4 multiple-featured-items">
+				
+<article class="news-item qpost-7601">
+	<h2 class="news-item__title-container">
+      <a class="news-item__title acctext--con" href="https://www.whitehouse.gov/briefing-room/press-briefings/2021/03/12/press-briefing-by-press-secretary-jen-psaki-march-12-2021/">
+  		Press Briefing by Press Secretary Jen Psaki and National Security Advisor Jake Sullivan, March 12, 2021  	</a>
+  </h2>
+	<div class="news-item__meta shared-meta">
+		<time class="posted-on entry-date published updated">March 12, 2021</time>		<span class="separator">&#8226;</span>
+		<span class="tax-links cat-links"><a href="https://www.whitehouse.gov/briefing-room/./press-briefings/" rel="category tag">Press Briefings</a></span>	</div>
+</article>
+
+<article class="news-item qpost-7587">
+	<h2 class="news-item__title-container">
+      <a class="news-item__title acctext--con" href="https://www.whitehouse.gov/briefing-room/statements-releases/2021/03/12/background-press-call-by-senior-administration-officials-on-the-administrations-response-to-the-microsoft-and-solarwinds-intrusions/">
+  		Background Press Call by Senior Administration Officials on the Administration&#8217;s Response to the Microsoft and SolarWinds Intrusions  	</a>
+  </h2>
+	<div class="news-item__meta shared-meta">
+		<time class="posted-on entry-date published updated">March 12, 2021</time>		<span class="separator">&#8226;</span>
+		<span class="tax-links cat-links"><a href="https://www.whitehouse.gov/briefing-room/./statements-releases/" rel="category tag">Statements and Releases</a></span>	</div>
+</article>
+
+<article class="news-item qpost-7581">
+	<h2 class="news-item__title-container">
+      <a class="news-item__title acctext--con" href="https://www.whitehouse.gov/briefing-room/speeches-remarks/2021/03/12/remarks-by-president-biden-on-the-american-rescue-plan-2/">
+  		Remarks by President Biden on the American Rescue Plan  	</a>
+  </h2>
+	<div class="news-item__meta shared-meta">
+		<time class="posted-on entry-date published updated">March 12, 2021</time>		<span class="separator">&#8226;</span>
+		<span class="tax-links cat-links"><a href="https://www.whitehouse.gov/briefing-room/./speeches-remarks/" rel="category tag">Speeches and Remarks</a></span>	</div>
+</article>
+
+<article class="news-item qpost-7577">
+	<h2 class="news-item__title-container">
+      <a class="news-item__title acctext--con" href="https://www.whitehouse.gov/briefing-room/statements-releases/2021/03/12/statement-by-white-house-press-secretary-jen-psaki-on-the-virtual-bilateral-meeting-between-president-joe-biden-and-micheal-martin-taoiseach-of-ireland/">
+  		Statement by White House Press Secretary Jen Psaki on the Virtual Bilateral Meeting between President Joe Biden and Micheál Martin, Taoiseach of Ireland  	</a>
+  </h2>
+	<div class="news-item__meta shared-meta">
+		<time class="posted-on entry-date published updated">March 12, 2021</time>		<span class="separator">&#8226;</span>
+		<span class="tax-links cat-links"><a href="https://www.whitehouse.gov/briefing-room/./statements-releases/" rel="category tag">Statements and Releases</a></span>	</div>
+</article>
+
+<article class="news-item qpost-7567">
+	<h2 class="news-item__title-container">
+      <a class="news-item__title acctext--con" href="https://www.whitehouse.gov/briefing-room/statements-releases/2021/03/12/statement-by-national-security-advisor-jake-sullivan-on-supporting-elections-in-libya/">
+  		Statement by National Security Advisor Jake Sullivan on Supporting Elections in Libya  	</a>
+  </h2>
+	<div class="news-item__meta shared-meta">
+		<time class="posted-on entry-date published updated">March 12, 2021</time>		<span class="separator">&#8226;</span>
+		<span class="tax-links cat-links"><a href="https://www.whitehouse.gov/briefing-room/./statements-releases/" rel="category tag">Statements and Releases</a></span>	</div>
+</article>
+			</div>
+
+			<div class="col-xs-12 col-lg-4 multiple-featured-items last-col">
+				
+<article class="news-item qpost-7553">
+	<h2 class="news-item__title-container">
+      <a class="news-item__title acctext--con" href="https://www.whitehouse.gov/briefing-room/press-briefings/2021/03/12/press-briefing-by-white-house-covid-19-response-team-and-public-health-officials-14/">
+  		Press Briefing by White House COVID-19 Response Team and Public Health Officials  	</a>
+  </h2>
+	<div class="news-item__meta shared-meta">
+		<time class="posted-on entry-date published updated">March 12, 2021</time>		<span class="separator">&#8226;</span>
+		<span class="tax-links cat-links"><a href="https://www.whitehouse.gov/briefing-room/./press-briefings/" rel="category tag">Press Briefings</a></span>	</div>
+</article>
+
+<article class="news-item qpost-7547">
+	<h2 class="news-item__title-container">
+      <a class="news-item__title acctext--con" href="https://www.whitehouse.gov/briefing-room/statements-releases/2021/03/12/president-biden-announces-rose-vela-as-director-of-the-presidents-commission-on-white-house-fellowships/">
+  		President Biden Announces Rose Vela as Director of the President’s Commission on White House Fellowships  	</a>
+  </h2>
+	<div class="news-item__meta shared-meta">
+		<time class="posted-on entry-date published updated">March 12, 2021</time>		<span class="separator">&#8226;</span>
+		<span class="tax-links cat-links"><a href="https://www.whitehouse.gov/briefing-room/./statements-releases/" rel="category tag">Statements and Releases</a></span>	</div>
+</article>
+
+<article class="news-item qpost-7535">
+	<h2 class="news-item__title-container">
+      <a class="news-item__title acctext--con" href="https://www.whitehouse.gov/briefing-room/blog/2021/03/12/the-white-house-gender-policy-council-a-message-from-the-co-chairs/">
+  		The White House Gender Policy Council: A Message from the Co-Chairs  	</a>
+  </h2>
+	<div class="news-item__meta shared-meta">
+		<time class="posted-on entry-date published updated">March 12, 2021</time>		<span class="separator">&#8226;</span>
+		<span class="tax-links cat-links"><a href="https://www.whitehouse.gov/briefing-room/./blog/" rel="category tag">Blog</a></span>	</div>
+</article>
+
+<article class="news-item qpost-7523">
+	<h2 class="news-item__title-container">
+      <a class="news-item__title acctext--con" href="https://www.whitehouse.gov/briefing-room/statements-releases/2021/03/12/fact-sheet-quad-summit/">
+  		Fact Sheet: Quad Summit  	</a>
+  </h2>
+	<div class="news-item__meta shared-meta">
+		<time class="posted-on entry-date published updated">March 12, 2021</time>		<span class="separator">&#8226;</span>
+		<span class="tax-links cat-links"><a href="https://www.whitehouse.gov/briefing-room/./statements-releases/" rel="category tag">Statements and Releases</a></span>	</div>
+</article>
+
+<article class="news-item qpost-7509">
+	<h2 class="news-item__title-container">
+      <a class="news-item__title acctext--con" href="https://www.whitehouse.gov/briefing-room/speeches-remarks/2021/03/12/remarks-by-president-biden-prime-minister-modi-of-india-prime-minister-morrison-of-australia-and-prime-minister-suga-of-japan-in-virtual-meeting-of-the-quad/">
+  		Remarks by President Biden, Prime Minister Modi of India, Prime Minister Morrison of Australia, and Prime Minister Suga of Japan in the Virtual Quad Leaders Summit  	</a>
+  </h2>
+	<div class="news-item__meta shared-meta">
+		<time class="posted-on entry-date published updated">March 12, 2021</time>		<span class="separator">&#8226;</span>
+		<span class="tax-links cat-links"><a href="https://www.whitehouse.gov/briefing-room/./speeches-remarks/" rel="category tag">Speeches and Remarks</a></span>	</div>
+</article>
+			</div>
+		</div><!-- end .row -->
+	</div><!-- end .container -->
+</section>
+
+
+
+<section
+	data-module
+	class="module module__featured-media-and-content  image"
+>
+	<div class="wrapper">
+		<div class="row">
+			<div class="media-col col col-lg-5 col-xs-12">
+									<img width="1200" height="1000" src="https://www.whitehouse.gov/wp-content/uploads/2021/01/home-administration.jpg" class="lazy-load object-fit-cover" alt="President Biden and Vice President Harris speak to each other while wearing masks and blue suits" loading="lazy" data-sizes="(max-width: 1200px) 100vw, 1200px" srcset="https://www.whitehouse.gov/wp-content/uploads/2021/01/home-administration.jpg 1200w, https://www.whitehouse.gov/wp-content/uploads/2021/01/home-administration-390x325.jpg 390w, https://www.whitehouse.gov/wp-content/uploads/2021/01/home-administration-780x650.jpg 780w, https://www.whitehouse.gov/wp-content/uploads/2021/01/home-administration-768x640.jpg 768w" sizes="(max-width: 1200px) 100vw, 1200px" />							</div><!-- end .media-col -->
+			<div class="content-col col col-lg-7 col-xs-12">
+				<p class="eyebrow h5">Learn More About</p>
+				<h2 class="h1small">The Administration</h2>
+				<hr>
+				<div class="deck">
+					<p>Thousands of people work in the West Wing, the East Wing, the Cabinet, and the Executive Office of the President. Learn more about the people who carry out the priorities of the Biden-Harris Administration.</p>
+				</div>
+				<ul>
+									<li>
+						<a
+							href="https://www.whitehouse.gov/administration/president-biden/"
+													>
+							The President						</a>
+					</li>
+									<li>
+						<a
+							href="https://www.whitehouse.gov/administration/vice-president-harris/"
+													>
+							The Vice President						</a>
+					</li>
+									<li>
+						<a
+							href="https://www.whitehouse.gov/administration/cabinet/"
+													>
+							The Cabinet						</a>
+					</li>
+								</ul>
+			</div><!-- end .content-col -->
+		</div><!-- end .row -->
+	</div><!-- end .row -->
+</section>
+
+
+<section
+	data-module
+	class="module module__featured-media-and-content is-style-media-right image"
+>
+	<div class="wrapper">
+		<div class="row">
+			<div class="media-col col col-lg-5 col-xs-12">
+									<img width="2500" height="1250" src="https://www.whitehouse.gov/wp-content/uploads/2021/01/white_house_grounds.jpg" class="lazy-load object-fit-cover" alt="The South Lawn of the White House." loading="lazy" data-sizes="(max-width: 2500px) 100vw, 2500px" />							</div><!-- end .media-col -->
+			<div class="content-col col col-lg-7 col-xs-12">
+				<p class="eyebrow h5">The History Of</p>
+				<h2 class="h1small">The White House</h2>
+				<hr>
+				<div class="deck">
+					<p>Learn more about our country’s former presidents and the official residence.</p>
+				</div>
+				<ul>
+									<li>
+						<a
+							href="https://www.whitehouse.gov/about-the-white-house/"
+													>
+							About the White House						</a>
+					</li>
+									<li>
+						<a
+							href="https://www.whitehouse.gov/about-the-white-house/presidents/"
+													>
+							Previous Presidents						</a>
+					</li>
+								</ul>
+			</div><!-- end .content-col -->
+		</div><!-- end .row -->
+	</div><!-- end .row -->
+</section>
+
+
+<p></p>
+
+
+
+<section data-module class="module module__full-width-featured-content ">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="wrapper">
+				<div class="image-wrapper"><img width="2360" height="1180" src="https://www.whitehouse.gov/wp-content/uploads/2021/01/about_the_white_house-2360x1180.jpg" class="lazy-load object-fit-cover" alt="The White House, viewed at sunrise" loading="lazy" data-sizes="(max-width: 2360px) 100vw, 2360px" srcset="https://www.whitehouse.gov/wp-content/uploads/2021/01/about_the_white_house-2360x1180.jpg 2360w, https://www.whitehouse.gov/wp-content/uploads/2021/01/about_the_white_house-390x195.jpg 390w, https://www.whitehouse.gov/wp-content/uploads/2021/01/about_the_white_house-780x390.jpg 780w, https://www.whitehouse.gov/wp-content/uploads/2021/01/about_the_white_house-1260x630.jpg 1260w, https://www.whitehouse.gov/wp-content/uploads/2021/01/about_the_white_house-1400x700.jpg 1400w, https://www.whitehouse.gov/wp-content/uploads/2021/01/about_the_white_house-1560x780.jpg 1560w, https://www.whitehouse.gov/wp-content/uploads/2021/01/about_the_white_house-1912x956.jpg 1912w, https://www.whitehouse.gov/wp-content/uploads/2021/01/about_the_white_house-1180x590.jpg 1180w, https://www.whitehouse.gov/wp-content/uploads/2021/01/about_the_white_house-1200x600.jpg 1200w, https://www.whitehouse.gov/wp-content/uploads/2021/01/about_the_white_house.jpg 2500w" sizes="(max-width: 2360px) 100vw, 2360px" /></div><!-- .image-wrapper --><div class="overlay"></div>				<div class="featured-content-label">
+					<p class="ui-label-base">
+						COVID-19					</p>
+				</div>
+								<div class="content-wrapper col col-xs-12 col-md-8">
+					<div class="fwfc__inner-content">
+						<h2 class="h1large">
+							Read the Biden-Harris Plan to Beat COVID-19						</h2>
+		
+													<hr>
+							<a href="https://www.whitehouse.gov/priorities/covid-19/" class="btn" >
+								Read the plan 							</a>
+											</div>
+				</div>
+			</div>
+		</div><!-- end .row -->
+	</div><!-- end .container -->
+</section>
+</section>
+
+
+<section class="bottomcta">
+	<div class="container">
+		<div class="row">
+			<div class="bottomcta-wrapper">
+				<div class="bottom-cta-logo">
+					<img class="svgloader" src="https://www.whitehouse.gov/wp-content/themes/whitehouse/assets/img/bottomcta-logo.svg" onload="var c=this;!window.fetch?window.llItems.push(c):fetch(c.currentSrc||c.src).then(function(x){return x.text();}).then(function(svgText){c.outerHTML = svgText;});" />				</div>
+				<div class="col-xs-2 col-md-8 bottomcta__form">
+					<div class="bottomcta__form__inner">
+						<div class="bottomcta__form__inner__wrapper">
+							<div id="mc_embed_signup">
+	<h2 class="h4alt form-headline">Stay Connected</h2>
+	<h2 class="h4alt form-headline success">Thanks for signing up!</h2>
+	<form action="https://forms.whitehouse.gov/newsletters/subscribe46" method="POST" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank">
+		<fieldset>
+			<div id="mc_embed_signup_scroll">
+				<div class="mc-field-group email">
+					<label for="mce-EMAIL">Email Address<span class="asterisk">*</span></label>
+					<input type="email" value="" name="EMAIL" placeholder="example@website.com" required class="required email" id="mce-EMAIL">
+				</div>
+				<div class="mc-field-group zip">
+					<label for="mce-ZIPCODE">ZIP Code</label>
+					<input type="text" value="" name="ZIPCODE" placeholder="ZIP Code" class="" required id="mce-ZIPCODE">
+				</div>
+				<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+				<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_4da4828d48b4efa4fc1138955_8cafb01033" tabindex="-1" value=""></div>
+				<div style="display: none">
+					<input name="SIGNUP" type="hidden" value="">
+					<input name="SIGNUP_SRC" type="hidden" value="">
+				</div>
+				<div class="clear submit-wrapper"><input type="submit" value="Sign Up" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+			</div>
+		</fieldset>
+		<input type="hidden" name="LANGUAGE" value="en">
+	</form>
+	<div class="success-message deck--sm">
+		<p>We'll be in touch with the latest information on how President Biden and his administration are working for the American people, as well as ways you can get involved and help our country build back better.</p>
+	</div>
+</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+		</main><!-- .site-main -->
+
+	<footer id="colophon" data-js-social-hide class="social-hide site-footer body-copy">
+		<div class="seal-icon-wrapper">
+			<img class="svgloader" src="https://www.whitehouse.gov/wp-content/themes/whitehouse/assets/img/footer-seal.svg" onload="var c=this;!window.fetch?window.llItems.push(c):fetch(c.currentSrc||c.src).then(function(x){return x.text();}).then(function(svgText){c.outerHTML = svgText;});" />		</div>
+		<div class="container">
+			<div class="row">
+				<div class="footer-wrapper">
+										<section id="primary-footer-menu-section" class="justify-content-center footer-navigation-section primary-footer-navigation">
+						<nav class="primary col col-xs-12 col-md-12 col-lg-10" aria-label="Primary Footer Navigation">
+							<ul id="primary-navigation-footer" class="menu"><li id="menu-item-91" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-91 col navlink top-level-menu-item"><a href="https://www.whitehouse.gov/" aria-current="page">Home</a></li>
+<li id="menu-item-98" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-98 col navlink top-level-menu-item"><a href="https://www.whitehouse.gov/administration/">The Administration</a></li>
+<li id="menu-item-2215" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2215 col navlink top-level-menu-item"><a href="https://www.whitehouse.gov/administration/executive-office-of-the-president/">Executive Offices</a></li>
+<li id="menu-item-93" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-93 col navlink top-level-menu-item"><a href="https://www.whitehouse.gov/priorities/">Priorities</a></li>
+<li id="menu-item-2785" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2785 col navlink top-level-menu-item"><a href="https://www.whitehouse.gov/briefing-room/">Briefing Room</a></li>
+<li id="menu-item-92" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-92 col navlink top-level-menu-item"><a href="https://www.whitehouse.gov/about-the-white-house/">The White House</a></li>
+<li id="menu-item-96" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-96 col navlink top-level-menu-item"><a href="https://www.whitehouse.gov/get-involved/">Get Involved</a></li>
+<li id="menu-item-1801" class="site-id-2 mlp-language-nav-item menu-item menu-item-type-mlp_language menu-item-object-mlp_language menu-item-1801 col navlink top-level-menu-item"><a rel="alternate" href="https://www.whitehouse.gov/es/" lang="es-MX">Español</a></li>
+</ul>						</nav><!-- .primary -->
+					</section><!-- #primary-footer-menu-section -->
+						
+					<div class="footer-right">
+												<section class="justify-content-center footer-navigation-section secondary-footer-navigation">
+							<nav class="footer-secondary col-xs-12 col-md-12 col-lg-10" aria-label="Secondary Footer Navigation">
+								<ul id="footer-secondary" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-109 col small-text top-level-menu-item"><a href="https://www.whitehouse.gov/contact/">Contact Us</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1791 col small-text top-level-menu-item"><a href="https://www.whitehouse.gov/privacy/">Privacy Policy</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-699 col small-text top-level-menu-item"><a href="https://www.whitehouse.gov/copyright/">Copyright Policy</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-107 col small-text top-level-menu-item"><a href="https://www.whitehouse.gov/accessibility/">Accessibility Statement</a></li>
+</ul>							</nav><!-- .footer-secondary -->
+						</section>
+							
+						<div class="social-and-address">
+															<div class="footer__social">
+									<nav class="col-xs-12" aria-label="Social Navigation">
+										<ul id="footer-social-navigation" class="social-simple"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-87 col-auto top-level-menu-item"><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/whitehouse/" class="external-link"><svg aria-hidden="true" tabindex="-1" viewBox="0 0 21 20" xmlns="http://www.w3.org/2000/svg"><path d="M6.928 6.27c.974-.974 2.148-1.461 3.523-1.461s2.535.487 3.48 1.46c.975.946 1.462 2.106 1.462 3.481s-.487 2.55-1.461 3.523c-.946.946-2.106 1.418-3.48 1.418-1.376 0-2.55-.472-3.524-1.418C5.982 12.3 5.51 11.125 5.51 9.75s.472-2.535 1.418-3.48zm1.246 5.757c.63.63 1.39.946 2.277.946.888 0 1.647-.315 2.277-.946.63-.63.946-1.389.946-2.277 0-.888-.315-1.647-.945-2.277a3.104 3.104 0 00-2.278-.946c-.888 0-1.647.315-2.277.946-.63.63-.945 1.389-.945 2.277 0 .888.315 1.647.945 2.277zM16.38 3.82c.229.2.344.459.344.774s-.115.587-.344.816a.981.981 0 01-.774.344c-.315 0-.587-.115-.816-.344a1.115 1.115 0 01-.344-.816.98.98 0 01.344-.774c.23-.229.501-.343.816-.343.316 0 .573.114.774.343zm3.652 1.977c.029.773.043 2.091.043 3.953 0 1.862-.014 3.18-.043 3.953-.086 1.748-.616 3.108-1.59 4.082-.945.945-2.291 1.447-4.039 1.504-.773.057-2.09.086-3.953.086-1.862 0-3.18-.029-3.953-.086-1.747-.086-3.094-.602-4.039-1.547a4.148 4.148 0 01-.902-1.203 7.057 7.057 0 01-.516-1.332 7.744 7.744 0 01-.129-1.504C.855 12.93.826 11.612.826 9.75c0-1.862.029-3.194.086-3.996.086-1.719.602-3.05 1.547-3.996C3.404.784 4.751.254 6.499.168 7.27.139 8.588.125 10.45.125s3.18.014 3.953.043c1.748.086 3.094.616 4.04 1.59.973.945 1.503 2.291 1.59 4.039zm-2.062 9.625c.086-.23.157-.516.215-.86.057-.372.1-.802.128-1.289.03-.515.043-.93.043-1.246v-1.332-.945-.945-1.332c0-.315-.014-.716-.043-1.203a12.168 12.168 0 00-.128-1.29 4.652 4.652 0 00-.215-.902c-.344-.888-.96-1.504-1.848-1.848a4.654 4.654 0 00-.902-.214c-.344-.058-.774-.1-1.29-.13a21.227 21.227 0 00-1.202-.042H8.174c-.315 0-.73.014-1.246.043-.487.028-.917.071-1.29.129a4.68 4.68 0 00-.859.214c-.888.344-1.504.96-1.847 1.848-.086.23-.158.53-.215.902-.057.344-.1.774-.13 1.29a21.23 21.23 0 00-.042 1.203v5.155c.029.43.057.803.086 1.118a11.384 11.384 0 00.3 1.676c.373.888.989 1.504 1.848 1.848.23.085.516.157.86.214.372.058.802.1 1.289.13.515.028.916.042 1.203.042h4.597c.316 0 .717-.014 1.204-.043.515-.028.945-.071 1.289-.129a4.65 4.65 0 00.902-.215c.888-.372 1.504-.988 1.848-1.847z"/></svg><span class="screen-reader-text">Instagram<span class="screen-reader-text">Opens in a new window</span></span></a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-88 col-auto top-level-menu-item"><a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/WhiteHouse/" class="external-link"><svg aria-hidden="true" tabindex="-1" viewBox="0 0 11 19" xmlns="http://www.w3.org/2000/svg"><path d="M9.722 10.375H7.086v7.875H3.57v-7.875H.722v-3.27H3.57v-2.46c0-.938.176-1.735.527-2.391A3.454 3.454 0 015.574.777C6.23.426 6.98.25 7.824.25c.375 0 .773.023 1.195.07.422.024.75.059.985.106l.351.035v2.777H8.95c-.656 0-1.137.176-1.441.528-.282.328-.422.738-.422 1.23v2.11h3.129l-.493 3.269z"/></svg><span class="screen-reader-text">Facebook<span class="screen-reader-text">Opens in a new window</span></span></a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-89 col-auto top-level-menu-item"><a target="_blank" rel="noopener noreferrer" href="https://twitter.com/whitehouse" class="external-link"><svg aria-hidden="true" tabindex="-1" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1684 408q-67 98-162 167 1 14 1 42 0 130-38 259.5T1369.5 1125 1185 1335.5t-258 146-323 54.5q-271 0-496-145 35 4 78 4 225 0 401-138-105-2-188-64.5T285 1033q33 5 61 5 43 0 85-11-112-23-185.5-111.5T172 710v-4q68 38 146 41-66-44-105-115t-39-154q0-88 44-163 121 149 294.5 238.5T884 653q-8-38-8-74 0-134 94.5-228.5T1199 256q140 0 236 102 109-21 205-78-37 115-142 178 93-10 186-50z"/></svg><span class="screen-reader-text">Twitter<span class="screen-reader-text">Opens in a new window</span></span></a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-90 col-auto top-level-menu-item"><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/whitehouse" class="external-link"><svg aria-hidden="true" tabindex="-1" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.156 1.906a2.126 2.126 0 00-1.5-1.531C14.312 0 9 0 9 0S3.656 0 2.312.375a2.126 2.126 0 00-1.5 1.531C.438 3.22.438 6.031.438 6.031s0 2.782.376 4.125c.187.75.78 1.313 1.5 1.5C3.655 12 9 12 9 12s5.313 0 6.656-.344a2.084 2.084 0 001.5-1.5c.375-1.344.375-4.125.375-4.125s0-2.812-.375-4.125zM7.25 8.563V3.5l4.438 2.531L7.25 8.563z"/></svg><span class="screen-reader-text">YouTube<span class="screen-reader-text">Opens in a new window</span></span></a></li>
+</ul>									</nav><!-- social -->
+								</div><!-- .footer__social -->
+														<p class="address">
+								<strong>The White House</strong><br>
+								1600 Pennsylvania Ave NW<br>
+								Washington, DC 20500
+							</p><!-- .address -->
+							<a class="wh-logo-link" href="https://www.whitehouse.gov/" rel="home"><span class="screen-reader-text">WH.gov</span>
+<svg version="1.1" id="wh-gov-604f9728da6e5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1231 180" style="enable-background:new 0 0 1231 180;" xml:space="preserve">
+<g>
+	<g class="st0">
+		<path d="M200.9,126h1.5l30-102.8l-18.7-9V4.5h60.7v9.7l-21.7,10.5L200.9,177h-22.5l-39-113.3H138L94.5,177H72L23.2,21.8L0,14.3
+			V4.5h86.2v9l-20.2,6l30,107.3h0.7l33.7-90l-6-15.8l-18-7.5v-9h80.2v9l-20.2,6.8L200.9,126z"/>
+		<path d="M446.1,21l-22.5-6V4.5h88.5V15l-25.5,6v138.8l25.5,6v9.8h-88.5v-9.8l22.5-6V96h-72v63.8l22.5,6v9.8h-88.5v-9.8l25.5-6V21
+			l-25.5-6V4.5h89.2V15l-22.5,6v57.8h72V21H446.1z"/>
+		<path d="M577.3,180c-9.7,0-17.2-7.5-17.2-17.2c0-9,7.5-17.2,17.2-17.2c9.7,0,17.2,7.5,17.2,17.2C594.5,171.7,587,180,577.3,180z"
+			/>
+		<path d="M770.7,57.8c-16.5-31.5-32.2-45-56.2-45c-27.7,0-51.7,24.8-51.7,74.2c0,51,24.7,77.2,60.7,77.2c13.5,0,22.5-3.8,32.2-9
+			v-43.5l-25.5-6V96h74.2v9.8l-22.5,6v66l-8.2,1.5l-13.5-13.5c-13.5,8.2-27,13.5-47.2,13.5c-46.5,0-83.2-33-83.2-86.2
+			c0-51.8,38.2-92.2,89.2-92.2c16.5,0,30,3.8,40.5,9l8.2-9.8h9l1.5,57L770.7,57.8z"/>
+		<path d="M931.9,179.3c-54,0-83.2-41.2-83.2-89.3c0-48,33-89.2,84.7-89.2c54,0,83.2,41.2,83.2,89.2
+			C1016.6,138.8,982.9,179.3,931.9,179.3z M929.7,12c-24.7,0-49.5,18-49.5,78c0,60,28.5,78,55.5,78c24.7,0,49.5-24.8,49.5-78
+			C985.2,36.8,956.7,12,929.7,12z"/>
+		<path d="M1146.3,177h-13.5l-60.7-155.3l-24.7-6.8V4.5h81v9.7l-26.2,6l45,121.5l45-119.3l-20.2-7.5V4.5h59.2v9.7l-22.5,7.5
+			L1146.3,177z"/>
+	</g>
+</g>
+</svg>
+</a>
+						</div>
+					</div><!-- .footer-right -->
+				</div><!-- .footer-wrapper -->
+			</div><!-- .row -->
+		</div><!-- .container -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+<script type='text/javascript' defer src='https://www.whitehouse.gov/wp-content/themes/whitehouse/assets/js/vendors.min.js?ver=7595b81.1615300361' id='vendors_js_defer-js'></script>
+<script type='text/javascript' id='theme_js_defer-js-extra'>
+/* <![CDATA[ */
+var emailSignupL10n = {"fakeOrInvalid":"This email address looks fake or invalid. Please enter a real email address.","tooManySignups":"Email address has too many recent signup requests","thankYou":"Thanks for signing up!","defaultError":"There was an error processing your email"};
+/* ]]> */
+</script>
+<script type='text/javascript' defer src='https://www.whitehouse.gov/wp-content/themes/whitehouse/assets/js/master.min.js?ver=7595b81.1615300361' id='theme_js_defer-js'></script>
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam-cell.nr-data.net","licenseKey":"9360826e15","applicationID":"81062413,484304241,484396381","transactionName":"MVNbZhQFXEAEVBBfWQgZbEAPS1tdAVIcGEYORg==","queueTime":0,"applicationTime":412,"atts":"HRRMEFwfTx9HVkYMTRtL","errorBeacon":"bam-cell.nr-data.net","agent":""}</script></body>
+</html>

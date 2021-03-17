@@ -17,7 +17,6 @@ import {
   ComboboxPopover,
   ComboboxList,
   ComboboxOption,
-  // ComboboxOptionText,
 } from "@reach/combobox"
 import "@reach/combobox/styles.css"
 import * as d3 from "d3"
@@ -28,8 +27,7 @@ import { networkReducer } from "./utilities/reducer"
 import { ForceGraph2D } from "react-force-graph"
 
 const matchSorter = (allNodes, term, args) => {
-  console.log({ allNodes })
-  return allNodes.filter(node => node.includes(term))
+  return allNodes && allNodes.filter(node => node.includes(term))
 }
 
 export default function Graph() {
@@ -37,7 +35,7 @@ export default function Graph() {
   const [sensitivity, setSensitivity] = useState(0.75)
   const [state, dispatch] = useReducer(networkReducer, {})
   const { graphData, globalPageRanks, nodeDetails } = state
-  const allNodes = globalPageRanks && Object.keys(globalPageRanks)
+  const allNodes = globalPageRanks && Object.keys(globalPageRanks).sort()
   const allNodesSet = allNodes && new Set([...allNodes])
   const [hoverNode, setHoverNode] = useState(null)
   const [lastHoverNode, setLastHoverNode] = useState(null)
@@ -57,10 +55,9 @@ export default function Graph() {
   // const handleChange = event => setStartNodeName(event.target.value);
   function useCityMatch(term) {
     const throttledTerm = useThrottle(term, 100)
-    return React.useMemo(
-      () => (term.trim() === "" ? null : matchSorter(allNodes, term)),
-      [throttledTerm]
-    )
+    return React.useMemo(() => matchSorter(allNodes, throttledTerm), [
+      throttledTerm,
+    ])
   }
 
   useEffect(() => {
@@ -107,7 +104,7 @@ export default function Graph() {
     [globalPageRanks, sensitivity, nodeDetails]
   )
 
-  const handleNodeHover = useCallback(node => {
+  const handleNodeHover = useCallback((node, ctx, globalScale) => {
     setHoverNode(node || null)
     if (node) {
       setLastHoverNode(`${node.name}.gov`)
@@ -136,7 +133,7 @@ export default function Graph() {
     const textWidth = ctx.measureText(label).width
     const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2) // some padding
 
-    ctx.fillStyle = "rgba(255, 255, 255, 0.8)"
+    ctx.fillStyle = "#101020"
     ctx.fillRect(
       node.x - bckgDimensions[0] / 2,
       node.y - bckgDimensions[1] / 2,
@@ -147,6 +144,7 @@ export default function Graph() {
     ctx.textBaseline = "middle"
     ctx.fillStyle = node.color
     ctx.fillText(label, node.x, node.y)
+    node.__bckgDimensions = bckgDimensions
   }
   const particlesForSensitivity = useCallback(
     link =>
@@ -174,6 +172,8 @@ export default function Graph() {
           }}
         >
           <ComboboxInput
+            placeholder="better than nothing"
+            // style={{ background: "blue" }}
             selectOnClick={true}
             className="node-search-input"
             onChange={handleNodeSearchChange}
@@ -202,14 +202,24 @@ export default function Graph() {
             height={window.innerHeight * 0.8}
             ref={graphRef}
             linkDirectionalParticles={particlesForSensitivity}
-            backgroundColor="dark"
-            linkColor="black"
+            backgroundColor="#101020"
+            linkColor="yellow"
             graphData={graphData}
             onNodeClick={handleNodeClick}
             onNodeHover={handleNodeHover}
             // onLinkHover={handleLinkHover}
             nodeAutoColorBy="name"
             nodeCanvasObject={paintNode}
+            nodePointerAreaPaint={(node, color, ctx) => {
+              ctx.fillStyle = color
+              const bckgDimensions = node.__bckgDimensions
+              bckgDimensions &&
+                ctx.fillRect(
+                  node.x - bckgDimensions[0] / 2,
+                  node.y - bckgDimensions[1] / 2,
+                  ...bckgDimensions
+                )
+            }}
           />
           <div style={{ margin: "24" }}>
             <Slider
@@ -224,7 +234,7 @@ export default function Graph() {
         </div>
         {/* <h1>{lastHoverNode}</h1> */}
 
-        <iframe
+        {/* <iframe
           key={lastHoverNode}
           src={
             lastHoverNode
@@ -233,7 +243,7 @@ export default function Graph() {
           }
           title="Preview"
           style={{ width: "25vw", height: "80vh", overflow: "auto" }}
-        />
+        /> */}
       </div>
     </div>
   ) : null
