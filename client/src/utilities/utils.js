@@ -54,15 +54,28 @@ export function getRelativePageRanks(
   )
 }
 
-export async function getSubgraphPageRanks(name) {
+export async function getSubgraphData(name) {
   const storedValue = JSON.parse(localStorage.getItem(name))
-  let incomingPageRanks, outgoingPageRanks
+  let incomingPageRanks, outgoingPageRanks, inVertices, outVertices, rank
   if (storedValue) {
-    ;({ incomingPageRanks, outgoingPageRanks } = storedValue)
+    ;({
+      incomingPageRanks,
+      outgoingPageRanks,
+      inVertices,
+      outVertices,
+      rank,
+    } = storedValue)
   } else {
     ;({
-      incoming: incomingPageRanks,
-      outgoing: outgoingPageRanks,
+      incoming: {
+        num_vertices: inVertices,
+        pagerank_in_original: rank,
+        subgraph_pageranks: incomingPageRanks,
+      },
+      outgoing: {
+        num_vertices: outVertices,
+        subgraph_pageranks: outgoingPageRanks,
+      },
     } = await fetch(`http://127.0.0.1:8000/nodes/${name}`).then(response =>
       response.json()
     ))
@@ -71,11 +84,14 @@ export async function getSubgraphPageRanks(name) {
       JSON.stringify({
         incomingPageRanks,
         outgoingPageRanks,
+        inVertices,
+        outVertices,
+        rank,
       })
     )
   }
 
-  return { incomingPageRanks, outgoingPageRanks }
+  return { incomingPageRanks, outgoingPageRanks, inVertices, outVertices, rank }
 }
 
 export function setDifference(setA, setB) {
@@ -88,4 +104,8 @@ export function setDifference(setA, setB) {
 
 export function displayNameForId(nodeId) {
   return displayNameForName(nameForId(nodeId))
+}
+
+export function nameForNode(node) {
+  return nameForId(node.id)
 }

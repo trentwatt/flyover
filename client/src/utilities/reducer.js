@@ -11,7 +11,8 @@ export const getInitialNetwork = initialNodeId => {
       nodes: [
         {
           id: initialNodeId,
-          name: displayNameForId(initialNodeId),
+
+          displayName: displayNameForId(initialNodeId),
         },
       ],
 
@@ -60,7 +61,7 @@ export function networkReducer(state, action) {
     const childId = genIdFromName(childName, type)
     const newNode = {
       id: childId,
-      name: displayNameForName(childName),
+      displayName: displayNameForName(childName),
     }
     const newLink = {
       source: type === "out" ? parentId : childId,

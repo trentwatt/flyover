@@ -1,9 +1,9 @@
 import {
-  getSubgraphPageRanks,
+  getSubgraphData,
   getRelativePageRanks,
   nameForId,
   // jsonLog,
-} from './utils'
+} from "./utils"
 
 const verticesAtOnce = 2
 export async function nodeUpdate(
@@ -14,7 +14,7 @@ export async function nodeUpdate(
 ) {
   const sliceIndex = nodeDetails[nodeToExpand.id].childrenIn.length
 
-  const { incomingPageRanks, outgoingPageRanks } = await getSubgraphPageRanks(
+  const { incomingPageRanks, outgoingPageRanks } = await getSubgraphData(
     nameForId(nodeToExpand.id)
   )
 
@@ -22,7 +22,7 @@ export async function nodeUpdate(
     ...getRelativePageRanks(incomingPageRanks, globalPageRanks, sensitivity)
       .slice(sliceIndex, sliceIndex + verticesAtOnce)
       .map(({ node }) => ({
-        type: 'in',
+        type: "in",
         parentId: nodeToExpand.id,
         childName: node,
         sensitivity,
@@ -31,7 +31,7 @@ export async function nodeUpdate(
     ...getRelativePageRanks(outgoingPageRanks, globalPageRanks, sensitivity)
       .slice(sliceIndex, sliceIndex + verticesAtOnce)
       .map(({ node }) => ({
-        type: 'out',
+        type: "out",
         parentId: nodeToExpand.id,
         childName: node,
         sensitivity,

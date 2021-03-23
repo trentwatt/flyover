@@ -4,61 +4,37 @@ import React, {
   useCallback,
   useRef,
   useState,
-  // useMemo,
+  useMemo,
 } from "react"
-
-import { useThrottle } from "react-use"
+import Dropdown from "./Dropdown"
+import SubgraphStats from "./SubgraphStats"
 
 import { Slider } from "@reach/slider"
 import "@reach/slider/styles.css"
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox"
-import "@reach/combobox/styles.css"
-import * as d3 from "d3"
 
 import { nodeUpdate } from "./utilities/nodeUpdate"
 import { sensUpdate } from "./utilities/sensUpdate"
 import { networkReducer } from "./utilities/reducer"
 import { ForceGraph2D } from "react-force-graph"
+import { nameForId, nameForNode } from "./utilities/utils"
 
-const matchSorter = (allNodes, term, args) => {
-  return allNodes && allNodes.filter(node => node.includes(term))
-}
+const initialNode = "cdc.gov"
 
+const yellow = "#FFC300"
+// const ruby = "#900C3F"
+const maroon = "#581845"
 export default function Graph() {
   const graphRef = useRef()
   const [sensitivity, setSensitivity] = useState(0.75)
   const [state, dispatch] = useReducer(networkReducer, {})
   const { graphData, globalPageRanks, nodeDetails } = state
-  const allNodes = globalPageRanks && Object.keys(globalPageRanks).sort()
-  const allNodesSet = allNodes && new Set([...allNodes])
-  const [hoverNode, setHoverNode] = useState(null)
-  const [lastHoverNode, setLastHoverNode] = useState(null)
+  const allNodes = useMemo(
+    () => globalPageRanks && Object.keys(globalPageRanks).sort(),
+    [globalPageRanks]
+  )
 
-  const [term, setTerm] = React.useState("")
-  const results = useCityMatch(term)
-  const handleNodeSearchChange = event => {
-    const nodeName = event.target.value
-    if (allNodesSet.has(nodeName)) {
-      dispatch({ type: "START_NEW", payload: { nodeName } })
-      setTerm("")
-    } else {
-      setTerm(nodeName)
-    }
-  }
-  // const [startNodeName, setStartNodeName] = useState("");
-  // const handleChange = event => setStartNodeName(event.target.value);
-  function useCityMatch(term) {
-    const throttledTerm = useThrottle(term, 100)
-    return React.useMemo(() => matchSorter(allNodes, throttledTerm), [
-      throttledTerm,
-    ])
-  }
+  const [hoverNode, setHoverNode] = useState(null)
+  const [highlightNode, setHighlightNode] = useState(initialNode)
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/")
@@ -67,34 +43,17 @@ export default function Graph() {
         dispatch({ type: "SET_GLOBAL_PAGERANKS", payload: globalPageRanks })
       )
       .then(() =>
-        dispatch({ type: "START_NEW", payload: { nodeName: "hhs.gov" } })
+        dispatch({ type: "START_NEW", payload: { nodeName: initialNode } })
       )
   }, [])
-  useEffect(() => {
-    document.title = lastHoverNode ? lastHoverNode.name : "no node hovered"
-  }, [lastHoverNode])
-  useEffect(() => {}, [hoverNode])
-  useEffect(() => {
-    const graph = graphRef.current
 
-    if (graph) {
-      graph
-        .d3Force(
-          "link",
-          d3
-            .forceLink()
-            .id(d => d.id)
-            .distance(0)
-            .strength(1)
-        )
-        .d3Force("charge", d3.forceManyBody().strength(-50))
-    }
+  const handleNodeHover = useCallback((node, ctx, globalScale) => {
+    setHoverNode((node && nameForNode(node)) || null)
   }, [])
 
   const handleNodeClick = useCallback(
     node => {
-      // node.fx = node.x
-      // node.fy = node.y
+      setHighlightNode(nameForNode(node))
       nodeUpdate(globalPageRanks, nodeDetails, node, sensitivity).then(
         edges =>
           edges &&
@@ -104,11 +63,9 @@ export default function Graph() {
     [globalPageRanks, sensitivity, nodeDetails]
   )
 
-  const handleNodeHover = useCallback((node, ctx, globalScale) => {
-    setHoverNode(node || null)
-    if (node) {
-      setLastHoverNode(`${node.name}.gov`)
-    }
+  const handleNodeRightClick = useCallback((node, event) => {
+    event.preventDefault()
+    setHighlightNode(nameForId(node.id))
   }, [])
 
   const handleSensitivityUpdate = useCallback(
@@ -117,35 +74,32 @@ export default function Graph() {
       if (!graphData?.links?.length) {
         return
       }
-
-      console.log("handling sensitivity update")
       const { add, del } = sensUpdate(globalPageRanks, nodeDetails, sensitivity)
       add.forEach(edge => dispatch({ type: "ADD_EDGE", payload: edge }))
       del.forEach(edge => dispatch({ type: "DEL_EDGE", payload: edge }))
     },
     [globalPageRanks, nodeDetails, graphData?.links?.length] // nodeDetails, globalPageRanks, graphData.links.length
   )
-  const paintNode = (node, ctx, globalScale) => {
-    const label = node.name
-    const fontSize =
-      (12 / globalScale) * (node.name === hoverNode?.name ? 3 : 1.0)
-    ctx.font = `${fontSize}px Sans-Serif`
-    const textWidth = ctx.measureText(label).width
-    const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2) // some padding
 
-    ctx.fillStyle = "#101020"
+  const paintNode = (node, ctx, globalScale) => {
+    const name = nameForId(node.id)
+    const fontSize = (12 / globalScale) * (name === hoverNode ? 2.5 : 1.0)
+    ctx.font = `${fontSize}px Sans-Serif`
+    const textWidth = ctx.measureText(name).width
+    const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2) // some padding
+    ctx.fillStyle = "transparent"
     ctx.fillRect(
       node.x - bckgDimensions[0] / 2,
       node.y - bckgDimensions[1] / 2,
       ...bckgDimensions
     )
-
     ctx.textAlign = "center"
     ctx.textBaseline = "middle"
     ctx.fillStyle = node.color
-    ctx.fillText(label, node.x, node.y)
+    ctx.fillText(name, node.x, node.y)
     node.__bckgDimensions = bckgDimensions
   }
+
   const particlesForSensitivity = useCallback(
     link =>
       link._sensitivity <= 0.25
@@ -161,89 +115,112 @@ export default function Graph() {
   return globalPageRanks && graphData?.nodes?.length ? (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div>
-        <h4>Start New Graph</h4>
-        <Combobox
-          aria-label="Nodes"
-          onSelect={nodeName => {
-            dispatch({
-              type: "START_NEW",
-              payload: { nodeName },
-            })
-          }}
-        >
-          <ComboboxInput
-            placeholder="better than nothing"
-            // style={{ background: "blue" }}
-            selectOnClick={true}
-            className="node-search-input"
-            onChange={handleNodeSearchChange}
+        <h4 style={{ color: yellow }} autoFocus>
+          Start New Graph
+        </h4>
+        {allNodes && (
+          <Dropdown
+            allNodes={allNodes}
+            dispatch={dispatch}
+            setHighlightNode={setHighlightNode}
           />
-          {results && (
-            <ComboboxPopover className="shadow-popup">
-              {results.length > 0 ? (
-                <ComboboxList>
-                  {results.slice(0, 10).map((result, index) => (
-                    <ComboboxOption key={index} value={result} />
-                  ))}
-                </ComboboxList>
-              ) : (
-                <span style={{ display: "block", margin: 8 }}>
-                  No results found
-                </span>
-              )}
-            </ComboboxPopover>
-          )}
-        </Combobox>
+        )}
       </div>
-      <div style={{ display: "flex" }}>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <ForceGraph2D
-            width={window.innerWidth * 0.75}
-            height={window.innerHeight * 0.8}
-            ref={graphRef}
-            linkDirectionalParticles={particlesForSensitivity}
-            backgroundColor="#101020"
-            linkColor="yellow"
-            graphData={graphData}
-            onNodeClick={handleNodeClick}
-            onNodeHover={handleNodeHover}
-            // onLinkHover={handleLinkHover}
-            nodeAutoColorBy="name"
-            nodeCanvasObject={paintNode}
-            nodePointerAreaPaint={(node, color, ctx) => {
-              ctx.fillStyle = color
-              const bckgDimensions = node.__bckgDimensions
-              bckgDimensions &&
-                ctx.fillRect(
-                  node.x - bckgDimensions[0] / 2,
-                  node.y - bckgDimensions[1] / 2,
-                  ...bckgDimensions
-                )
+      <div
+        style={{
+          display: "flex",
+          position: "absolute",
+          margin: 0,
+          padding: 0,
+          top: "12vh",
+          left: "3vw",
+        }}
+      >
+        <div
+          style={{ width: "70vw", display: "flex", flexDirection: "column" }}
+        >
+          <div
+            style={{
+              display: "flex",
+              border: `2px solid ${yellow}`,
+              margin: "2em",
             }}
-          />
-          <div style={{ margin: "24" }}>
+          >
+            <ForceGraph2D
+              width={window.innerWidth * 0.6}
+              height={window.innerHeight * 0.7}
+              ref={graphRef}
+              linkDirectionalParticles={particlesForSensitivity}
+              backgroundColor={maroon}
+              linkColor="yellow"
+              graphData={graphData}
+              onNodeClick={handleNodeClick}
+              onNodeRightClick={handleNodeRightClick}
+              onNodeHover={handleNodeHover}
+              nodeAutoColorBy="displayName"
+              nodeCanvasObject={paintNode}
+              nodePointerAreaPaint={(node, color, ctx) => {
+                ctx.fillStyle = color
+                const bckgDimensions = node.__bckgDimensions
+                bckgDimensions &&
+                  ctx.fillRect(
+                    node.x - bckgDimensions[0] / 2,
+                    node.y - bckgDimensions[1] / 2,
+                    ...bckgDimensions
+                  )
+              }}
+            />
+          </div>
+          <div style={{ margin: "1vmax" }}>
             <Slider
+              style={{ background: maroon }}
               value={sensitivity}
               onChange={handleSensitivityUpdate}
               min={0}
               max={1}
               step={0.025}
             />
-            <p>Sensitivity: {sensitivity}</p>
+            <p style={{ color: "#FFC300" }}>Sensitivity: {sensitivity}</p>
           </div>
-        </div>
-        {/* <h1>{lastHoverNode}</h1> */}
 
-        {/* <iframe
-          key={lastHoverNode}
-          src={
-            lastHoverNode
-              ? `http://127.0.0.1:8000/proxy/${lastHoverNode}`
-              : "about:blank" // replace about.blank with a site that gives info
-          }
-          title="Preview"
-          style={{ width: "25vw", height: "80vh", overflow: "auto" }}
-        /> */}
+          {/* <h1>{lastHoverNode}</h1> */}
+
+          {/*  */}
+        </div>
+        <div
+          style={{
+            width: "22vw",
+            margin: "1vw",
+          }}
+        >
+          <h2>
+            <a
+              href={`https://${highlightNode}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {highlightNode}
+            </a>
+          </h2>
+          <SubgraphStats highlightNode={highlightNode} />
+          <iframe
+            key={highlightNode}
+            src={
+              highlightNode
+                ? `http://127.0.0.1:8000/proxy/${highlightNode}`
+                : "about:blank" // replace about.blank with a site that gives info
+            }
+            title="Preview"
+            style={{
+              width: "100%",
+              height: "90%",
+              overflow: "auto",
+
+              border: `3px solid ${yellow}`,
+            }}
+            // sandbox
+          />
+        </div>
       </div>
     </div>
   ) : null
