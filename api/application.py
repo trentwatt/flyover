@@ -51,14 +51,10 @@ num_vertices_in_original = len(original_pagerank)
 def get_subgraph_data(vertex, mode="ALL"):
     subgraph = get_adjacent_subgraph(vertex, mode=mode)
     num_vertices = len(subgraph.vs)
-    pagerank_in_original = {
-        "rank": pagerank_rankings[vertex],
-        "total": num_vertices_in_original,
-    }
+
     subgraph_pageranks = labeled_pagerank(subgraph)
     return {
         "num_vertices": num_vertices,
-        "pagerank_in_original": pagerank_in_original,
         "subgraph_pageranks": subgraph_pageranks,
     }
 
@@ -83,7 +79,16 @@ def get_original_pagerank():
 def get_node_data(node):
     incoming = get_subgraph_data(node, mode="IN")
     outgoing = get_subgraph_data(node, mode="OUT")
-    return {"node": node, "incoming": incoming, "outgoing": outgoing}
+    pagerank_in_original = {
+        "rank": pagerank_rankings[node],
+        "total": num_vertices_in_original,
+    }
+    return {
+        "node": node,
+        "pagerank_in_original": pagerank_in_original,
+        "incoming": incoming,
+        "outgoing": outgoing,
+    }
 
 
 # def base_normalize(sub, orig, sensitivity=0.75):
@@ -106,7 +111,6 @@ def get_node_data(node):
 #     return relative_pagerank(subgraph, normalize=normalize, sensitivity=sensitivity)
 
 user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B137 Safari/601.1"
-user_agent = ""
 
 
 async def fetch(session, url):
@@ -118,14 +122,14 @@ async def fetch(session, url):
 async def get_proxied_site(site):
     async with aiohttp.ClientSession() as session:
         try:
-            html = await fetch(session, f"https://{site}")
+            html = await fetch(session, f"http://{site}")
             html_content = (
                 html.strip()
                 .replace('href="/', f'href="https://{site}/ ')  # target="_blank"
                 .replace('src="/', f'src="https://{site}/')
                 .replace("url('/", f"url('https://{site}/")
                 .replace("url('../", f"url('https://{site}/..")
-                # .replace("'/", f"'/{site}")
+                .replace("'/", f"'/{site}")
             )
             with open("h.html", "w") as f:
                 f.write(html_content)
