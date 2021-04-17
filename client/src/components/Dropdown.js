@@ -1,10 +1,9 @@
-import React, { useState, useCallback, useRef, useMemo } from "react"
+import { useState, useRef, useCallback, useMemo } from "react"
 import { useCombobox } from "downshift"
 import { useVirtual } from "react-virtual"
 
 const ruby = "#900C3F"
 const maroon = "#581845"
-const comboboxStyles = {}
 const menuStyles = {
   maxHeight: 120,
   maxWidth: 300,
@@ -17,22 +16,22 @@ const menuStyles = {
 }
 
 export default function Dropdown({ allNodes, dispatch, setHighlightNode }) {
-  const getItems = useCallback(
-    search => allNodes.filter(n => n.toLowerCase().includes(search)),
-    [allNodes]
-  )
+  const [inputValue, setInputValue] = useState("")
+  const getItems = search =>
+    allNodes.filter(n => n.toLowerCase().startsWith(search))
+  const items = getItems(inputValue)
   const allNodesSet = useMemo(() => allNodes && new Set([...allNodes]), [
     allNodes,
   ])
-  const [inputValue, setInputValue] = useState("")
-  const items = getItems(inputValue)
+
   const listRef = useRef()
   const rowVirtualizer = useVirtual({
     size: items.length,
     parentRef: listRef,
-    estimateSize: useCallback(() => 30, []),
+    estimateSize: useCallback(() => 20, []),
     overscan: 2,
   })
+
   const {
     getInputProps,
     getItemProps,
@@ -46,6 +45,7 @@ export default function Dropdown({ allNodes, dispatch, setHighlightNode }) {
   } = useCombobox({
     items,
     inputValue,
+    // defaultIsOpen: true,
     onInputValueChange: ({ inputValue: newValue }) => {
       setInputValue(newValue)
       if (allNodesSet.has(newValue)) {
@@ -53,7 +53,7 @@ export default function Dropdown({ allNodes, dispatch, setHighlightNode }) {
         dispatch({ type: "START_NEW", payload: { nodeName: newValue } })
       }
     },
-    scrollIntoView: () => {},
+    // scrollIntoView: () => {},
     onHighlightedIndexChange: ({ highlightedIndex }) =>
       rowVirtualizer.scrollToIndex(highlightedIndex),
   })
@@ -62,7 +62,7 @@ export default function Dropdown({ allNodes, dispatch, setHighlightNode }) {
     <div>
       <div>
         <label {...getLabelProps()}>Choose a Start Node:</label>
-        <div {...getComboboxProps()} style={comboboxStyles}>
+        <div {...getComboboxProps()}>
           <input
             {...getInputProps({
               onFocus: () => {
@@ -71,6 +71,8 @@ export default function Dropdown({ allNodes, dispatch, setHighlightNode }) {
                 }
               },
               type: "text",
+              position: "fixed",
+              style: { zIndex: 100 },
             })}
           />
         </div>
@@ -86,7 +88,7 @@ export default function Dropdown({ allNodes, dispatch, setHighlightNode }) {
             <li key="total-size" style={{ height: rowVirtualizer.totalSize }} />
             {rowVirtualizer.virtualItems.map(virtualRow => (
               <li
-                key={items[virtualRow.index].id}
+                key={items[virtualRow.index]}
                 {...getItemProps({
                   index: virtualRow.index,
                   item: items[virtualRow.index],

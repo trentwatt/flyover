@@ -1,4 +1,10 @@
 import { v4 as uuid } from "uuid"
+
+// export const baseUrl = "http://127.0.0.1:8000" // api-LoadBal-FST3Z3OAYO6M-1619812618.us-west-1.elb.amazonaws.com:80
+
+export const baseUrl =
+  "http://api-LoadBal-FST3Z3OAYO6M-1619812618.us-west-1.elb.amazonaws.com:80"
+
 export function nameForId(id) {
   return id.split(" ")[1]
 }
@@ -56,27 +62,34 @@ export function getRelativePageRanks(
 
 export async function getSubgraphData(name) {
   const storedValue = JSON.parse(localStorage.getItem(name))
-  let incomingPageRanks, outgoingPageRanks, inVertices, outVertices, rank
+  let incomingPageRanks,
+    outgoingPageRanks,
+    inVertices,
+    outVertices,
+    vRank,
+    totalVertices
   if (storedValue) {
     ;({
       incomingPageRanks,
       outgoingPageRanks,
       inVertices,
       outVertices,
-      rank,
+      vRank,
+      totalVertices,
     } = storedValue)
   } else {
     ;({
+      pagerank_in_original: { rank: vRank, total: totalVertices },
       incoming: {
         num_vertices: inVertices,
-        pagerank_in_original: rank,
+
         subgraph_pageranks: incomingPageRanks,
       },
       outgoing: {
         num_vertices: outVertices,
         subgraph_pageranks: outgoingPageRanks,
       },
-    } = await fetch(`http://127.0.0.1:8000/nodes/${name}`).then(response =>
+    } = await fetch(`${baseUrl}/nodes/${name}`).then(response =>
       response.json()
     ))
     localStorage.setItem(
@@ -86,12 +99,20 @@ export async function getSubgraphData(name) {
         outgoingPageRanks,
         inVertices,
         outVertices,
-        rank,
+        vRank,
+        totalVertices,
       })
     )
   }
 
-  return { incomingPageRanks, outgoingPageRanks, inVertices, outVertices, rank }
+  return {
+    incomingPageRanks,
+    outgoingPageRanks,
+    inVertices,
+    outVertices,
+    vRank,
+    totalVertices,
+  }
 }
 
 export function setDifference(setA, setB) {

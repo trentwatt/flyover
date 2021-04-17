@@ -1,4 +1,4 @@
-import { getRelativePageRanks, nameForId } from './utils'
+import { getRelativePageRanks, nameForId } from "./utils"
 export function sensUpdate(globalPageRanks, nodeDetails, sensitivity) {
   let add = []
   let del = []
@@ -21,7 +21,6 @@ export function sensUpdate(globalPageRanks, nodeDetails, sensitivity) {
         // there is a possible race condition we might want to handle at some point
       }
       const { incomingPageRanks, outgoingPageRanks } = storedValue
-
       const topIncoming = getRelativePageRanks(
         incomingPageRanks,
         globalPageRanks,
@@ -33,11 +32,11 @@ export function sensUpdate(globalPageRanks, nodeDetails, sensitivity) {
 
       topIncoming.forEach(
         childName =>
-          (add = [...add, { parentId, childName, sensitivity, type: 'in' }])
+          (add = [...add, { parentId, childName, sensitivity, type: "in" }])
       )
       leavesInIds
         .filter(childId => !topIncoming.includes(nameForId(childId)))
-        .forEach(childId => (del = [...del, { parentId, childId, type: 'in' }]))
+        .forEach(childId => (del = [...del, { parentId, childId, type: "in" }]))
 
       const topOutgoing = getRelativePageRanks(
         outgoingPageRanks,
@@ -50,12 +49,12 @@ export function sensUpdate(globalPageRanks, nodeDetails, sensitivity) {
 
       topOutgoing.forEach(
         childName =>
-          (add = [...add, { parentId, childName, sensitivity, type: 'out' }])
+          (add = [...add, { parentId, childName, sensitivity, type: "out" }])
       )
       leavesOutIds
         .filter(childId => !topOutgoing.includes(nameForId(childId)))
         .forEach(
-          childId => (del = [...del, { parentId, childId, type: 'out' }])
+          childId => (del = [...del, { parentId, childId, type: "out" }])
         )
     }
   )

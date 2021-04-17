@@ -1,18 +1,16 @@
-import React, { useEffect, useReducer, useState, useMemo } from "react"
-import Dropdown from "./components/Dropdown"
-import Sidebar from "./components/Sidebar"
-import SensSlider from "./components/SensSlider"
-import Graph from "./components/Graph"
+import React, { useReducer, useState, useMemo } from "react"
+import Dropdown from "./Dropdown"
+import Sidebar from "../src/components/Sidebar"
+import SensSlider from "../src/components/SensSlider"
+import Graph from "../src/components/Graph"
 
-import { baseUrl } from "./utilities/utils"
+import { networkReducer } from "../src/utilities/reducer"
 
-import { networkReducer } from "./utilities/reducer"
-
-import { yellow } from "./utilities/colors"
+import { yellow } from "../src/utilities/colors"
 
 const initialNode = "cdc.gov"
 
-function App() {
+export default function Apps() {
   const [sensitivity, setSensitivity] = useState(0.75)
   const [state, dispatch] = useReducer(networkReducer, {})
   const { graphData, globalPageRanks } = state
@@ -21,17 +19,8 @@ function App() {
     [globalPageRanks]
   )
 
-  useEffect(() => {
-    fetch(`${baseUrl}`)
-      .then(response => response.json())
-      .then(globalPageRanks =>
-        dispatch({ type: "SET_GLOBAL_PAGERANKS", payload: globalPageRanks })
-      )
-      .then(() =>
-        dispatch({ type: "START_NEW", payload: { nodeName: initialNode } })
-      )
-  }, [])
   const [highlightNode, setHighlightNode] = useState(initialNode)
+
   return globalPageRanks && graphData?.nodes?.length ? (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div>
@@ -47,7 +36,6 @@ function App() {
         )}
       </div>
       <div
-        id="main-body-container"
         style={{
           display: "flex",
           position: "absolute",
@@ -59,7 +47,6 @@ function App() {
         }}
       >
         <div
-          id="graph-sens-panel"
           style={{
             width: "70vw",
             display: "flex",
@@ -85,5 +72,3 @@ function App() {
     </div>
   ) : null
 }
-
-export default App
