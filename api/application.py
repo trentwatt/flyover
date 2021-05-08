@@ -24,7 +24,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -42,7 +42,7 @@ def labeled_pagerank(graph):
 
 original_pagerank = labeled_pagerank(graph)
 pagerank_rankings = {
-    vertex: i + i for i, (vertex, _) in enumerate(original_pagerank.items())
+    vertex: i + 1 for i, (vertex, _) in enumerate(original_pagerank.items())
 }
 num_vertices_in_original = len(original_pagerank)
 # %%
@@ -110,7 +110,8 @@ def get_node_data(node):
 #     subgraph = get_adjacent_subgraph(vertex, mode=mode)
 #     return relative_pagerank(subgraph, normalize=normalize, sensitivity=sensitivity)
 
-user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B137 Safari/601.1"
+user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
+# user_agent = ""
 
 
 async def fetch(session, url):
@@ -122,16 +123,19 @@ async def fetch(session, url):
 async def get_proxied_site(site):
     async with aiohttp.ClientSession() as session:
         try:
-            html = await fetch(session, f"http://{site}")
+            html = await fetch(session, f"https://www.{site}")
+            with open("before.html", "w") as f:
+                f.write(html)
             html_content = (
                 html.strip()
-                .replace('href="/', f'href="https://{site}/ ')  # target="_blank"
-                .replace('src="/', f'src="https://{site}/')
-                .replace("url('/", f"url('https://{site}/")
-                .replace("url('../", f"url('https://{site}/..")
+                .replace('href="/', f'href="https://www.{site}/')  # target="_blank"
+                # .replace('href="', f'href="https://www.{site}/')  # target="_blank"
+                .replace('src="/', f'src="https://www.{site}/')
+                .replace("url('/", f"url('https://www.{site}/")
+                .replace("url('../", f"url('https://www.{site}/..")
                 .replace("'/", f"'/{site}")
             )
-            with open("h.html", "w") as f:
+            with open("after.html", "w") as f:
                 f.write(html_content)
             return HTMLResponse(content=html_content, status_code=200)
         except:

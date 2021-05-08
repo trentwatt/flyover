@@ -1,9 +1,12 @@
 import { v4 as uuid } from "uuid"
 
-// export const baseUrl = "http://127.0.0.1:8000" // api-LoadBal-FST3Z3OAYO6M-1619812618.us-west-1.elb.amazonaws.com:80
+// export const baseUrl = "http://api:80"
 
-export const baseUrl =
-  "http://api-LoadBal-FST3Z3OAYO6M-1619812618.us-west-1.elb.amazonaws.com:80"
+export const baseUrl = "https://metaphistopheles.azurewebsites.net/"
+// export const baseUrl = "http://127.0.0.1:80" // api-LoadBal-FST3Z3OAYO6M-1619812618.us-west-1.elb.amazonaws.com:80
+
+// export const baseUrl =
+//   "http://api-LoadBal-FST3Z3OAYO6M-1619812618.us-west-1.elb.amazonaws.com:80"
 
 export function nameForId(id) {
   return id.split(" ")[1]
