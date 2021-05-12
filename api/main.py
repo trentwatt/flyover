@@ -124,8 +124,8 @@ async def get_proxied_site(site):
     async with aiohttp.ClientSession() as session:
         try:
             html = await fetch(session, f"https://www.{site}")
-            with open("before.html", "w") as f:
-                f.write(html)
+            # with open("before.html", "w") as f:
+            #     f.write(html)
             html_content = (
                 html.strip()
                 .replace('href="/', f'href="https://www.{site}/')  # target="_blank"
@@ -135,8 +135,8 @@ async def get_proxied_site(site):
                 .replace("url('../", f"url('https://www.{site}/..")
                 .replace("'/", f"'/{site}")
             )
-            with open("after.html", "w") as f:
-                f.write(html_content)
+            # with open("after.html", "w") as f:
+            #     f.write(html_content)
             return HTMLResponse(content=html_content, status_code=200)
         except:
             return HTMLResponse(

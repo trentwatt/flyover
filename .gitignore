@@ -15,7 +15,7 @@ node_modules
 
 __pycache__
 # production
-/build
+build
 
 # misc
 .DS_Store
@@ -30,3 +30,5 @@ yarn-error.log*
 
 
 /venv
+
+.deta
