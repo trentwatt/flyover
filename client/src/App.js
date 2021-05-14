@@ -56,6 +56,7 @@ function App() {
           padding: 0,
           top: "12vh",
           left: "3vw",
+          height: "88vh",
         }}
       >
         <div

@@ -1,14 +1,13 @@
 import { useState, useRef, useCallback, useMemo } from "react"
 import { useCombobox } from "downshift"
 import { useVirtual } from "react-virtual"
+import { liteGreen, peach } from "../utilities/colors"
 
-const ruby = "#900C3F"
-const maroon = "#581845"
 const menuStyles = {
   maxHeight: 120,
   maxWidth: 300,
   overflowY: "scroll",
-  backgroundColor: ruby,
+  backgroundColor: liteGreen,
   padding: 0,
   listStyle: "none",
   position: "relative",
@@ -20,9 +19,10 @@ export default function Dropdown({ allNodes, dispatch, setHighlightNode }) {
   const getItems = search =>
     allNodes.filter(n => n.toLowerCase().startsWith(search))
   const items = getItems(inputValue)
-  const allNodesSet = useMemo(() => allNodes && new Set([...allNodes]), [
-    allNodes,
-  ])
+  const allNodesSet = useMemo(
+    () => allNodes && new Set([...allNodes]),
+    [allNodes]
+  )
 
   const listRef = useRef()
   const rowVirtualizer = useVirtual({
@@ -94,9 +94,7 @@ export default function Dropdown({ allNodes, dispatch, setHighlightNode }) {
                   item: items[virtualRow.index],
                   style: {
                     backgroundColor:
-                      highlightedIndex === virtualRow.index
-                        ? maroon
-                        : "inherit",
+                      highlightedIndex === virtualRow.index ? peach : "inherit",
                     // fontWeight:
                     //   selectedItem &&
                     //   selectedItem.id === items[virtualRow.index].id

@@ -1,5 +1,5 @@
 import SubgraphStats from "./SubgraphStats"
-import { yellow } from "../utilities/colors"
+import { periwinkle } from "../utilities/colors"
 import { baseUrl } from "../utilities/utils"
 
 export default function Sidebar({ highlightNode }) {
@@ -26,7 +26,7 @@ export default function Sidebar({ highlightNode }) {
           width: "100%",
           height: "75%",
           overflow: "auto",
-          border: `3px solid ${yellow}`,
+          border: `1px solid ${periwinkle}`,
         }}
       />
     </div>

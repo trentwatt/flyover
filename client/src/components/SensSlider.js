@@ -1,5 +1,5 @@
 import { Slider } from "@reach/slider"
-import { yellow, maroon } from "../utilities/colors"
+import { yellow, background } from "../utilities/colors"
 import { sensUpdate } from "../utilities/sensUpdate"
 import { useCallback } from "react"
 import "@reach/slider/styles.css"
@@ -32,7 +32,7 @@ export default function SensSlider({
   return (
     <div style={{ margin: "1vmax" }}>
       <Slider
-        style={{ background: maroon }}
+        style={{ background: background }}
         value={sensitivity}
         onChange={handleSensitivityUpdate}
         min={0}

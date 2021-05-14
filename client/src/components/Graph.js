@@ -1,7 +1,7 @@
 import { useCallback, useState, useRef } from "react"
 import { nameForId, nameForNode } from "../utilities/utils"
 import { ForceGraph2D } from "react-force-graph"
-import { yellow, maroon } from "../utilities/colors"
+import { periwinkle, graphBackground } from "../utilities/colors"
 import { nodeUpdate } from "../utilities/nodeUpdate"
 
 const particlesForSensitivity = link =>
@@ -68,8 +68,9 @@ export default function Graph({
     <div
       style={{
         display: "flex",
-        border: `2px solid ${yellow}`,
+        border: `1px solid ${periwinkle}`,
         margin: "2em",
+        background: graphBackground,
       }}
     >
       <ForceGraph2D
@@ -77,7 +78,7 @@ export default function Graph({
         height={window.innerHeight * 0.7}
         ref={graphRef}
         linkDirectionalParticles={particlesForSensitivity}
-        backgroundColor={maroon}
+        backgroundColor={graphBackground}
         linkColor="yellow"
         graphData={graphData}
         onNodeClick={handleNodeClick}
