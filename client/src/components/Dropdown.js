@@ -59,9 +59,9 @@ export default function Dropdown({ allNodes, dispatch, setHighlightNode }) {
   })
 
   return (
-    <div>
+    <div style={{ paddingTop: "1em", paddingRight: "2em" }}>
       <div>
-        <label {...getLabelProps()}>Choose a Start Node:</label>
+        <label {...getLabelProps()}>Start New at:</label>
         <div {...getComboboxProps()}>
           <input
             {...getInputProps({

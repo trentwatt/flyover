@@ -13,7 +13,7 @@ export default function SubgraphStats({ highlightNode }) {
     <>
       <ul>
         <li>
-          Pagerank in Original: {data.vRank} of {data.totalVertices}
+          Pagerank: {data.vRank} of {data.totalVertices}
         </li>
         <li>Incoming Edges: {data.inVertices}</li>
         <li>Outgoing Edges: {data.outVertices}</li>

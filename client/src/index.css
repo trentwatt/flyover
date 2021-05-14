@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: "Courier New", Courier, monospace;
   background-color: #8e5f5f;
   color: #9f9fc2;
 }
@@ -24,4 +24,9 @@ a {
 
 [data-reach-slider-handle] {
   background: #9f9fc2;
+}
+
+h4 {
+  padding-left: 3em;
+  padding-top: 1em;
 }

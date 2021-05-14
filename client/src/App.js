@@ -8,8 +8,6 @@ import { baseUrl } from "./utilities/utils"
 
 import { networkReducer } from "./utilities/reducer"
 
-import { yellow } from "./utilities/colors"
-
 const initialNode = "cdc.gov"
 
 function App() {
@@ -34,17 +32,30 @@ function App() {
   const [highlightNode, setHighlightNode] = useState(initialNode)
   return globalPageRanks && graphData?.nodes?.length ? (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <div>
-        <h4 style={{ color: yellow }} autoFocus>
-          Start New Graph
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <div>
+          <p autoFocus></p>
+          {allNodes && (
+            <Dropdown
+              allNodes={allNodes}
+              dispatch={dispatch}
+              setHighlightNode={setHighlightNode}
+            />
+          )}
+        </div>
+        <h4>Explore Relatedness</h4>
+        <h4>Click Expands</h4>
+        <h4>Right Click Highlights</h4>
+        <h4>Slider Adjusts Sensitivity</h4>
+        <h4>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://github.com/trentwatt/flyover"
+          >
+            About
+          </a>
         </h4>
-        {allNodes && (
-          <Dropdown
-            allNodes={allNodes}
-            dispatch={dispatch}
-            setHighlightNode={setHighlightNode}
-          />
-        )}
       </div>
       <div
         id="main-body-container"

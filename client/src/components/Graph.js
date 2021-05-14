@@ -28,8 +28,8 @@ export default function Graph({
 
   const paintNode = (node, ctx, globalScale) => {
     const name = nameForId(node.id)
-    const fontSize = (12 / globalScale) * (name === hoverNode ? 2.5 : 1.0)
-    ctx.font = `${fontSize}px Sans-Serif`
+    const fontSize = (16 / globalScale) * (name === hoverNode ? 2.5 : 1.0)
+    ctx.font = `bold ${fontSize}px Courier New`
     const textWidth = ctx.measureText(name).width
     const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2) // some padding
     ctx.fillStyle = "transparent"

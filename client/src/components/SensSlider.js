@@ -30,7 +30,7 @@ export default function SensSlider({
     ]
   )
   return (
-    <div style={{ margin: "1vmax" }}>
+    <div style={{ marginLeft: "10%", width: "80%" }}>
       <Slider
         style={{ background: background }}
         value={sensitivity}
