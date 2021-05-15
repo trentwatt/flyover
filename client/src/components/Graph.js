@@ -3,6 +3,7 @@ import { nameForId, nameForNode } from "../utilities/utils"
 import { ForceGraph2D } from "react-force-graph"
 import { periwinkle, graphBackground } from "../utilities/colors"
 import { nodeUpdate } from "../utilities/nodeUpdate"
+import { isMobile } from "react-device-detect"
 
 const particlesForSensitivity = link =>
   link._sensitivity <= 0.25
@@ -69,13 +70,15 @@ export default function Graph({
       style={{
         display: "flex",
         border: `1px solid ${periwinkle}`,
-        margin: "2em",
+        margin: "2vmax",
         background: graphBackground,
       }}
     >
       <ForceGraph2D
-        width={window.innerWidth * 0.6}
+        width={isMobile ? window.innerWidth * 0.86 : window.innerWidth * 0.65}
         height={window.innerHeight * 0.7}
+        // width="91vw"
+        // height="85vh"
         ref={graphRef}
         linkDirectionalParticles={particlesForSensitivity}
         backgroundColor={graphBackground}

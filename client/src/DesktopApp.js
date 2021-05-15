@@ -31,7 +31,12 @@ function App() {
   }, [])
   const [highlightNode, setHighlightNode] = useState(initialNode)
   return globalPageRanks && graphData?.nodes?.length ? (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <div style={{ display: "flex", flexDirection: "row" }}>
         <div>
           <p autoFocus></p>

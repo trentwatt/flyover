@@ -1,11 +1,13 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import App from "./App"
+import DesktopApp from "./DesktopApp"
+import MobileApp from "./MobileApp"
 import "./index.css"
+import { isMobile } from "react-device-detect"
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    {isMobile ? <MobileApp /> : <DesktopApp />}
   </React.StrictMode>,
   document.getElementById("root")
 )
