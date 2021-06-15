@@ -140,7 +140,7 @@ async def get_proxied_site(site):
             return HTMLResponse(content=html_content, status_code=200)
         except:
             return HTMLResponse(
-                content="<h2>Unable to retrieve preview</h2>", status_code=200
+                content="<h2>Unable to retrieve preview</h2>", status_code=200,
             )
 
 
