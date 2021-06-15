@@ -11,7 +11,7 @@ import { networkReducer } from "./utilities/reducer"
 const initialNode = "cdc.gov"
 
 function App() {
-  const [sensitivity, setSensitivity] = useState(0.75)
+  const [altitude, setAltitude] = useState(7500)
   const [state, dispatch] = useReducer(networkReducer, {})
   const { graphData, globalPageRanks } = state
   const allNodes = useMemo(
@@ -53,7 +53,7 @@ function App() {
         {/* <h4>Explore Relatedness</h4>
         <h4>Click Expands</h4>
         <h4>Right Click Highlights</h4>
-        <h4>Slider Adjusts Sensitivity</h4> */}
+        <h4>Slider Adjusts Altitude</h4> */}
         <h4>
           <a
             target="_blank"
@@ -90,11 +90,11 @@ function App() {
             state={state}
             dispatch={dispatch}
             setHighlightNode={setHighlightNode}
-            sensitivity={sensitivity}
+            altitude={altitude}
           />
           <SensSlider
-            sensitivity={sensitivity}
-            setSensitivity={setSensitivity}
+            altitude={altitude}
+            setAltitude={setAltitude}
             state={state}
             dispatch={dispatch}
           />

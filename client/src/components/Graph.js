@@ -1,5 +1,9 @@
 import { useCallback, useState, useRef } from "react"
-import { nameForId, nameForNode } from "../utilities/utils"
+import {
+  nameForId,
+  nameForNode,
+  sensitivityForAltitude,
+} from "../utilities/utils"
 import { ForceGraph2D } from "react-force-graph"
 import { periwinkle, graphBackground } from "../utilities/colors"
 import { nodeUpdate } from "../utilities/nodeUpdate"
@@ -14,12 +18,7 @@ const particlesForSensitivity = link =>
     ? 3
     : 4
 
-export default function Graph({
-  state,
-  dispatch,
-  setHighlightNode,
-  sensitivity,
-}) {
+export default function Graph({ state, dispatch, setHighlightNode, altitude }) {
   const { graphData, globalPageRanks, nodeDetails } = state
   const [hoverNode, setHoverNode] = useState(null)
   const graphRef = useRef()
@@ -49,13 +48,18 @@ export default function Graph({
   const handleNodeClick = useCallback(
     node => {
       setHighlightNode(nameForNode(node))
-      nodeUpdate(globalPageRanks, nodeDetails, node, sensitivity).then(
+      nodeUpdate(
+        globalPageRanks,
+        nodeDetails,
+        node,
+        sensitivityForAltitude(altitude)
+      ).then(
         edges =>
           edges &&
           edges.forEach(edge => dispatch({ type: "ADD_EDGE", payload: edge }))
       )
     },
-    [globalPageRanks, sensitivity, nodeDetails, setHighlightNode, dispatch]
+    [globalPageRanks, altitude, nodeDetails, setHighlightNode, dispatch]
   )
 
   const handleNodeRightClick = useCallback(

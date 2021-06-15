@@ -1,23 +1,23 @@
 import { Slider } from "@reach/slider"
+import { sensitivityForAltitude } from "../utilities/utils"
 import { yellow, background } from "../utilities/colors"
 import { sensUpdate } from "../utilities/sensUpdate"
 import { useCallback } from "react"
 import "@reach/slider/styles.css"
 
-export default function SensSlider({
-  sensitivity,
-  setSensitivity,
-  state,
-  dispatch,
-}) {
+export default function SensSlider({ altitude, setAltitude, state, dispatch }) {
   const { graphData, globalPageRanks, nodeDetails } = state
-  const handleSensitivityUpdate = useCallback(
-    sensitivity => {
-      setSensitivity(sensitivity)
+  const handleAltitudeChange = useCallback(
+    altitude => {
+      setAltitude(altitude)
       if (!graphData?.links?.length) {
         return
       }
-      const { add, del } = sensUpdate(globalPageRanks, nodeDetails, sensitivity)
+      const { add, del } = sensUpdate(
+        globalPageRanks,
+        nodeDetails,
+        sensitivityForAltitude(altitude)
+      )
       add.forEach(edge => dispatch({ type: "ADD_EDGE", payload: edge }))
       del.forEach(edge => dispatch({ type: "DEL_EDGE", payload: edge }))
     },
@@ -26,20 +26,20 @@ export default function SensSlider({
       nodeDetails,
       graphData?.links?.length,
       dispatch,
-      setSensitivity,
+      setAltitude,
     ]
   )
   return (
     <div style={{ marginLeft: "10%", width: "80%" }}>
       <Slider
         style={{ background: background }}
-        value={sensitivity}
-        onChange={handleSensitivityUpdate}
+        value={altitude}
+        onChange={handleAltitudeChange}
         min={0}
-        max={1}
-        step={0.025}
+        max={30000}
+        step={750}
       />
-      <p style={{ color: yellow }}>Sensitivity: {sensitivity}</p>
+      <p style={{ color: yellow }}>Altitude: {altitude} ft</p>
     </div>
   )
 }

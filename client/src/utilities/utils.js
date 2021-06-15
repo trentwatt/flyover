@@ -16,6 +16,14 @@ export function displayNameForName(name) {
   return name.split(".")[0]
 }
 
+export function altitudeForSensitivity(sensitivity) {
+  return 30000 - 30000 * sensitivity
+}
+
+export function sensitivityForAltitude(altitude) {
+  return -altitude / 30000 + 1
+}
+
 export function idForLink(link) {
   if (!new Set(["in", "out", "orig"]).has(link.type)) {
     console.log({ link })
