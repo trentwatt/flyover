@@ -7,11 +7,17 @@ body {
 input {
   background-color: #ebaaa9;
   color: inherit;
-  border: none;
+  border: #ebaaa9;
+  border-radius: 3px;
 }
 
 a {
   color: inherit;
+}
+
+input[type="text"] {
+  font-size: inherit;
+  font-family: inherit;
 }
 
 [data-reach-slider-range] {

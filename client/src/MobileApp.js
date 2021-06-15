@@ -4,7 +4,7 @@ import Dropdown from "./components/Dropdown"
 import SensSlider from "./components/SensSlider"
 import Graph from "./components/Graph"
 
-import { baseUrl } from "./utilities/utils"
+import { baseUrl, nameForNode, getSubgraphData } from "./utilities/utils"
 
 import { networkReducer } from "./utilities/reducer"
 
@@ -18,6 +18,11 @@ function App() {
     () => globalPageRanks && Object.keys(globalPageRanks).sort(),
     [globalPageRanks]
   )
+  const displayNodes = useMemo(
+    () => new Set(graphData && graphData.nodes?.map(node => nameForNode(node))),
+    [graphData]
+  )
+  displayNodes.forEach(getSubgraphData)
 
   useEffect(() => {
     fetch(`${baseUrl}`)
