@@ -1,10 +1,5 @@
-import {
-  genIdFromName,
-  displayNameForName,
-  idForLink,
-  displayNameForId,
-} from "./utils"
-
+import { genIdFromName, idForLink, displayNameForId } from "./utils"
+import { displayNameForName } from "../config"
 export const getInitialNetwork = initialNodeId => {
   return {
     graphData: {

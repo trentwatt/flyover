@@ -1,6 +1,6 @@
 import SubgraphStats from "./SubgraphStats"
 import { periwinkle } from "../utilities/colors"
-import { baseUrl } from "../utilities/utils"
+import { baseUrl } from "../config"
 
 export default function Sidebar({ highlightNode }) {
   return (
@@ -28,6 +28,7 @@ export default function Sidebar({ highlightNode }) {
           overflow: "auto",
           border: `1px solid ${periwinkle}`,
         }}
+        sandbox
       />
     </div>
   )

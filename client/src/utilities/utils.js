@@ -1,7 +1,5 @@
 import { v4 as uuid } from "uuid"
-
-export const baseUrl = "https://zr1qj7.deta.dev"
-// export const baseUrl = "https://womihg.deta.dev/"
+import { baseUrl, displayNameForName } from "../config"
 
 export function nameForId(id) {
   return id.split(" ")[1]
@@ -10,10 +8,6 @@ export function nameForId(id) {
 export function jsonLog(x) {
   console.log(JSON.stringify(x, null, 2))
   return x
-}
-
-export function displayNameForName(name) {
-  return name.split(".")[0]
 }
 
 export function altitudeForSensitivity(sensitivity) {
@@ -32,10 +26,6 @@ export function idForLink(link) {
   return `${link.type} ${link.parentId} ${
     link.childName || nameForId(link.childId)
   }`
-}
-
-export function nameForDisplayName(displayName) {
-  return `${displayName}.gov`
 }
 
 export function genIdFromName(name, type) {
@@ -96,7 +86,7 @@ export async function getSubgraphData(name) {
         num_vertices: outVertices,
         subgraph_pageranks: outgoingPageRanks,
       },
-    } = await fetch(`${baseUrl}/nodes/${name}`).then(response =>
+    } = await fetch(`${baseUrl}/subgraph_pagerank/${name}`).then(response =>
       response.json()
     ))
     localStorage.setItem(

@@ -15,8 +15,8 @@ const particlesForSensitivity = link =>
     : link._sensitivity <= 0.5
     ? 2
     : link._sensitivity <= 0.75
-    ? 3
-    : 4
+    ? 4
+    : 8
 
 export default function Graph({ state, dispatch, setHighlightNode, altitude }) {
   const { graphData, globalPageRanks, nodeDetails } = state

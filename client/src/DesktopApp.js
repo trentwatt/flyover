@@ -5,11 +5,10 @@ import Sidebar from "./components/Sidebar"
 import SensSlider from "./components/SensSlider"
 import Graph from "./components/Graph"
 
-import { baseUrl, nameForNode, getSubgraphData } from "./utilities/utils"
+import { nameForNode, getSubgraphData } from "./utilities/utils"
+import { initialNode, baseUrl } from "./config"
 
 import { networkReducer } from "./utilities/reducer"
-
-const initialNode = "cdc.gov"
 
 function App() {
   const [altitude, setAltitude] = useState(7500)
@@ -25,7 +24,7 @@ function App() {
   )
   displayNodes.forEach(getSubgraphData)
   useEffect(() => {
-    fetch(`${baseUrl}`)
+    fetch(`${baseUrl}/base_pagerank`)
       .then(response => response.json())
       .then(globalPageRanks =>
         dispatch({ type: "SET_GLOBAL_PAGERANKS", payload: globalPageRanks })

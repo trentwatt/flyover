@@ -4,11 +4,11 @@ import Dropdown from "./components/Dropdown"
 import SensSlider from "./components/SensSlider"
 import Graph from "./components/Graph"
 
-import { baseUrl, nameForNode, getSubgraphData } from "./utilities/utils"
+import { nameForNode, getSubgraphData } from "./utilities/utils"
 
 import { networkReducer } from "./utilities/reducer"
 
-const initialNode = "cdc.gov"
+import { baseUrl, initialNode } from "./config"
 
 function App() {
   const [altitude, setAltitude] = useState(7500)
