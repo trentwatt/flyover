@@ -25,7 +25,7 @@ function App() {
   displayNodes.forEach(getSubgraphData)
 
   useEffect(() => {
-    fetch(`${baseUrl}`)
+    fetch(`${baseUrl}/base_pagerank`)
       .then(response => response.json())
       .then(globalPageRanks =>
         dispatch({ type: "SET_GLOBAL_PAGERANKS", payload: globalPageRanks })
@@ -34,8 +34,7 @@ function App() {
         dispatch({ type: "START_NEW", payload: { nodeName: initialNode } })
       )
   }, [])
-  const [highlightNode, setHighlightNode] = useState(initialNode)
-  console.log(highlightNode)
+  const [, setHighlightNode] = useState(initialNode)
   return globalPageRanks && graphData?.nodes?.length ? (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div

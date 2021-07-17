@@ -12,11 +12,9 @@ navigator.brave &&
       x =>
         x &&
         alert(
-          "For some reason node hit detection doesnt work in Brave. I will try to fix. Apologies."
+          "For some reason doesn't work in Brave. I will try to fix. Apologies."
         )
     )
-
-console.log()
 
 ReactDOM.render(
   <React.StrictMode>

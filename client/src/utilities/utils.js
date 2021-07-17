@@ -20,7 +20,7 @@ export function sensitivityForAltitude(altitude) {
 
 export function idForLink(link) {
   if (!new Set(["in", "out", "orig"]).has(link.type)) {
-    console.log({ link })
+    // console.log({ link })
     throw new Error("invalid node type")
   }
   return `${link.type} ${link.parentId} ${
