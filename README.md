@@ -1,6 +1,6 @@
 # Flyover
 
-Exploring Networks from Above
+[Exploring Networks from Above](https://flyover.vercel.app)
 
 ![preview](/assets/flyover.gif)
 
@@ -42,7 +42,7 @@ new terminal session:
 
 ## Configurating
 
-To make this work with an different common crawl subgraph, the following steps are before you:
+To make this work with an different common crawl subgraph, the following steps are before ye:
 
 - Swap out the edgelist in /api/data/edges.txt with an edgelist of your choosing
 - Make the appropriate modifications to /client/src/config.js
@@ -50,4 +50,4 @@ To make this work with an different common crawl subgraph, the following steps a
   - change start node
   - change display text for nodes
 
-To make it work with a non-common crawl dataset, the main difference will be that the vertices are not websites. The sidebar generates an iframe preview of the sites, which doesn't make sense for non-website vertices. Best to comment out the iframe in `/client/src/components/Sidebar.js`, or replace with suitable alternative.
+To make it work with a non-Common Crawl dataset, the main difference will be that the vertices are not websites. The sidebar generates an iframe preview of the sites, which doesn't make sense for non-website vertices. Best to comment out the iframe in `/client/src/components/Sidebar.js`, or replace with suitable alternative.
