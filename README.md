@@ -10,13 +10,13 @@ For detailed overview, (incl reasoning) see [the writeup](https://logspace.io/pr
 
 Generates a Map as you survey dense graph datasets.
 
-Whenever you click on a vertex, it expands the map with the next two vertices (you can click multiple times) with the highest score relative to the vertex, where
+Whenever you click on a vertex, it expands the map with the next two vertices (you can click multiple times) with the highest score for the subgraph of vertices with edges to the vertex AND the subgraph of vertices with edges from the vertex, where
 
 ![eqn](/assets/eqn.png)
 
-and sensitivity is a number between 0 and 1 (calibrated in the UI) for the subgraph of vertices with edges to vertex, as well as for the subgraph of vertices with edges from that vertex.
+and sensitivity is a number between 0 and 1 (calibrated in the UI).  
 
-Whenever you change the sensitivity, it replaces each parent vertex’s `n` childless children with the `n` with the highest score relative to said parent for the new sensitivity. Any vertices that have children remain. In the interface, sensitivity is labeled with α and interpreted as altitude for reasons explained in the writeup.
+Whenever you change the sensitivity, it replaces each parent vertex’s `n` childless children with the `n` with the highest score relative to said parent for the new sensitivity. Any vertices with children remain. In the interface, sensitivity is labeled with α and interpreted as altitude for reasons explained in the writeup.
 
 ## Running locally
 
