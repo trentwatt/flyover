@@ -15,7 +15,7 @@ export function nameForDisplayName(displayName) {
   return `${displayName}.gov`
 }
 
-export const baseUrl = "http://localhost:8000"
-// export const baseUrl = "https://myfp10.deta.dev/"
+// export const baseUrl = "http://localhost:8000"
+export const baseUrl = "https://myfp10.deta.dev/"
 
 export const initialNode = "cdc.gov"
