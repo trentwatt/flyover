@@ -30,8 +30,8 @@ then
 `pip install -r -requirements.txt`  
 `uvicorn main:app --reload`  
 
-take note of url
-open `/client/src/config.js`  
+take note of url  
+open `/client/src/config.js`    
 change the line `export const baseUrl = ...` to reflect the url you noted
 
 new terminal session:
