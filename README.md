@@ -8,7 +8,7 @@ For detailed overview, (incl reasoning) see [the writeup](https://logspace.io/pr
 
 ## Specifics
 
-Generates a Map as you survey dense graph datasets.
+Generates a Map as you survey dense graph datasets. By default it is configured to use the [graph of hyperlinks between websites](https://commoncrawl.org/2021/05/host-and-domain-level-web-graphs-feb-apr-may-2021/) provided by Common Crawl, in particular the subgraph on vertices ending in `.gov`. 
 
 Whenever you click on a vertex, it expands the map with the next two vertices (you can click multiple times) with the highest score for the subgraph of vertices with edges to the vertex AND the subgraph of vertices with edges from the vertex, where
 
@@ -34,7 +34,7 @@ take note of url
 open `/client/src/config.js`    
 change the line `export const baseUrl = ...` to reflect the url you noted
 
-new terminal session:
+new terminal session:  
 `cd client`  
 `npm init`  
 `npm i`  
@@ -42,7 +42,7 @@ new terminal session:
 
 ## Configurating
 
-To make this work with an alternative common crawl subgraph, the following steps are before you:
+To make this work with an different common crawl subgraph, the following steps are before you:
 
 - Swap out the edgelist in /api/data/edges.txt with an edgelist of your choosing
 - Make the appropriate modifications to /client/src/config.js
