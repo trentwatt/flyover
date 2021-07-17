@@ -42,7 +42,7 @@ new terminal session:
 
 ## Configurating
 
-To make this work with an different common crawl subgraph, the following steps are before ye:
+To make this work with a different Common Crawl subgraph, the following steps are before ye:
 
 - Swap out the edgelist in `/api/data/edges.txt` with an edgelist of your choosing
 - Make the appropriate modifications to `/client/src/config.js`
