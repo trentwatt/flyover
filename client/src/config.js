@@ -16,6 +16,6 @@ export function nameForDisplayName(displayName) {
 }
 
 // export const baseUrl = "http://localhost:8000"
-export const baseUrl = "https://myfp10.deta.dev/"
+export const baseUrl = "https://myfp10.deta.dev"
 
 export const initialNode = "cdc.gov"
