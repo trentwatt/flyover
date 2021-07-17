@@ -41,7 +41,7 @@ export default function SensSlider({ altitude, setAltitude, state, dispatch }) {
       />
       <p style={{ color: yellow }}>
         Altitude: {altitude} ft ~ <em>α</em> ={" "}
-        {sensitivityForAltitude(altitude)}
+        {sensitivityForAltitude(altitude).toFixed(2)}
       </p>
     </div>
   )

@@ -57,7 +57,6 @@ export function getRelativePageRanks(
 }
 
 export async function getSubgraphData(name) {
-  console.log("checking ... " + name)
   const storedValue = JSON.parse(localStorage.getItem(name))
   let incomingPageRanks,
     outgoingPageRanks,

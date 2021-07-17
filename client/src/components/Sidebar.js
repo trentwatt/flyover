@@ -28,7 +28,7 @@ export default function Sidebar({ highlightNode }) {
           overflow: "auto",
           border: `1px solid ${periwinkle}`,
         }}
-        sandbox
+        sandbox="true"
       />
     </div>
   )
