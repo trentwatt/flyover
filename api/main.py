@@ -1,38 +1,24 @@
 # %%
 import aiohttp
-from typing import Optional
 from igraph import Graph
 from collections import Counter
 from fastapi import FastAPI
-from pydantic import BaseModel  # pylint: disable=no-name-in-module
 from fastapi.middleware.cors import CORSMiddleware
-import requests
 from fastapi.responses import HTMLResponse
 
 
 app = FastAPI()
 
-origins = [
-    "http://10.0.0.81:3000",
-    "http://localhost:3000",
-    "http://localhost:1234",
-    "http://127.0.0.1:8080",
-    "http://127.0.0.1:1234",
-    "http://localhost",
-    "http://localhost:8080",
-]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://flyover.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-graph = Graph.Read_Ncol("data/gov_to_gov/edges.txt")
-start_vertex = "cdc.gov"
-start_sensitivity = 0.75
+graph = Graph.Read_Ncol("data/edges.txt")
 
 
 def labeled_pagerank(graph):
@@ -70,12 +56,12 @@ def get_adjacent_subgraph(vertex, mode="ALL", include_self=False):
         return graph.subgraph(adjacent_vertices)
 
 
-@app.get("/")
+@app.get("/base_pagerank")
 def get_original_pagerank():
     return original_pagerank
 
 
-@app.get("/nodes/{node}")
+@app.get("/subgraph_pagerank/{node}")
 def get_node_data(node):
     incoming = get_subgraph_data(node, mode="IN")
     outgoing = get_subgraph_data(node, mode="OUT")
@@ -111,7 +97,6 @@ def get_node_data(node):
 #     return relative_pagerank(subgraph, normalize=normalize, sensitivity=sensitivity)
 
 user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
-# user_agent = ""
 
 
 async def fetch(session, url):
@@ -140,7 +125,8 @@ async def get_proxied_site(site):
             return HTMLResponse(content=html_content, status_code=200)
         except:
             return HTMLResponse(
-                content="<h2>Unable to retrieve preview</h2>", status_code=200,
+                content="<h2>Unable to retrieve preview</h2>",
+                status_code=200,
             )
 
 
