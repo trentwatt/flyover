@@ -24,21 +24,21 @@ Whenever you change the sensitivity, it replaces each parent vertex’s `n` chil
 
 then
 
-`cd api`
-`python3 -m venv .venv`
-`source .venv/bin/activate`
-`pip install -r -requirements.txt`
-`uvicorn main:app --reload`
+`cd api`  
+`python3 -m venv .venv`  
+`source .venv/bin/activate`  
+`pip install -r -requirements.txt`  
+`uvicorn main:app --reload`  
 
 take note of url
-open `/client/src/config.js`
+open `/client/src/config.js`  
 change the line `export const baseUrl = ...` to reflect the url you noted
 
-in new terminal session
-`cd client`
-`npm init`
-`npm i`
-`npm start`
+new terminal session:
+`cd client`  
+`npm init`  
+`npm i`  
+`npm start`  
 
 ## Configurating
 
