@@ -44,8 +44,8 @@ new terminal session:
 
 To make this work with an different common crawl subgraph, the following steps are before ye:
 
-- Swap out the edgelist in /api/data/edges.txt with an edgelist of your choosing
-- Make the appropriate modifications to /client/src/config.js
+- Swap out the edgelist in `/api/data/edges.txt` with an edgelist of your choosing
+- Make the appropriate modifications to `/client/src/config.js`
   - change base url
   - change start node
   - change display text for nodes
