@@ -62,7 +62,7 @@ function App() {
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://github.com/trentwatt/flyover"
+            href="https://logspace.io/projects/flyover/"
           >
             About
           </a>
