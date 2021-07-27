@@ -1,6 +1,6 @@
 # Flyover
 
-[Exploring Networks from Above](https://flyover.vercel.app)
+[Exploring Networks from Above](https://flyover.city)
 
 ![preview](/assets/flyover.gif)
 
